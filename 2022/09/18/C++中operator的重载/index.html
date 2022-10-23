@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>c++中operator的重载 | Jack的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="两种函数允许编译器进行隐士类型转换 单一参数调用成功的constructors 隐士转换操作符  12345678910111213141516171819class Ration &amp;#123;public:    &#x2F;&#x2F;1 隐士构造函数    Ration(int a) &amp;#123;            &amp;#125;    &#x2F;&#x2F;2 隐士类型转换函数    operator double() co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++中operator的重载">
+<meta property="og:url" content="http://example.com/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/index.html">
+<meta property="og:site_name" content="Jack的博客">
+<meta property="og:description" content="两种函数允许编译器进行隐士类型转换 单一参数调用成功的constructors 隐士转换操作符  12345678910111213141516171819class Ration &amp;#123;public:    &#x2F;&#x2F;1 隐士构造函数    Ration(int a) &amp;#123;            &amp;#125;    &#x2F;&#x2F;2 隐士类型转换函数    operator double() co">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-18T07:10:20.000Z">
+<meta property="article:modified_time" content="2022-10-23T12:52:41.516Z">
+<meta property="article:author" content="JackWang">
+<meta property="article:tag" content="C++11">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jack的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jack的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C++中operator的重载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/" class="article-date">
+  <time datetime="2022-09-18T07:10:20.000Z" itemprop="datePublished">2022-09-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      c++中operator的重载
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="两种函数允许编译器进行隐士类型转换"><a href="#两种函数允许编译器进行隐士类型转换" class="headerlink" title="两种函数允许编译器进行隐士类型转换"></a>两种函数允许编译器进行隐士类型转换</h2><ol>
+<li>单一参数调用成功的constructors</li>
+<li>隐士转换操作符</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    //1 隐士构造函数</span><br><span class="line">    Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    //2 隐士类型转换函数</span><br><span class="line">    operator double() const &#123;</span><br><span class="line">        return 5.0f;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    cout &lt;&lt; ration &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何阻止构造函数发生不期望的隐士类型转换"><a href="#如何阻止构造函数发生不期望的隐士类型转换" class="headerlink" title="如何阻止构造函数发生不期望的隐士类型转换"></a>如何阻止构造函数发生不期望的隐士类型转换</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    explicit Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    </span><br><span class="line">    //构造函数声明为explicit 阻止隐士类型转换 ration == 2 会编译报错</span><br><span class="line">    if (ration == 2) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重载操作符可以在globe-scope或者class-scope中进行，但是切记不要重载-amp-amp-操作符，-原因是改变了短路运算的语义，变成函数调用。"><a href="#重载操作符可以在globe-scope或者class-scope中进行，但是切记不要重载-amp-amp-操作符，-原因是改变了短路运算的语义，变成函数调用。" class="headerlink" title="重载操作符可以在globe scope或者class scope中进行，但是切记不要重载 &amp;&amp; || 操作符， 原因是改变了短路运算的语义，变成函数调用。"></a>重载操作符可以在globe scope或者class scope中进行，但是切记不要重载 &amp;&amp; || 操作符， 原因是改变了短路运算的语义，变成函数调用。</h3><h4 id="这里还有一个细节，c-中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。"><a href="#这里还有一个细节，c-中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。" class="headerlink" title="这里还有一个细节，c++中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。"></a>这里还有一个细节，c++中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。</h4><p>###重载(),当重载 () 时，不是创造了一种新的调用函数的方式，相反地，这是创建一个可以传递任意数目参数的运算符函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    explicit Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int operator() (int a , int b, int c)</span><br><span class="line">    &#123;</span><br><span class="line">        return 10;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int operator() (int a , int b)</span><br><span class="line">    &#123;</span><br><span class="line">        return 5;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    ration(1, 2, 3);</span><br><span class="line">    ration(1, 3);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/" data-id="cl9lffyvj0001y2vqbzv818m7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          c++ 右值引用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/09/18/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C++ 构造函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C-11/" style="font-size: 15px;">C++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 15px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/23/C++%E5%AE%9E%E7%8E%B0%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/">实现完美转发</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/25/add-Image/">add Image</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/25/C++-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">c++ 11 智能指针</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/">c++ 右值引用</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/">c++中operator的重载</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 JackWang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

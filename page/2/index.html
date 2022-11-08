@@ -64,6 +64,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS11 Simulator OpenGL Slowly" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/" class="article-date">
+  <time datetime="2017-09-18T16:00:00.000Z" itemprop="datePublished">2017-09-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/">iOS11模拟器运行OpenGL相关程序卡顿</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近升级Xcode9.0后发现模拟器上运行OpenGL程序非常卡顿，查了一下原因，原来是苹果的一处bug</p>
+</blockquote>
+<h3 id="具体的解决方案是"><a href="#具体的解决方案是" class="headerlink" title="具体的解决方案是"></a>具体的解决方案是</h3><p>替换此路径下的文件用附件文件，替换此路径下文件即可</p>
+<p><em>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/OpenGLES.framework/libCoreVMClient.dylib</em>  </p>
+<p><a target="_blank" rel="noopener" href="http://ox0sey9ue.bkt.clouddn.com/libCoreVMClient.dylib">libCoreVMClient.dylib下载链接</a></p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a target="_blank" rel="noopener" href="https://forums.developer.apple.com/thread/83570">苹果开发者论坛</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/" data-id="cl9lffyw4000xy2vq3jqdfy1n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-iOS准确计时" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/17/iOS%E5%87%86%E7%A1%AE%E8%AE%A1%E6%97%B6/" class="article-date">
@@ -497,49 +542,6 @@
 
 
   
-    <article id="post-CALayer-opaque" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/30/CALayer-opaque/" class="article-date">
-  <time datetime="2016-12-30T02:51:46.000Z" itemprop="datePublished">2016-12-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/30/CALayer-opaque/">CALayer opaque</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="颜色合成公式"><a href="#颜色合成公式" class="headerlink" title="颜色合成公式"></a>颜色合成公式</h3><p><strong>R = S + D * ( 1 – Sa )</strong></p>
-<p> <img src="/Users/baidu/Downloads/20130819170332968.png" alt="20130819170332968"></p>
-<p>其中，R表示混合结果的颜色，S是源颜色(位于上层的红色图层一)，D是目标颜色(位于下层的绿色图层二)，Sa是源颜色的alpha值，即透明度。公式中所有的S和D颜色都假定已经预先乘以了他们的透明度。</p>
-<p>设置opaque相当于是设置了Sa=1，此时R = S，省去了GPU的计算</p>
-<p>注意：设置opaque为YES时，要确保alpha为1.0f，否则结果不可预期</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2016/12/30/CALayer-opaque/" data-id="cl9lffyvq0008y2vq3tkbh4xb" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -590,6 +592,10 @@
       <ul>
         
           <li>
+            <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/">trivially copyable(拷贝不变)</a>
+          </li>
+        
+          <li>
             <a href="/2022/10/23/C++%E5%AE%9E%E7%8E%B0%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/">实现完美转发</a>
           </li>
         
@@ -603,10 +609,6 @@
         
           <li>
             <a href="/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/">c++ 右值引用</a>
-          </li>
-        
-          <li>
-            <a href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/">c++中operator的重载</a>
           </li>
         
       </ul>

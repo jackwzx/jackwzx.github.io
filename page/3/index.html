@@ -64,6 +64,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenGL-基本框架搭建和绘制一个简单图形" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/30/OpenGL-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E5%92%8C%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%9B%BE%E5%BD%A2/" class="article-date">
+  <time datetime="2016-12-30T07:42:35.000Z" itemprop="datePublished">2016-12-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/30/OpenGL-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E5%92%8C%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%9B%BE%E5%BD%A2/">opengl iOS创建OpenGL环境绘制一个简单三角形</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="EAGLView创建要点"><a href="#EAGLView创建要点" class="headerlink" title="EAGLView创建要点"></a>EAGLView创建要点</h3><p>1 EAGLView的layer为CAEAGLLayer，设置kEAGLDrawablePropertyRetainedBacking和kEAGLDrawablePropertyColorFormat属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)setupLayer&#123;</span><br><span class="line"></span><br><span class="line">    CAEAGLLayer* layer = (CAEAGLLayer*)self.layer;</span><br><span class="line">    </span><br><span class="line">    layer.opaque = YES;</span><br><span class="line">    </span><br><span class="line">    layer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:@(NO), kEAGLDrawablePropertyRetainedBacking,</span><br><span class="line">                                kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2  创建EAGLContext</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_context = [[EAGLContext alloc]initWithAPI:kEAGLRenderingAPIOpenGLES2];</span><br></pre></td></tr></table></figure>
+
+<p>3  加载着着色器程序，获取到着色器变量的索引，此过程，大致可分为：</p>
+<p>a获取着色器源文件，创建shader，编译</p>
+<p>b创建program，attachShader，link，useProgram</p>
+<p>c从program，通过名字获取着色器中变量的索引(后续可以向着色器中传递参数)</p>
+<p>这里有一点需要注意，此过程的前提，一定是已经设置了EAGLContext的currentContext</p>
+<p>4 每一帧绘制流程</p>
+<p>在外面使用CADisplayLink来控制播放帧率，每一帧的绘制流程就是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (void)drawFrame&#123;</span><br><span class="line"></span><br><span class="line">    [_eaglView setFramebuffer];</span><br><span class="line">    </span><br><span class="line">    [_eaglView draw];</span><br><span class="line">    </span><br><span class="line">    [_eaglView presentFramebuffer];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>5 关于frameBuffetObject的创建和释放</p>
+<p>前提：context确保设置</p>
+<p>流程大致是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">- (void)createBuffer&#123;</span><br><span class="line">    </span><br><span class="line">    [self checkContext];</span><br><span class="line">    </span><br><span class="line">    glGenRenderbuffers(1, &amp;_colorRenderBuffer);</span><br><span class="line">    </span><br><span class="line">    glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);</span><br><span class="line">    </span><br><span class="line">    [_context renderbufferStorage:GL_RENDERBUFFER fromDrawable:(CAEAGLLayer*)self.layer];</span><br><span class="line">    </span><br><span class="line">    glGenFramebuffers(1, &amp;_frameBuffer);</span><br><span class="line">    </span><br><span class="line">    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);</span><br><span class="line">    </span><br><span class="line">    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,</span><br><span class="line">    						GL_RENDERBUFFER, _colorRenderBuffer);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)deleteBuffer&#123;</span><br><span class="line"></span><br><span class="line">    [self checkContext];</span><br><span class="line">    </span><br><span class="line">    glDeleteRenderbuffers(1, &amp;_colorRenderBuffer);</span><br><span class="line">    </span><br><span class="line">    _colorRenderBuffer = 0;</span><br><span class="line">    </span><br><span class="line">    glDeleteFramebuffers(1, &amp;_frameBuffer);</span><br><span class="line">    </span><br><span class="line">    _frameBuffer = 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setFramebuffer</span><br><span class="line">&#123;</span><br><span class="line">    if ([self checkContext])</span><br><span class="line">    &#123;</span><br><span class="line">        if (!_frameBuffer)&#123;</span><br><span class="line">            [self createBuffer];</span><br><span class="line">        &#125;</span><br><span class="line">        glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (BOOL)presentFramebuffer</span><br><span class="line">&#123;</span><br><span class="line">    BOOL success = FALSE;</span><br><span class="line">    </span><br><span class="line">    if ([self checkContext])</span><br><span class="line">    &#123;</span><br><span class="line">        glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);</span><br><span class="line">        </span><br><span class="line">        success = [_context presentRenderbuffer:GL_RENDERBUFFER];</span><br><span class="line">    &#125;</span><br><span class="line">    return success;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>6 关于绘制三角形</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (void)draw&#123;</span><br><span class="line">    //设置背景颜色为绿色</span><br><span class="line">    glClearColor(0, 1.0, 0,1.0);</span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">    //设置管区域大小</span><br><span class="line">    glViewport(0, 0, self.frame.size.width, self.frame.size.height);</span><br><span class="line">    </span><br><span class="line">    GLfloat vertices[] = &#123;</span><br><span class="line">        0.0f,  0.5f, 0.0f,</span><br><span class="line">        -0.5f, -0.5f, 0.0f,</span><br><span class="line">        0.5f,  -0.5f, 0.0f &#125;;</span><br><span class="line">    //设置着色器中的vPositon</span><br><span class="line">    glVertexAttribPointer(_positionSlot, 3, GL_FLOAT, GL_FALSE, 0, vertices);</span><br><span class="line">    //使上一步的设置生效</span><br><span class="line">    glEnableVertexAttribArray(_positionSlot);</span><br><span class="line">    //绘制三角形</span><br><span class="line">    glDrawArrays(GL_TRIANGLES, 0, 3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/12/30/OpenGL-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E5%92%8C%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%9B%BE%E5%BD%A2/" data-id="cl9lffyw0000py2vqfxfcfujp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CALayer-opaque" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/12/30/CALayer-opaque/" class="article-date">
@@ -232,7 +292,7 @@ _redView.frame = oldFrame;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-11/" style="font-size: 15px;">C++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 15px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C-11/" style="font-size: 13.33px;">C++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 16.67px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -241,7 +301,7 @@ _redView.frame = oldFrame;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -252,6 +312,10 @@ _redView.frame = oldFrame;
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
+          </li>
         
           <li>
             <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/">trivially copyable(拷贝不变)</a>
@@ -267,10 +331,6 @@ _redView.frame = oldFrame;
         
           <li>
             <a href="/2022/09/25/C++-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">c++ 11 智能指针</a>
-          </li>
-        
-          <li>
-            <a href="/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/">c++ 右值引用</a>
           </li>
         
       </ul>

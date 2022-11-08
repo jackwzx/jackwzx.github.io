@@ -64,6 +64,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenGL模板测试流程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time datetime="2022-11-08T03:51:27.000Z" itemprop="datePublished">2022-11-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="模板测试流程"><a href="#模板测试流程" class="headerlink" title="模板测试流程"></a>模板测试流程</h3><p>不考虑earlyZ的情况下，fragment执行后，进行模板测试，通过后，进入深度测试</p>
+<h4 id="模板测试一般使用流程："><a href="#模板测试一般使用流程：" class="headerlink" title="模板测试一般使用流程："></a>模板测试一般使用流程：</h4><pre><code>1. 启用模板缓冲写入
+2. 渲染物体，更新模板缓冲
+3. 禁用模板缓冲写入
+4. 渲染其他物体，根据模板缓冲内容决定是否丢弃片段
+</code></pre>
+<h5 id="使用模板测试绘制物体轮廓的例子"><a href="#使用模板测试绘制物体轮廓的例子" class="headerlink" title="使用模板测试绘制物体轮廓的例子"></a>使用模板测试绘制物体轮廓的例子</h5><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glStencilMask();</span><br><span class="line">glStencilFunc(GLenum func, GLint ref, GLuint mask);</span><br><span class="line">glStencilOp(GLenum sfail, GLenum dpfail, GLenum dppass);</span><br></pre></td></tr></table></figure>
+
+1. 开启模板测试和深度测试
+2. 第一次render pass，主要是绘制，并写入模板
+    1. 开启模板测试和深度测试
+    2. glStencilMask(0xFF);
+    3. glStencilOp(keep, keep, replace);
+    4. glStencilFunc(always, 1, 0xFF);
+    5. 绘制物体
+3. 第二次render pass, 放大物体，通过模板测试剔除非边缘像素
+    1. 将物体缩放变大
+    2. 关闭深度测试 //因为这里的边缘不需要有拓扑关系
+    3. 关闭模板写入glStencilMask(0x00);
+    4. glStencilFunc(not_equal, 1, 0xFF);
+    5. 绘制物体
+</code></pre>
+<h3 id="关于OpenGL里面的Mask"><a href="#关于OpenGL里面的Mask" class="headerlink" title="关于OpenGL里面的Mask"></a>关于OpenGL里面的Mask</h3><pre><code>1. 写入颜色是，r，g，b，a 分别与对应的mask，进行&amp;运算后写入
+2. depth也是同样道理，如果设置成true，就是允许写入，设置成false，不允许写入
+3. stencil的Mask，是0xFF~0x00，之间的256个数，一般设置是0xFF，允许任意值写入，0x00是不允许写入
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" data-id="cla7onlj70000ztvqh5nb73ei" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-trivially-copyable-拷贝不变" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/" class="article-date">
@@ -561,50 +625,6 @@
 
 
   
-    <article id="post-MacOS下ruby安装" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/19/MacOS%E4%B8%8Bruby%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2017-09-18T16:00:00.000Z" itemprop="datePublished">2017-09-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/19/MacOS%E4%B8%8Bruby%E5%AE%89%E8%A3%85/">Mac环境下安装Ruby</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用rvm来安装ruby"><a href="#使用rvm来安装ruby" class="headerlink" title="使用rvm来安装ruby"></a>使用rvm来安装ruby</h2><h3 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -L get.rvm.io | bash -s stable  </span><br></pre></td></tr></table></figure>
-<h3 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/.bashrc $ source ~/.bash_profile$ rvm -v  </span><br><span class="line">$ source ~/.bash_profile  </span><br><span class="line">$ rvm -v  </span><br></pre></td></tr></table></figure>
-<h3 id="step3"><a href="#step3" class="headerlink" title="step3"></a>step3</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rvm list known  </span><br></pre></td></tr></table></figure>
-<h3 id="step4"><a href="#step4" class="headerlink" title="step4"></a>step4</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rvm install 2.2.0  </span><br></pre></td></tr></table></figure>
-
-<h3 id="如果Step4失败，可以进行如下尝试"><a href="#如果Step4失败，可以进行如下尝试" class="headerlink" title="如果Step4失败，可以进行如下尝试"></a>如果Step4失败，可以进行如下尝试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami):admin /usr/local</span><br><span class="line">cd /usr/local</span><br><span class="line">git remote set-url origin git://mirrors.ustc.edu.cn/brew.git</span><br><span class="line">brew update</span><br><span class="line">sudo chown root:wheel /usr/local</span><br><span class="line">rvm install 2.2.0</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/09/19/MacOS%E4%B8%8Bruby%E5%AE%89%E8%A3%85/" data-id="cl9lffyvw000iy2vqeknfd1ia" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -633,7 +653,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C-11/" style="font-size: 15px;">C++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 15px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+      <a href="/tags/C-11/" style="font-size: 13.33px;">C++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 16.67px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
     </div>
   </div>
 
@@ -642,7 +662,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -653,6 +673,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
+          </li>
         
           <li>
             <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/">trivially copyable(拷贝不变)</a>
@@ -668,10 +692,6 @@
         
           <li>
             <a href="/2022/09/25/C++-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/">c++ 11 智能指针</a>
-          </li>
-        
-          <li>
-            <a href="/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/">c++ 右值引用</a>
           </li>
         
       </ul>

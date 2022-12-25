@@ -5,19 +5,18 @@
   
 
   
-  <title>uniform和attribute区别 | Jack的博客</title>
+  <title>电子书目录 | Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简单对比一下attribute，可以理解为顶点的属性，表示顶点的输入数据，只在顶点着色器中使用 uniform，可以简单理解为向着色器中传递matrix等数据，这个是在着色器中是只读的，并且在两个着色器中都可以使用 使用上的区别： 1 获取指针，分别使用glGetAttribLocation和glGetUniformLocation方法 2 设置值时，分别使用glVertexAttribPoint">
+  <meta name="description" content="渲染整理开放世界的场景管理1. 切成tile 2. 数据分级LOD 3. 根据天顶角，调整远平面，裁剪数据  游戏引擎分层架构1. EditorLayer 2. FuntionLayer     1. Rendering     2. Animation     3. Camera     4. Physics     5. Script 3. ResourceLayer 4. CoreLayer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="uniform和attribute区别">
-<meta property="og:url" content="http://example.com/2016/12/30/OpenGL-uniform%E5%92%8Cattribute/index.html">
+<meta property="og:title" content="电子书目录">
+<meta property="og:url" content="http://example.com/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/index.html">
 <meta property="og:site_name" content="Jack的博客">
-<meta property="og:description" content="简单对比一下attribute，可以理解为顶点的属性，表示顶点的输入数据，只在顶点着色器中使用 uniform，可以简单理解为向着色器中传递matrix等数据，这个是在着色器中是只读的，并且在两个着色器中都可以使用 使用上的区别： 1 获取指针，分别使用glGetAttribLocation和glGetUniformLocation方法 2 设置值时，分别使用glVertexAttribPoint">
+<meta property="og:description" content="渲染整理开放世界的场景管理1. 切成tile 2. 数据分级LOD 3. 根据天顶角，调整远平面，裁剪数据  游戏引擎分层架构1. EditorLayer 2. FuntionLayer     1. Rendering     2. Animation     3. Camera     4. Physics     5. Script 3. ResourceLayer 4. CoreLayer">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2016-12-30T08:17:50.000Z">
-<meta property="article:modified_time" content="2017-12-20T09:50:13.000Z">
+<meta property="article:published_time" content="2022-12-25T15:36:30.000Z">
+<meta property="article:modified_time" content="2022-12-25T15:37:33.436Z">
 <meta property="article:author" content="JackWang">
-<meta property="article:tag" content="openGL">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Jack的博客" type="application/atom+xml">
@@ -67,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-OpenGL-uniform和attribute" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-电子书目录" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/12/30/OpenGL-uniform%E5%92%8Cattribute/" class="article-date">
-  <time datetime="2016-12-30T08:17:50.000Z" itemprop="datePublished">2016-12-30</time>
+    <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" class="article-date">
+  <time datetime="2022-12-25T15:36:30.000Z" itemprop="datePublished">2022-12-25</time>
 </a>
     
   </div>
@@ -81,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      uniform和attribute区别
+      电子书目录
     </h1>
   
 
@@ -89,40 +88,73 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="简单对比一下"><a href="#简单对比一下" class="headerlink" title="简单对比一下"></a>简单对比一下</h4><p>attribute，可以理解为顶点的属性，表示顶点的输入数据，只在顶点着色器中使用</p>
-<p>uniform，可以简单理解为向着色器中传递matrix等数据，这个是在着色器中是只读的，并且在两个着色器中都可以使用</p>
-<p>使用上的区别：</p>
-<p>1 获取指针，分别使用glGetAttribLocation和glGetUniformLocation方法</p>
-<p>2 设置值时，分别使用glVertexAttribPointer和glUniformMatrix4fv，注意使用glVertexAttribPointer和glEnableVertexAttribArray需要配合使用，而glUniformMatrix4fv无此限制</p>
-<p>3 使用矩阵时，一般先LoadIdentity，然后进行平移，旋转和缩放，glDrawElements与顶点着色器可以理解为一一对应，也就是说，可以设置matrix1，传入shader的modelView中，然后glDrawElements，接下来可以再设置matrix2，再传入modelView中，再进行glDrawElements</p>
+        <h2 id="渲染整理"><a href="#渲染整理" class="headerlink" title="渲染整理"></a>渲染整理</h2><h4 id="开放世界的场景管理"><a href="#开放世界的场景管理" class="headerlink" title="开放世界的场景管理"></a>开放世界的场景管理</h4><pre><code>1. 切成tile
+2. 数据分级LOD
+3. 根据天顶角，调整远平面，裁剪数据
+</code></pre>
+<h4 id="游戏引擎分层架构"><a href="#游戏引擎分层架构" class="headerlink" title="游戏引擎分层架构"></a>游戏引擎分层架构</h4><pre><code>1. EditorLayer
+2. FuntionLayer
+    1. Rendering
+    2. Animation
+    3. Camera
+    4. Physics
+    5. Script
+3. ResourceLayer
+4. CoreLayer
+    1. threadPoolManagement
+    2. memoryPool
+    3. mathLibrary
+5. PlatformLayer
+    1. RHI
+</code></pre>
+<h4 id="Renderable"><a href="#Renderable" class="headerlink" title="Renderable"></a>Renderable</h4><pre><code>1. shader
+    1. vs,fs
+    2. macro
+2. RenderState
+3. MVP 
+4. Texture
+5. DrawImp
+</code></pre>
+<h4 id="渲染效果"><a href="#渲染效果" class="headerlink" title="渲染效果"></a>渲染效果</h4><pre><code>1. 前向渲染
+      1. PBR
+      2. 布林冯模型
+2. 阴影shadowMap：
+    1. 根据相机的位置，对整个场景，绘制出深度图，表示光的可见性
+    2. 渲染时，将相机位置变化到光源位置，计算深度值与shadowmap进行比较，从而决定绘制的亮度
+3. 楼的倒影
+4. AO
+5. 聚光灯效果
+6. UV动画
+</code></pre>
+<h4 id="技术点提炼"><a href="#技术点提炼" class="headerlink" title="技术点提炼"></a>技术点提炼</h4><pre><code>1. 楼块
+    1. 切成小块
+    2. 柔化圆角
+    3. 贴UV
+2. 3d瓦片绘制
+    1. 瓦片的加载，与cache
+    2. 非实施例渲染，按材质进行分类渲染
+    3. 实例化渲染，动态计算lod进行渲染
+3. 模型渲染
+    1. PBR渲染
+    2. 非PBR渲染
+</code></pre>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2016/12/30/OpenGL-uniform%E5%92%8Cattribute/" data-id="cl9lffyvy000ly2vq4fyy2hn8" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" data-id="clc3jbpcq0001dlvq12d2ayeo" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2017/01/02/OpenGL-VBO/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          VBO
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/30/OpenGL-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E5%92%8C%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%9B%BE%E5%BD%A2/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">opengl iOS创建OpenGL环境绘制一个简单三角形</div>
+      <div class="article-nav-title">c++ 可变参数模板</div>
     </a>
   
 </nav>

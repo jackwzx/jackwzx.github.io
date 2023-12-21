@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OpenGL模板测试流程 | Jack的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="模板测试流程不考虑earlyZ的情况下，fragment执行后，进行模板测试，通过后，进入深度测试 模板测试一般使用流程：1. 启用模板缓冲写入 2. 渲染物体，更新模板缓冲 3. 禁用模板缓冲写入 4. 渲染其他物体，根据模板缓冲内容决定是否丢弃片段  使用模板测试绘制物体轮廓的例子123glStencilMask();glStencilFunc(GLenum func, GLint ref,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGL模板测试流程">
+<meta property="og:url" content="http://example.com/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Jack的博客">
+<meta property="og:description" content="模板测试流程不考虑earlyZ的情况下，fragment执行后，进行模板测试，通过后，进入深度测试 模板测试一般使用流程：1. 启用模板缓冲写入 2. 渲染物体，更新模板缓冲 3. 禁用模板缓冲写入 4. 渲染其他物体，根据模板缓冲内容决定是否丢弃片段  使用模板测试绘制物体轮廓的例子123glStencilMask();glStencilFunc(GLenum func, GLint ref,">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-11-08T03:51:27.000Z">
+<meta property="article:modified_time" content="2022-11-08T03:58:04.802Z">
+<meta property="article:author" content="JackWang">
+<meta property="article:tag" content="openGL">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jack的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jack的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenGL模板测试流程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time datetime="2022-11-08T03:51:27.000Z" itemprop="datePublished">2022-11-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenGL模板测试流程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="模板测试流程"><a href="#模板测试流程" class="headerlink" title="模板测试流程"></a>模板测试流程</h3><p>不考虑earlyZ的情况下，fragment执行后，进行模板测试，通过后，进入深度测试</p>
+<h4 id="模板测试一般使用流程："><a href="#模板测试一般使用流程：" class="headerlink" title="模板测试一般使用流程："></a>模板测试一般使用流程：</h4><pre><code>1. 启用模板缓冲写入
+2. 渲染物体，更新模板缓冲
+3. 禁用模板缓冲写入
+4. 渲染其他物体，根据模板缓冲内容决定是否丢弃片段
+</code></pre>
+<h5 id="使用模板测试绘制物体轮廓的例子"><a href="#使用模板测试绘制物体轮廓的例子" class="headerlink" title="使用模板测试绘制物体轮廓的例子"></a>使用模板测试绘制物体轮廓的例子</h5><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glStencilMask();</span><br><span class="line">glStencilFunc(GLenum func, GLint ref, GLuint mask);</span><br><span class="line">glStencilOp(GLenum sfail, GLenum dpfail, GLenum dppass);</span><br></pre></td></tr></table></figure>
+
+1. 开启模板测试和深度测试
+2. 第一次render pass，主要是绘制，并写入模板
+    1. 开启模板测试和深度测试
+    2. glStencilMask(0xFF);
+    3. glStencilOp(keep, keep, replace);
+    4. glStencilFunc(always, 1, 0xFF);
+    5. 绘制物体
+3. 第二次render pass, 放大物体，通过模板测试剔除非边缘像素
+    1. 将物体缩放变大
+    2. 关闭深度测试 //因为这里的边缘不需要有拓扑关系
+    3. 关闭模板写入glStencilMask(0x00);
+    4. glStencilFunc(not_equal, 1, 0xFF);
+    5. 绘制物体
+</code></pre>
+<h3 id="关于OpenGL里面的Mask"><a href="#关于OpenGL里面的Mask" class="headerlink" title="关于OpenGL里面的Mask"></a>关于OpenGL里面的Mask</h3><pre><code>1. 写入颜色是，r，g，b，a 分别与对应的mask，进行&amp;运算后写入
+2. depth也是同样道理，如果设置成true，就是允许写入，设置成false，不允许写入
+3. stencil的Mask，是0xFF~0x00，之间的256个数，一般设置是0xFF，允许任意值写入，0x00是不允许写入
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" data-id="cla7onlj70000ztvqh5nb73ei" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          c++继承权限
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">trivially copyable(拷贝不变)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C-11/" style="font-size: 13.33px;">C++11</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 16.67px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/">电子书目录</a>
+          </li>
+        
+          <li>
+            <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/">c++ 可变参数模板</a>
+          </li>
+        
+          <li>
+            <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/">c++继承权限</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/">trivially copyable(拷贝不变)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 JackWang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

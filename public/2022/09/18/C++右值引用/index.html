@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>c++ 右值引用 | Jack的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 什么是右值？有名称，可以取地址的值，是左值。没有名称，不能取地址的值，就是右值，另外类似函数返回值这种临时变量，定义为将亡值，也是右值。c++11中，所有的值，必属于左值，将亡值，和纯右值。 2. 左值引用，右值引用123456789101112131415161718int main() &amp;#123;        int a &#x3D; 0; &#x2F;&#x2F;ok        int&amp; b &#x3D; a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++ 右值引用">
+<meta property="og:url" content="http://example.com/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/index.html">
+<meta property="og:site_name" content="Jack的博客">
+<meta property="og:description" content="1. 什么是右值？有名称，可以取地址的值，是左值。没有名称，不能取地址的值，就是右值，另外类似函数返回值这种临时变量，定义为将亡值，也是右值。c++11中，所有的值，必属于左值，将亡值，和纯右值。 2. 左值引用，右值引用123456789101112131415161718int main() &amp;#123;        int a &#x3D; 0; &#x2F;&#x2F;ok        int&amp; b &#x3D; a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-18T08:15:56.000Z">
+<meta property="article:modified_time" content="2022-10-25T08:52:46.025Z">
+<meta property="article:author" content="JackWang">
+<meta property="article:tag" content="C++11">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jack的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jack的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-C++右值引用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/" class="article-date">
+  <time datetime="2022-09-18T08:15:56.000Z" itemprop="datePublished">2022-09-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      c++ 右值引用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-什么是右值？"><a href="#1-什么是右值？" class="headerlink" title="1. 什么是右值？"></a>1. 什么是右值？</h3><p>有名称，可以取地址的值，是左值。<br>没有名称，不能取地址的值，就是右值，另外类似函数返回值这种临时变量，定义为将亡值，也是右值。<br>c++11中，所有的值，必属于左值，将亡值，和纯右值。</p>
+<h3 id="2-左值引用，右值引用"><a href="#2-左值引用，右值引用" class="headerlink" title="2. 左值引用，右值引用"></a>2. 左值引用，右值引用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">    </span><br><span class="line">    int a = 0; //ok</span><br><span class="line">    </span><br><span class="line">    int&amp; b = a; //ok,左值引用</span><br><span class="line">    int&amp; c = 0; // not ok,左值引用无法引用右值</span><br><span class="line">    </span><br><span class="line">    const int&amp; d = 0; // ok，常左值引用，可以绑定右值</span><br><span class="line">    const int&amp; e = a; // ok，常左值引用，可以绑定左值</span><br><span class="line">    </span><br><span class="line">    int&amp;&amp; f = 0;//ok 右值引用绑定右值</span><br><span class="line">    const int &amp;&amp; g = 0; // ok,常右值引用可以绑定右值</span><br><span class="line">    //但是实际上没有意义，因为绑定的右值无法修改，一般右值引用是为了实现移动语义，降低copy消耗</span><br><span class="line">    </span><br><span class="line">    int&amp;&amp; h = a;//not ok，右值引用无法绑定左值</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>左值引用，只能绑定左值<br>常左值引用，可以绑定常量左值，右值，非常量左值和右值<br>右值引用，只能绑定非常量右值<br>常右值引用，可以绑定常量右值，非常量右值</p>
+<h3 id="3-讨论右值引用，要注意排除返回值优化"><a href="#3-讨论右值引用，要注意排除返回值优化" class="headerlink" title="3. 讨论右值引用，要注意排除返回值优化"></a>3. 讨论右值引用，要注意排除返回值优化</h3><p>如果关闭返回值优化，可以参考<br><a target="_blank" rel="noopener" href="https://www.yhspy.com/2019/09/01/C-%E7%BC%96%E8%AF%91%E5%99%A8%E4%BC%98%E5%8C%96%E4%B9%8B-RVO-%E4%B8%8E-NRVO">https://www.yhspy.com/2019/09/01/C-%E7%BC%96%E8%AF%91%E5%99%A8%E4%BC%98%E5%8C%96%E4%B9%8B-RVO-%E4%B8%8E-NRVO</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Person GetPerson()&#123;</span><br><span class="line">    return Person();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Person person = GetPerson();</span><br><span class="line">    person.print();</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     一共执行三次构造</span><br><span class="line">    1 Person()默认构造函数</span><br><span class="line">    2 GetPerson函数返回时，生成临时对象，调用移动构造函数</span><br><span class="line">    3 使用临时对象，构造person，调用移动构造函数</span><br><span class="line">     */</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Person&amp;&amp; GetPerson()&#123;</span><br><span class="line">    return Person();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Person person = GetPerson();</span><br><span class="line">    person.print();</span><br><span class="line">    </span><br><span class="line">    /*</span><br><span class="line">     一共执行两次次构造，这种写法是错的，会有warnning</span><br><span class="line">     Returning reference to local temporary object</span><br><span class="line">    1 Person()默认构造函数</span><br><span class="line">    2 右值引用，引用了已经析构的临时对象</span><br><span class="line">    3 使用临时对象，构造person，调用移动构造函数</span><br><span class="line">     */</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-函数返回值，如果没有写左值引用，就是临时变量属于右值"><a href="#4-函数返回值，如果没有写左值引用，就是临时变量属于右值" class="headerlink" title="4. 函数返回值，如果没有写左值引用，就是临时变量属于右值"></a>4. 函数返回值，如果没有写左值引用，就是临时变量属于右值</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Person GetPerson()&#123;</span><br><span class="line">    return Person();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    </span><br><span class="line">    Person person1 = GetPerson(); //调用一次构造，两次次移动构造</span><br><span class="line">    </span><br><span class="line">    Person&amp;&amp; person2 = GetPerson(); //调用一次构造，一次移动构造</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>理解上面person1和person2的区别，person1是根据临时变量构造了一个新的对象<br>person2是直接对临时变量的右值引用</p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const Person&amp; GetPerson1()&#123;</span><br><span class="line">    return Person();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person&amp;&amp; GetPerson2()&#123;</span><br><span class="line">    return Person();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面两种写法都是错误的，返回的是临时变量的引用，可以编译通过，但是有警告</p>
+<p><code>Returning reference to local temporary object</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/09/18/C++%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8/" data-id="cl9lffyvm0003y2vq4py2b97x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/09/25/C++-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          c++ 11 智能指针
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">c++中operator的重载</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C-11/" style="font-size: 13.33px;">C++11</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 16.67px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/">电子书目录</a>
+          </li>
+        
+          <li>
+            <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/">c++ 可变参数模板</a>
+          </li>
+        
+          <li>
+            <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/">c++继承权限</a>
+          </li>
+        
+          <li>
+            <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/">trivially copyable(拷贝不变)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 JackWang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

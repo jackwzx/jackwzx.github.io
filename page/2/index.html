@@ -64,6 +64,84 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-C++中operator的重载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/" class="article-date">
+  <time datetime="2022-09-18T07:10:20.000Z" itemprop="datePublished">2022-09-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/">c++中operator的重载</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="两种函数允许编译器进行隐士类型转换"><a href="#两种函数允许编译器进行隐士类型转换" class="headerlink" title="两种函数允许编译器进行隐士类型转换"></a>两种函数允许编译器进行隐士类型转换</h2><ol>
+<li>单一参数调用成功的constructors</li>
+<li>隐士转换操作符</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    //1 隐士构造函数</span><br><span class="line">    Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    //2 隐士类型转换函数</span><br><span class="line">    operator double() const &#123;</span><br><span class="line">        return 5.0f;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    cout &lt;&lt; ration &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何阻止构造函数发生不期望的隐士类型转换"><a href="#如何阻止构造函数发生不期望的隐士类型转换" class="headerlink" title="如何阻止构造函数发生不期望的隐士类型转换"></a>如何阻止构造函数发生不期望的隐士类型转换</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    explicit Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    </span><br><span class="line">    //构造函数声明为explicit 阻止隐士类型转换 ration == 2 会编译报错</span><br><span class="line">    if (ration == 2) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重载操作符可以在globe-scope或者class-scope中进行，但是切记不要重载-amp-amp-操作符，-原因是改变了短路运算的语义，变成函数调用。"><a href="#重载操作符可以在globe-scope或者class-scope中进行，但是切记不要重载-amp-amp-操作符，-原因是改变了短路运算的语义，变成函数调用。" class="headerlink" title="重载操作符可以在globe scope或者class scope中进行，但是切记不要重载 &amp;&amp; || 操作符， 原因是改变了短路运算的语义，变成函数调用。"></a>重载操作符可以在globe scope或者class scope中进行，但是切记不要重载 &amp;&amp; || 操作符， 原因是改变了短路运算的语义，变成函数调用。</h3><h4 id="这里还有一个细节，c-中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。"><a href="#这里还有一个细节，c-中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。" class="headerlink" title="这里还有一个细节，c++中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。"></a>这里还有一个细节，c++中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。</h4><p>###重载(),当重载 () 时，不是创造了一种新的调用函数的方式，相反地，这是创建一个可以传递任意数目参数的运算符函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    explicit Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int operator() (int a , int b, int c)</span><br><span class="line">    &#123;</span><br><span class="line">        return 10;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int operator() (int a , int b)</span><br><span class="line">    &#123;</span><br><span class="line">        return 5;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    ration(1, 2, 3);</span><br><span class="line">    ration(1, 3);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/" data-id="cl9lffyvj0001y2vqbzv818m7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-C++构造函数" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/09/18/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" class="article-date">
@@ -516,57 +594,6 @@
 
 
   
-    <article id="post-OpenGL-纹理贴图" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" class="article-date">
-  <time datetime="2017-01-03T03:11:26.000Z" itemprop="datePublished">2017-01-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/">纹理贴图</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1 VertexShader</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">attribute vec2 TexCoordIn; // New</span><br><span class="line">varying vec2 TexCoordOut; // New</span><br><span class="line"></span><br><span class="line">void main(void) &#123; </span><br><span class="line">    DestinationColor = SourceColor; </span><br><span class="line">    gl_Position = Projection * Modelview * Position;</span><br><span class="line">    TexCoordOut = TexCoordIn; // New</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2 FragmentShader</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">varying lowp vec4 DestinationColor;</span><br><span class="line">varying lowp vec2 TexCoordOut; // New</span><br><span class="line">uniform sampler2D Texture; // New</span><br><span class="line"></span><br><span class="line">void main(void) &#123;</span><br><span class="line">    gl_FragColor = DestinationColor * texture2D(Texture, TexCoordOut); // New</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3 将图片资源转换成位图数据，绑定到对应纹理ID中</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">+ (GLuint)createTextureWithImage:(UIImage *)image&#123;</span><br><span class="line">    </span><br><span class="line">    //转换为CGImage，获取图片基本参数</span><br><span class="line">    CGImageRef cgImageRef = [image CGImage];</span><br><span class="line">    GLuint width = (GLuint)CGImageGetWidth(cgImageRef);</span><br><span class="line">    GLuint height = (GLuint)CGImageGetHeight(cgImageRef);</span><br><span class="line">    CGRect rect = CGRectMake(0, 0, width, height);</span><br><span class="line">    </span><br><span class="line">    //绘制图片</span><br><span class="line">    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();</span><br><span class="line">    void *imageData = malloc(width * height * 4);</span><br><span class="line">    CGContextRef context = CGBitmapContextCreate(imageData, width, height, 8, width * 4, colorSpace,kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);</span><br><span class="line">    CGContextTranslateCTM(context, 0, height);</span><br><span class="line">    CGContextScaleCTM(context, 1.0f, -1.0f);</span><br><span class="line">    CGColorSpaceRelease(colorSpace);</span><br><span class="line">    CGContextClearRect(context, rect);</span><br><span class="line">    CGContextDrawImage(context, rect, cgImageRef);</span><br><span class="line">    </span><br><span class="line">    GLuint textureID;</span><br><span class="line">    glGenTextures(1, &amp;textureID);</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</span><br><span class="line">    </span><br><span class="line">    //纹理一些设置，可有可无</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">    </span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);</span><br><span class="line">    </span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, 0);</span><br><span class="line">    </span><br><span class="line">    //释放内存</span><br><span class="line">    CGContextRelease(context);</span><br><span class="line">    free(imageData);</span><br><span class="line">    </span><br><span class="line">    return textureID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>4 绘制时使用纹理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">glActiveTexture(GL_TEXTURE0);</span><br><span class="line">//载入纹理</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _textTureId);</span><br><span class="line"></span><br><span class="line">glUniform1i(_textureSlot, 0);</span><br><span class="line"></span><br><span class="line">const GLfloat texCoords[] = &#123;</span><br><span class="line">    0, 0,//左下</span><br><span class="line">    1, 0,//右下</span><br><span class="line">    0, 1,//左上</span><br><span class="line">    1, 1,//右上</span><br><span class="line">&#125;;</span><br><span class="line">glVertexAttribPointer(_textureCoordsSlot, 2, GL_FLOAT, GL_FALSE, 0, texCoords);</span><br><span class="line">glEnableVertexAttribArray(_textureCoordsSlot);</span><br></pre></td></tr></table></figure>
-
-<p>5 关于纹理坐标</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" data-id="cl9lffyw1000ry2vq1hiy961v" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -604,7 +631,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -615,6 +642,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/">模板规则推导</a>
+          </li>
         
           <li>
             <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/">电子书目录</a>
@@ -632,10 +663,6 @@
             <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
           </li>
         
-          <li>
-            <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/">trivially copyable(拷贝不变)</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -648,7 +675,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2022 JackWang<br>
+      &copy; 2023 JackWang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

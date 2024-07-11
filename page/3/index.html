@@ -64,6 +64,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS11 Simulator OpenGL Slowly" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/" class="article-date">
+  <time datetime="2017-09-18T16:00:00.000Z" itemprop="datePublished">2017-09-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/">iOS11模拟器运行OpenGL相关程序卡顿</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近升级Xcode9.0后发现模拟器上运行OpenGL程序非常卡顿，查了一下原因，原来是苹果的一处bug</p>
+</blockquote>
+<h3 id="具体的解决方案是"><a href="#具体的解决方案是" class="headerlink" title="具体的解决方案是"></a>具体的解决方案是</h3><p>替换此路径下的文件用附件文件，替换此路径下文件即可</p>
+<p><em>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/OpenGLES.framework/libCoreVMClient.dylib</em>  </p>
+<p><a target="_blank" rel="noopener" href="http://ox0sey9ue.bkt.clouddn.com/libCoreVMClient.dylib">libCoreVMClient.dylib下载链接</a></p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a target="_blank" rel="noopener" href="https://forums.developer.apple.com/thread/83570">苹果开发者论坛</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/" data-id="cl9lffyw4000xy2vq3jqdfy1n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-iOS准确计时" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/17/iOS%E5%87%86%E7%A1%AE%E8%AE%A1%E6%97%B6/" class="article-date">
+  <time datetime="2017-09-16T16:00:00.000Z" itemprop="datePublished">2017-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/17/iOS%E5%87%86%E7%A1%AE%E8%AE%A1%E6%97%B6/">iOS不受用户手动修改时间的影响的计时技术</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="iOS不受用户手动修改时间的影响的计时技术"><a href="#iOS不受用户手动修改时间的影响的计时技术" class="headerlink" title="iOS不受用户手动修改时间的影响的计时技术"></a>iOS不受用户手动修改时间的影响的计时技术</h3><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这几天的项目中，要求实现一个用户计时的功能，其中遇到了经理了几种技术方法，分别是利用NSTimer，NSDate，都有各自的问题，Timer计时不够精准，以及需要程序在后台执行，NSDate会受到用户修改系统时间，而导致计时不准，最后找到了一种完美的解决方案</p>
+<h3 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h3><p>直接说最终方案</p>
+<p><code>[[NSProcessInfo processInfo] systemUptime];</code></p>
+<p>这个函数返回的是开机到当前的时间，秒数为单位，并且<strong>不受系统时钟的影响</strong>，在一些需要准确记录时间长度的场景里，配合Timer非常适合，解决了前沿描述的所有痛点.</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/nsprocessinfo/1414553-systemuptime?language=objc">苹果接口文档</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/09/17/iOS%E5%87%86%E7%A1%AE%E8%AE%A1%E6%97%B6/" data-id="cl9lffyw5000zy2vqavs7hjwf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-iOS手势事件分发原理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/07/01/iOS%E6%89%8B%E5%8A%BF%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%8E%9F%E7%90%86/" class="article-date">
@@ -454,105 +542,6 @@
 
 
   
-    <article id="post-CALayer-opaque" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/12/30/CALayer-opaque/" class="article-date">
-  <time datetime="2016-12-30T02:51:46.000Z" itemprop="datePublished">2016-12-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/30/CALayer-opaque/">CALayer opaque</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="颜色合成公式"><a href="#颜色合成公式" class="headerlink" title="颜色合成公式"></a>颜色合成公式</h3><p><strong>R = S + D * ( 1 – Sa )</strong></p>
-<p> <img src="/Users/baidu/Downloads/20130819170332968.png" alt="20130819170332968"></p>
-<p>其中，R表示混合结果的颜色，S是源颜色(位于上层的红色图层一)，D是目标颜色(位于下层的绿色图层二)，Sa是源颜色的alpha值，即透明度。公式中所有的S和D颜色都假定已经预先乘以了他们的透明度。</p>
-<p>设置opaque相当于是设置了Sa=1，此时R = S，省去了GPU的计算</p>
-<p>注意：设置opaque为YES时，要确保alpha为1.0f，否则结果不可预期</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2016/12/30/CALayer-opaque/" data-id="cl9lffyvq0008y2vq3tkbh4xb" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-CALayer属性positon和anchor" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/" class="article-date">
-  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">2016-10-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/">CALayer属性positon和anchor</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="CALayer-的frame，bounds-position和anchor"><a href="#CALayer-的frame，bounds-position和anchor" class="headerlink" title="CALayer 的frame，bounds, position和anchor"></a>CALayer 的frame，bounds, position和anchor</h3><p>frame描述的是在父layer上的坐标和尺寸</p>
-<p>bounds是类似于View的bounds</p>
-<p>anchor描述的是做动画时，比如旋转时的中心点，以某个点旋转，默认时（0.5，0.5）左上点是（0，0），右下点是（1，1）</p>
-<p>position描述的是anchor的在父layer的坐标</p>
-<p>举例来说，一个View的Frame是（40，40，100，100）</p>
-<p>那么layer的frame是（40，40，100，100）</p>
-<p>bound是（0，0，100，100）</p>
-<p>position是：（140，140）</p>
-<p>position计算：</p>
-<p>pos.x = origin.x + anchor.x*size.with</p>
-<p>pos.y = origin.y + anchor.y*size.height</p>
-<p>如果想修改anchor,一定要同时修改position，才能保证位置不变，否则，单独修改position或者anchor，根据上面公式会导致layer位置发生变化</p>
-<p>如果想修改anchor，而不影响layer移动，只需修改完成后，再设置一次layer的frame即可</p>
-<pre><code>CGRect oldFrame = _redView.frame;
-_redView.layer.anchorPoint = CGPointMake(0.5, 1);
-_redView.frame = oldFrame;
-</code></pre>
-<p>注意，position并不适用这一点</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/" data-id="cl9lffyvr000ay2vqgxs0fhnu" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -590,7 +579,7 @@ _redView.frame = oldFrame;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -603,6 +592,14 @@ _redView.frame = oldFrame;
       <ul>
         
           <li>
+            <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/">UTF编码内存角度比较.md</a>
+          </li>
+        
+          <li>
+            <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/">SDF实现CornerRadius</a>
+          </li>
+        
+          <li>
             <a href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/">lamda 初始化捕获用法</a>
           </li>
         
@@ -612,14 +609,6 @@ _redView.frame = oldFrame;
         
           <li>
             <a href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/">smoothStep实现</a>
-          </li>
-        
-          <li>
-            <a href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/">模板规则推导</a>
-          </li>
-        
-          <li>
-            <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/">电子书目录</a>
           </li>
         
       </ul>
@@ -634,7 +623,7 @@ _redView.frame = oldFrame;
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2023 JackWang<br>
+      &copy; 2024 JackWang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

@@ -5,17 +5,17 @@
   
 
   
-  <title>c++继承权限 | Jack的博客</title>
+  <title>UTF编码内存角度比较.md | Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="继承有三种权限，public，proteced，private，默认不写是private  权限的最低是public，其次是protected，最高private  继承方式代表是父类属性在当前类中的最低呈现  父类中的privated属性在子类中不可访问">
+  <meta name="description" content="UTF-8、UTF-16 和 UTF-32 是三种不同的 Unicode 编码方式，它们在表示字符时占用的字节数各不相同。具体如下：  UTF-8：  UTF-8 是一种可变长度的编码方式，每个字符占用 1 到 4 个字节。 具体字节数取决于字符的 Unicode 码点： U+0000 至 U+007F（基本拉丁字母）占 1 个字节。 U+0080 至 U+07FF 占 2 个字节。 U+0800">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++继承权限">
-<meta property="og:url" content="http://example.com/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/index.html">
+<meta property="og:title" content="UTF编码内存角度比较.md">
+<meta property="og:url" content="http://example.com/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/index.html">
 <meta property="og:site_name" content="Jack的博客">
-<meta property="og:description" content="继承有三种权限，public，proteced，private，默认不写是private  权限的最低是public，其次是protected，最高private  继承方式代表是父类属性在当前类中的最低呈现  父类中的privated属性在子类中不可访问">
+<meta property="og:description" content="UTF-8、UTF-16 和 UTF-32 是三种不同的 Unicode 编码方式，它们在表示字符时占用的字节数各不相同。具体如下：  UTF-8：  UTF-8 是一种可变长度的编码方式，每个字符占用 1 到 4 个字节。 具体字节数取决于字符的 Unicode 码点： U+0000 至 U+007F（基本拉丁字母）占 1 个字节。 U+0080 至 U+07FF 占 2 个字节。 U+0800">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-12-04T14:52:54.000Z">
-<meta property="article:modified_time" content="2022-12-04T14:57:31.186Z">
+<meta property="article:published_time" content="2024-07-11T07:36:56.000Z">
+<meta property="article:modified_time" content="2024-07-11T07:37:51.937Z">
 <meta property="article:author" content="JackWang">
 <meta name="twitter:card" content="summary">
   
@@ -66,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-c-继承权限" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-UTF编码内存角度比较-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" class="article-date">
-  <time datetime="2022-12-04T14:52:54.000Z" itemprop="datePublished">2022-12-04</time>
+    <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" class="article-date">
+  <time datetime="2024-07-11T07:36:56.000Z" itemprop="datePublished">2024-07-11</time>
 </a>
     
   </div>
@@ -80,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      c++继承权限
+      UTF编码内存角度比较.md
     </h1>
   
 
@@ -88,21 +88,49 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li><p>继承有三种权限，public，proteced，private，默认不写是private</p>
+        <p>UTF-8、UTF-16 和 UTF-32 是三种不同的 Unicode 编码方式，它们在表示字符时占用的字节数各不相同。具体如下：</p>
+<ol>
+<li><p><strong>UTF-8</strong>：</p>
+<ul>
+<li>UTF-8 是一种可变长度的编码方式，每个字符占用 1 到 4 个字节。</li>
+<li>具体字节数取决于字符的 Unicode 码点：<ul>
+<li>U+0000 至 U+007F（基本拉丁字母）占 1 个字节。</li>
+<li>U+0080 至 U+07FF 占 2 个字节。</li>
+<li>U+0800 至 U+FFFF 占 3 个字节。</li>
+<li>U+10000 至 U+10FFFF 占 4 个字节。</li>
+</ul>
 </li>
-<li><p>权限的最低是public，其次是protected，最高private</p>
+</ul>
 </li>
-<li><p>继承方式代表是父类属性在当前类中的最低呈现</p>
+<li><p><strong>UTF-16</strong>：</p>
+<ul>
+<li>UTF-16 也是一种可变长度的编码方式，每个字符占用 2 或 4 个字节。</li>
+<li>具体字节数取决于字符的 Unicode 码点：<ul>
+<li>U+0000 至 U+FFFF（基本多语言平面，BMP）占 2 个字节。</li>
+<li>U+10000 至 U+10FFFF（辅助平面）占 4 个字节（使用一对代理项，即高位代理项和低位代理项，每个占 2 个字节）。</li>
+</ul>
 </li>
-<li><p>父类中的privated属性在子类中不可访问</p>
+</ul>
+</li>
+<li><p><strong>UTF-32</strong>：</p>
+<ul>
+<li>UTF-32 是一种固定长度的编码方式，每个字符占用 4 个字节。</li>
+<li>无论字符的 Unicode 码点是多少，每个字符始终占用 4 个字节。</li>
+</ul>
 </li>
 </ol>
+<p>总结：</p>
+<ul>
+<li><strong>UTF-8</strong>：1 到 4 个字节，具体取决于字符。</li>
+<li><strong>UTF-16</strong>：2 或 4 个字节，具体取决于字符。</li>
+<li><strong>UTF-32</strong>：固定 4 个字节。</li>
+</ul>
+<p>这三种编码方式各有优缺点。UTF-8 是最常用的编码方式，因其对 ASCII 字符的高效编码（仅占 1 个字节），节省空间且向后兼容 ASCII。UTF-16 在处理基本多语言平面字符时相对高效，但对于包括大量辅助平面字符的文本，可能会占用更多空间。UTF-32 最简单，但由于每个字符固定占用 4 个字节，通常会占用更多的存储空间。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" data-id="clbiwqnu50000dbvqewni94x2" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" data-id="clygyir5n000102vq0e8k1uc9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -111,19 +139,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          c++ 可变参数模板
-        
-      </div>
-    </a>
   
-  
-    <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">OpenGL模板测试流程</div>
+      <div class="article-nav-title">SDF实现CornerRadius</div>
     </a>
   
 </nav>

@@ -64,6 +64,57 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-使用-asan-unpoison-memory-region屏蔽某处内存检查" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/" class="article-date">
+  <time datetime="2024-07-22T00:45:16.000Z" itemprop="datePublished">2024-07-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>__asan_unpoison_memory_region</code> 是 AddressSanitizer (ASan) 库中的一个函数。ASan 是一个用于检测内存错误的工具，主要用于 C 和 C++ 程序开发者。<code>__asan_unpoison_memory_region</code> 的作用是标记一段内存区域为“未污染”状态，这意味着这段内存可以被访问且不会触发 ASan 的错误报告。</p>
+<p>具体来说，这个函数通常用于以下场景：</p>
+<ol>
+<li>在内存被分配后但未初始化之前，标记该区域为未污染，以便在初始化期间可以安全访问。</li>
+<li>当程序知道某段内存区域将被合法访问时，预先标记该区域为未污染，以避免误报。</li>
+</ol>
+<p>函数原型通常如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __asan_unpoison_memory_region(<span class="type">void</span> *addr, <span class="type">size_t</span> size);</span><br></pre></td></tr></table></figure>
+
+<p>参数解释：</p>
+<ul>
+<li><code>addr</code>：内存区域的起始地址。</li>
+<li><code>size</code>：内存区域的大小（以字节为单位）。</li>
+</ul>
+<p>通过调用这个函数，开发者可以更精细地控制 ASan 的内存监控行为，减少误报，提高调试效率。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/" data-id="clyw9me4e00003tvq102c6la1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-UTF编码内存角度比较-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" class="article-date">
@@ -516,70 +567,6 @@
 
 
   
-    <article id="post-OpenGL模板测试流程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" class="article-date">
-  <time datetime="2022-11-08T03:51:27.000Z" itemprop="datePublished">2022-11-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="模板测试流程"><a href="#模板测试流程" class="headerlink" title="模板测试流程"></a>模板测试流程</h3><p>不考虑earlyZ的情况下，fragment执行后，进行模板测试，通过后，进入深度测试</p>
-<h4 id="模板测试一般使用流程："><a href="#模板测试一般使用流程：" class="headerlink" title="模板测试一般使用流程："></a>模板测试一般使用流程：</h4><pre><code>1. 启用模板缓冲写入
-2. 渲染物体，更新模板缓冲
-3. 禁用模板缓冲写入
-4. 渲染其他物体，根据模板缓冲内容决定是否丢弃片段
-</code></pre>
-<h5 id="使用模板测试绘制物体轮廓的例子"><a href="#使用模板测试绘制物体轮廓的例子" class="headerlink" title="使用模板测试绘制物体轮廓的例子"></a>使用模板测试绘制物体轮廓的例子</h5><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glStencilMask();</span><br><span class="line">glStencilFunc(GLenum func, GLint ref, GLuint mask);</span><br><span class="line">glStencilOp(GLenum sfail, GLenum dpfail, GLenum dppass);</span><br></pre></td></tr></table></figure>
-
-1. 开启模板测试和深度测试
-2. 第一次render pass，主要是绘制，并写入模板
-    1. 开启模板测试和深度测试
-    2. glStencilMask(0xFF);
-    3. glStencilOp(keep, keep, replace);
-    4. glStencilFunc(always, 1, 0xFF);
-    5. 绘制物体
-3. 第二次render pass, 放大物体，通过模板测试剔除非边缘像素
-    1. 将物体缩放变大
-    2. 关闭深度测试 //因为这里的边缘不需要有拓扑关系
-    3. 关闭模板写入glStencilMask(0x00);
-    4. glStencilFunc(not_equal, 1, 0xFF);
-    5. 绘制物体
-</code></pre>
-<h3 id="关于OpenGL里面的Mask"><a href="#关于OpenGL里面的Mask" class="headerlink" title="关于OpenGL里面的Mask"></a>关于OpenGL里面的Mask</h3><pre><code>1. 写入颜色是，r，g，b，a 分别与对应的mask，进行&amp;运算后写入
-2. depth也是同样道理，如果设置成true，就是允许写入，设置成false，不允许写入
-3. stencil的Mask，是0xFF~0x00，之间的256个数，一般设置是0xFF，允许任意值写入，0x00是不允许写入
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" data-id="cla7onlj70000ztvqh5nb73ei" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -630,6 +617,10 @@
       <ul>
         
           <li>
+            <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
+          </li>
+        
+          <li>
             <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/">UTF编码内存角度比较.md</a>
           </li>
         
@@ -643,10 +634,6 @@
         
           <li>
             <a href="/2023/12/24/tag-dispatch/">tag dispatch</a>
-          </li>
-        
-          <li>
-            <a href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/">smoothStep实现</a>
           </li>
         
       </ul>

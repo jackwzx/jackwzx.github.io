@@ -64,6 +64,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS-MessageForwarding" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/14/iOS-MessageForwarding/" class="article-date">
+  <time datetime="2017-12-13T16:00:00.000Z" itemprop="datePublished">2017-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/14/iOS-MessageForwarding/">iOS运行时消息转发</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近读了一遍apple 文档，对于iOS运行时消息转发机制发现有些细节还是理解有所偏差，写此文章加深理解</p>
+</blockquote>
+<h3 id="iOS-方法调用探讨"><a href="#iOS-方法调用探讨" class="headerlink" title="iOS 方法调用探讨"></a>iOS 方法调用探讨</h3><p>这个话题还要从OC是一门动态语言说起，OC的动态性体现在编译和链接期，并没有直接绑定函数调用关系，编译器将方法调用转成objc_msgSend(receiver, selector, arg1, arg2, …)方法这种方式</p>
+<p>在运行时，通过isa对象通过从子类到父类的方法查找，找到具体的函数入口进行调用，这其中还包括cache等机制，这里不在赘述，这次主要讨论的是Dynamic Method Resolution和Message Forwarding</p>
+<p>如果调用的Seletor在类的方法列表中找不到，以实例对象的方法为例，将进入如下流程：</p>
+<p><img src="https://oh144b0ji.qnssl.com/OC%20runTime.jpg" alt="image.png"></p>
+<p>主要流程可以总结为，先进入消息动态处理流程，再进入消息转发流程</p>
+<p>1.消息动态处理流程：resloveInstanceMethod中可以通过class_addMethod为此对象动态添加方法，这样就使该对象正常响应此方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)aSEL&#123;</span><br><span class="line">  </span><br><span class="line">    if (aSEL == @selector(notFoundFunctiion)) &#123;</span><br><span class="line">        </span><br><span class="line">        class_addMethod([self class], aSEL, (IMP) dynamicMethodIMP, &quot;v@:&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return [super resolveInstanceMethod:aSEL];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    需要注意的是，不仅[self notFoundFunctiion]会触发这里，在</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self respondsToSelector:@selector(notFoundFunctiion)]</span><br></pre></td></tr></table></figure>
+
+<p>​    这句代码中，同样会触发消息动态处理流程，这和后面讲的消息转发有很大区别。</p>
+<p>2.如果上面的消息处理流程返回NO，那么就会进入消息转发流程</p>
+<p>可以将此消息转发给另外一个对象进行执行。首先进入的是forwardingTargetForSelector，这里可以返回一个可以响应此消息的对象，如果仍然返回nil，就会进入methodSignatureForSelector和forwardInvocation的流程，其实这两种方式本质的意义相同，只不过一个是通过另外的对象selector调用，一个是通过invocation的方式调用，但是要注意，这里的selector对于原来的对象来讲，respondsToSelector返回为NO</p>
+<h4 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h4><p><a target="_blank" rel="noopener" href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html">Objective-C Runtime Programming Guide</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/14/iOS-MessageForwarding/" data-id="cl9lffyw3000vy2vqc3e55i0z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CALayer的presentLayer那点事" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/11/12/CALayer%E7%9A%84presentLayer%E9%82%A3%E7%82%B9%E4%BA%8B/" class="article-date">
@@ -490,50 +546,6 @@
 
 
   
-    <article id="post-OpenGL-VBO" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/02/OpenGL-VBO/" class="article-date">
-  <time datetime="2017-01-02T05:19:23.000Z" itemprop="datePublished">2017-01-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/02/OpenGL-VBO/">VBO</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="VBO的目的："><a href="#VBO的目的：" class="headerlink" title="VBO的目的："></a>VBO的目的：</h3><p>主要是为了提高效率，减少在CPU向GPU中传输数据，直接在GPU上申请内存空间</p>
-<p>两种target分别是GL_ARRAY_BUFFER和GL_ELEMENT_ARRAY_BUFFER</p>
-<p>分别对应顶点数据和索引</p>
-<p>使用glVertexAttribPointer和glDrawElements的流程和以前大致保持一致，区别在于，最后一个参数不是传指针了，而是传bindBuffer的偏移量</p>
-<h3 id="VBO使用的大概流程："><a href="#VBO使用的大概流程：" class="headerlink" title="VBO使用的大概流程："></a>VBO使用的大概流程：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//获取一个操作句柄</span><br><span class="line">glGenBuffers(1, &amp;_vertexBuffer);</span><br><span class="line">//设置缓存对象类型，数据缓存对象，还是元素缓存对象，通俗的说就是数组还是索引</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);</span><br><span class="line">//分配内存空间</span><br><span class="line">glBufferData(GL_ARRAY_BUFFER, 7*3*sizeof(GLfloat), vertices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">在绘制代码Draw时，可以使用，绘制代码与正常并无冥想差别</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);</span><br><span class="line">glVertexAttribPointer(_positionSlot, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), 0);</span><br><span class="line">glEnableVertexAttribArray(_positionSlot);</span><br><span class="line"></span><br><span class="line">glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _triangleIndexBuffer);</span><br><span class="line">glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, 0);</span><br><span class="line"></span><br><span class="line">//可以在清理时，释放VBO</span><br><span class="line">glDeleteBuffers(1, &amp;_vertexBuffer);</span><br><span class="line">_vertexBuffer = 0;</span><br><span class="line"></span><br><span class="line">glDeleteBuffers(1, &amp;_triangleIndexBuffer);</span><br><span class="line">_triangleIndexBuffer = 0;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/01/02/OpenGL-VBO/" data-id="cl9lffyvx000jy2vq8dnc9pxr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -584,6 +596,10 @@
       <ul>
         
           <li>
+            <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">AddressSanitizer实现原理</a>
+          </li>
+        
+          <li>
             <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/">pthread_create设置栈size</a>
           </li>
         
@@ -597,10 +613,6 @@
         
           <li>
             <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/">SDF实现CornerRadius</a>
-          </li>
-        
-          <li>
-            <a href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/">lamda 初始化捕获用法</a>
           </li>
         
       </ul>

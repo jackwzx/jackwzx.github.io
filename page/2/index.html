@@ -64,6 +64,64 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-c-可变参数模板" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" class="article-date">
+  <time datetime="2022-12-11T06:50:04.000Z" itemprop="datePublished">2022-12-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/">c++ 可变参数模板</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="可变模版参数-variadic-templates"><a href="#可变模版参数-variadic-templates" class="headerlink" title="可变模版参数(variadic templates)"></a>可变模版参数(variadic templates)</h3><p>可以对参数进行高度泛化，标识0到任意个数参数</p>
+<h4 id="两种展开形式"><a href="#两种展开形式" class="headerlink" title="两种展开形式"></a>两种展开形式</h4><ol>
+<li>使用特化的终止函数结合递归</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//终止函数</span><br><span class="line">int multiply()</span><br><span class="line">&#123;</span><br><span class="line">    return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//递归展开</span><br><span class="line">template &lt;typename T, typename ...Args&gt;</span><br><span class="line">int multiply(T&amp;&amp; t, Args&amp;&amp; ...arg)</span><br><span class="line">&#123;</span><br><span class="line">    return t * multiply(arg...);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; multiply(3, 4, 5) &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; multiply() &lt;&lt; endl;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用逗号表达式<br>初始化列表，通过初始化列表来初始化一个变长数组, {(printarg(args), 0)…}将会展开成((printarg(arg1),0), (printarg(arg2),0), (printarg(arg3),0),  etc… )，最终会创建一个元素值都为0的数组int arr[sizeof…(Args)]</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">template&lt;class F, class... Args&gt;void expand(const F&amp; f, Args&amp;&amp;...args)</span><br><span class="line">&#123;</span><br><span class="line">  //这里用到了完美转发，关于完美转发，读者可以参考笔者在上一期程序员中的文章《通过4行代码看右值引用》</span><br><span class="line">  initializer_list&lt;int&gt;&#123;(f(std::forward&lt; Args&gt;(args)),0)...&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    </span><br><span class="line">    expand([](int i) &#123;</span><br><span class="line">        cout&lt;&lt;i&lt;&lt;endl;</span><br><span class="line">    &#125;, 1,2,3);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="initializer-list"><a href="#initializer-list" class="headerlink" title="initializer_list"></a>initializer_list</h3><p>为了编写处理不同数量实参的函数，如果参数类型相同，可以使用initializer_list， 如果实参类型不同，使用可变参数模板</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct myclass &#123;</span><br><span class="line">    myclass(int,int)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;myclass constructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    myclass(initializer_list&lt;int&gt;)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;myclass initializer_list constructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    </span><br><span class="line">    auto il = &#123;10, 20, 30&#125;;</span><br><span class="line">    </span><br><span class="line">    myclass foo &#123;10,20&#125;;  // calls initializer_list constructor</span><br><span class="line">    myclass bar (10,20);  // calls first constructo</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" data-id="clc3jbpcl0000dlvq58w60usi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-c-继承权限" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" class="article-date">
@@ -563,62 +621,6 @@
 
 
   
-    <article id="post-iOS-MessageForwarding" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/14/iOS-MessageForwarding/" class="article-date">
-  <time datetime="2017-12-13T16:00:00.000Z" itemprop="datePublished">2017-12-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/14/iOS-MessageForwarding/">iOS运行时消息转发</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>最近读了一遍apple 文档，对于iOS运行时消息转发机制发现有些细节还是理解有所偏差，写此文章加深理解</p>
-</blockquote>
-<h3 id="iOS-方法调用探讨"><a href="#iOS-方法调用探讨" class="headerlink" title="iOS 方法调用探讨"></a>iOS 方法调用探讨</h3><p>这个话题还要从OC是一门动态语言说起，OC的动态性体现在编译和链接期，并没有直接绑定函数调用关系，编译器将方法调用转成objc_msgSend(receiver, selector, arg1, arg2, …)方法这种方式</p>
-<p>在运行时，通过isa对象通过从子类到父类的方法查找，找到具体的函数入口进行调用，这其中还包括cache等机制，这里不在赘述，这次主要讨论的是Dynamic Method Resolution和Message Forwarding</p>
-<p>如果调用的Seletor在类的方法列表中找不到，以实例对象的方法为例，将进入如下流程：</p>
-<p><img src="https://oh144b0ji.qnssl.com/OC%20runTime.jpg" alt="image.png"></p>
-<p>主要流程可以总结为，先进入消息动态处理流程，再进入消息转发流程</p>
-<p>1.消息动态处理流程：resloveInstanceMethod中可以通过class_addMethod为此对象动态添加方法，这样就使该对象正常响应此方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)aSEL&#123;</span><br><span class="line">  </span><br><span class="line">    if (aSEL == @selector(notFoundFunctiion)) &#123;</span><br><span class="line">        </span><br><span class="line">        class_addMethod([self class], aSEL, (IMP) dynamicMethodIMP, &quot;v@:&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return [super resolveInstanceMethod:aSEL];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    需要注意的是，不仅[self notFoundFunctiion]会触发这里，在</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self respondsToSelector:@selector(notFoundFunctiion)]</span><br></pre></td></tr></table></figure>
-
-<p>​    这句代码中，同样会触发消息动态处理流程，这和后面讲的消息转发有很大区别。</p>
-<p>2.如果上面的消息处理流程返回NO，那么就会进入消息转发流程</p>
-<p>可以将此消息转发给另外一个对象进行执行。首先进入的是forwardingTargetForSelector，这里可以返回一个可以响应此消息的对象，如果仍然返回nil，就会进入methodSignatureForSelector和forwardInvocation的流程，其实这两种方式本质的意义相同，只不过一个是通过另外的对象selector调用，一个是通过invocation的方式调用，但是要注意，这里的selector对于原来的对象来讲，respondsToSelector返回为NO</p>
-<h4 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h4><p><a target="_blank" rel="noopener" href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html">Objective-C Runtime Programming Guide</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/14/iOS-MessageForwarding/" data-id="cl9lffyw3000vy2vqc3e55i0z" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -669,6 +671,10 @@
       <ul>
         
           <li>
+            <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">AddressSanitizer实现原理</a>
+          </li>
+        
+          <li>
             <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/">pthread_create设置栈size</a>
           </li>
         
@@ -682,10 +688,6 @@
         
           <li>
             <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/">SDF实现CornerRadius</a>
-          </li>
-        
-          <li>
-            <a href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/">lamda 初始化捕获用法</a>
           </li>
         
       </ul>

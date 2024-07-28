@@ -5,19 +5,18 @@
   
 
   
-  <title>tweak心得 | Jack的博客</title>
+  <title>AddressSanitizer实现原理 | Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1 关于ssh一般形式 ssh &amp;#x72;&amp;#x6f;&amp;#111;&amp;#x74;&amp;#64;&amp;#49;&amp;#57;&amp;#50;&amp;#46;&amp;#x31;&amp;#54;&amp;#x38;&amp;#x2e;&amp;#x32;&amp;#x2e;&amp;#x31;&amp;#x37;或者ssh &amp;#109;&amp;#x6f;&amp;#98;&amp;#x69;&amp;#108;&amp;#x65;&amp;#64;&amp;#49;&amp;#x39;&amp;#50;&amp;#46;&amp;#49;&amp;#54;&amp;#56;&amp;#46;&amp;">
+  <meta name="description" content="AddressSanitizer（简称ASan）是一种内存错误检测工具，用于捕捉诸如缓冲区溢出、使用已释放内存、堆栈溢出等内存错误。ASan在编译时和运行时对程序进行处理，以检测和报告内存相关的错误。以下是AddressSanitizer的实现原理的详细解释： 1. 编译时插桩ASan在编译时对代码进行插桩，插入额外的检查代码。这些检查代码会在每次内存访问时执行，以验证访问是否合法。具体过程包括：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tweak心得">
-<meta property="og:url" content="http://example.com/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/index.html">
+<meta property="og:title" content="AddressSanitizer实现原理">
+<meta property="og:url" content="http://example.com/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Jack的博客">
-<meta property="og:description" content="1 关于ssh一般形式 ssh &amp;#x72;&amp;#x6f;&amp;#111;&amp;#x74;&amp;#64;&amp;#49;&amp;#57;&amp;#50;&amp;#46;&amp;#x31;&amp;#54;&amp;#x38;&amp;#x2e;&amp;#x32;&amp;#x2e;&amp;#x31;&amp;#x37;或者ssh &amp;#109;&amp;#x6f;&amp;#98;&amp;#x69;&amp;#108;&amp;#x65;&amp;#64;&amp;#49;&amp;#x39;&amp;#50;&amp;#46;&amp;#49;&amp;#54;&amp;#56;&amp;#46;&amp;">
+<meta property="og:description" content="AddressSanitizer（简称ASan）是一种内存错误检测工具，用于捕捉诸如缓冲区溢出、使用已释放内存、堆栈溢出等内存错误。ASan在编译时和运行时对程序进行处理，以检测和报告内存相关的错误。以下是AddressSanitizer的实现原理的详细解释： 1. 编译时插桩ASan在编译时对代码进行插桩，插入额外的检查代码。这些检查代码会在每次内存访问时执行，以验证访问是否合法。具体过程包括：">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2017-03-07T01:20:39.000Z">
-<meta property="article:modified_time" content="2022-10-23T12:59:07.975Z">
+<meta property="article:published_time" content="2024-07-28T04:23:56.000Z">
+<meta property="article:modified_time" content="2024-07-28T04:24:46.732Z">
 <meta property="article:author" content="JackWang">
-<meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Jack的博客" type="application/atom+xml">
@@ -67,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-tweak使用说明" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-AddressSanitizer实现原理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="article-date">
-  <time datetime="2017-03-07T01:20:39.000Z" itemprop="datePublished">2017-03-07</time>
+    <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2024-07-28T04:23:56.000Z" itemprop="datePublished">2024-07-28</time>
 </a>
     
   </div>
@@ -81,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      tweak心得
+      AddressSanitizer实现原理
     </h1>
   
 
@@ -89,43 +88,58 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-关于ssh"><a href="#1-关于ssh" class="headerlink" title="1 关于ssh"></a>1 关于ssh</h3><p>一般形式 ssh <a href="mailto:&#x72;&#x6f;&#111;&#x74;&#64;&#49;&#57;&#50;&#46;&#x31;&#54;&#x38;&#x2e;&#x32;&#x2e;&#x31;&#x37;">&#x72;&#x6f;&#111;&#x74;&#64;&#49;&#57;&#50;&#46;&#x31;&#54;&#x38;&#x2e;&#x32;&#x2e;&#x31;&#x37;</a>或者ssh <a href="mailto:&#109;&#x6f;&#98;&#x69;&#108;&#x65;&#64;&#49;&#x39;&#50;&#46;&#49;&#54;&#56;&#46;&#50;&#46;&#49;&#55;">&#109;&#x6f;&#98;&#x69;&#108;&#x65;&#64;&#49;&#x39;&#50;&#46;&#49;&#54;&#56;&#46;&#50;&#46;&#49;&#55;</a></p>
-<p>root和mobile分别为iOS上默认用户，alpine是默认密码</p>
-<p>可以通过ssh-gen 分别在Mac和iOS上生成密钥对，然后将Mac上的公钥拷贝到手机上，这样配之后，每次ssh不会再提示输入密码</p>
-<h3 id="2-scp-source-dest"><a href="#2-scp-source-dest" class="headerlink" title="2 scp source dest"></a>2 scp source dest</h3><p>一般为</p>
-<p>scp ~/123.txt <a href="mailto:&#109;&#x6f;&#98;&#x69;&#x6c;&#x65;&#x40;&#x31;&#57;&#50;&#46;&#x31;&#54;&#x38;&#46;&#x32;&#46;&#49;&#55;">&#109;&#x6f;&#98;&#x69;&#x6c;&#x65;&#x40;&#x31;&#57;&#50;&#46;&#x31;&#54;&#x38;&#46;&#x32;&#46;&#49;&#55;</a>:/usr/bin</p>
-<h3 id="3-Makefile"><a href="#3-Makefile" class="headerlink" title="3 Makefile"></a>3 Makefile</h3><p>可以配置手机的IP，framework，arch等参数</p>
-<p>THEOS_DEVICE_IP = 192.168.31.202<br>ARCHS = armv7 arm64<br>TARGET = iphone:latest:8.0</p>
-<p>iOSREGreetings_FRAMEWORKS = UIKit </p>
-<h3 id="4-关于bundleID"><a href="#4-关于bundleID" class="headerlink" title="4 关于bundleID"></a>4 关于bundleID</h3><p>.plist中的bundle就是你想hook的程序的bundleID</p>
+        <p>AddressSanitizer（简称ASan）是一种内存错误检测工具，用于捕捉诸如缓冲区溢出、使用已释放内存、堆栈溢出等内存错误。ASan在编译时和运行时对程序进行处理，以检测和报告内存相关的错误。以下是AddressSanitizer的实现原理的详细解释：</p>
+<h3 id="1-编译时插桩"><a href="#1-编译时插桩" class="headerlink" title="1. 编译时插桩"></a>1. 编译时插桩</h3><p>ASan在编译时对代码进行插桩，插入额外的检查代码。这些检查代码会在每次内存访问时执行，以验证访问是否合法。具体过程包括：</p>
+<ul>
+<li><strong>插入检查代码</strong>：在每次内存分配、释放和访问操作前后插入检查代码。</li>
+<li><strong>标记内存区域</strong>：在内存分配和释放时，更新内存区域的元数据，以记录该区域的状态（已分配、已释放等）。</li>
+</ul>
+<h3 id="2-Shadow-Memory"><a href="#2-Shadow-Memory" class="headerlink" title="2. Shadow Memory"></a>2. Shadow Memory</h3><p>ASan使用影子内存（Shadow Memory）来记录主内存的状态。影子内存是主内存的一个映射区域，每个字节的影子内存对应主内存的几个字节（通常是8字节）。影子内存的值用于指示主内存的哪些部分是合法访问的，哪些部分是非法的。</p>
+<ul>
+<li><strong>影子内存布局</strong>：影子内存占用主内存的1/8，因为每个影子字节代表8个主内存字节。</li>
+<li><strong>影子内存值</strong>：影子内存中的值表示主内存的状态。例如，0表示所有8个字节都是合法的，负值表示不合法的访问，正值表示部分合法访问。</li>
+</ul>
+<h3 id="3-内存分配和释放"><a href="#3-内存分配和释放" class="headerlink" title="3. 内存分配和释放"></a>3. 内存分配和释放</h3><p>ASan对内存分配和释放函数（如<code>malloc</code>和<code>free</code>）进行重载，以维护内存区域的元数据。这些元数据包括：</p>
+<ul>
+<li><strong>红色区域（Redzones）</strong>：在每个分配的内存块周围添加红色区域，用于检测缓冲区溢出。红色区域被标记为非法访问区域。</li>
+<li><strong>元数据</strong>：记录每个内存块的大小、分配堆栈等信息，以便在检测到错误时提供详细报告。</li>
+</ul>
+<h3 id="4-运行时检查"><a href="#4-运行时检查" class="headerlink" title="4. 运行时检查"></a>4. 运行时检查</h3><p>在运行时，ASan插入的检查代码会在每次内存访问时执行，检查访问的地址是否在合法范围内。如果访问非法区域，则报告错误并终止程序。</p>
+<ul>
+<li><strong>内存访问检查</strong>：每次内存读取或写入时，检查影子内存中的值，以确定访问是否合法。</li>
+<li><strong>错误报告</strong>：在检测到非法访问时，ASan会生成详细的错误报告，包含访问地址、内存块信息、调用堆栈等。</li>
+</ul>
+<h3 id="5-错误类型检测"><a href="#5-错误类型检测" class="headerlink" title="5. 错误类型检测"></a>5. 错误类型检测</h3><p>ASan能够检测多种类型的内存错误，包括：</p>
+<ul>
+<li><strong>缓冲区溢出</strong>：访问数组或内存块的边界外的区域。</li>
+<li><strong>使用未初始化内存</strong>：访问未初始化的内存。</li>
+<li><strong>使用已释放内存</strong>：访问已经释放的内存。</li>
+<li><strong>双重释放</strong>：重复释放同一块内存。</li>
+<li><strong>堆栈溢出</strong>：访问栈帧之外的内存。</li>
+</ul>
+<h3 id="6-性能与开销"><a href="#6-性能与开销" class="headerlink" title="6. 性能与开销"></a>6. 性能与开销</h3><p>ASan在检测内存错误时会引入一定的性能开销和内存开销：</p>
+<ul>
+<li><strong>性能开销</strong>：由于插入了额外的检查代码，程序的执行速度会有所降低。通常，ASan引入的性能开销在2-3倍左右。</li>
+<li><strong>内存开销</strong>：影子内存和红色区域会增加内存使用量，通常内存开销在2倍左右。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>AddressSanitizer通过编译时插桩、使用影子内存和运行时检查等机制，能够有效地检测和报告内存相关的错误。尽管引入了一定的性能和内存开销，但它在提高程序安全性和稳定性方面具有重要意义，是开发和调试C/C++程序的强大工具。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" data-id="cl9lffyw70012y2vq7o8tb306" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" data-id="clz523x2m0000blvqgvvyek3r" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2017/07/01/iOS%E6%89%8B%E5%8A%BF%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          iOS手势事件分发原理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">tweak环境搭建</div>
+      <div class="article-nav-title">pthread_create设置栈size</div>
     </a>
   
 </nav>

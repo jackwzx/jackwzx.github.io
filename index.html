@@ -64,6 +64,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenGLE-VAO局部影响vs全局影响" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/" class="article-date">
+  <time datetime="2024-07-28T08:57:48.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="全局顶点属性数组使能状态"><a href="#全局顶点属性数组使能状态" class="headerlink" title="全局顶点属性数组使能状态"></a>全局顶点属性数组使能状态</h3><p><code>glEnableVertexAttribArray</code> 和 <code>glDisableVertexAttribArray</code> 确实是全局状态。这意味着在不使用 VAO 的情况下，启用或禁用特定的顶点属性数组会影响所有后续的绘制调用，直到该状态被改变。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 启用顶点属性数组索引 0</span></span><br><span class="line">glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进行绘制调用，使用索引 0 的顶点属性数组</span></span><br><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 禁用顶点属性数组索引 0</span></span><br><span class="line">glDisableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 再次进行绘制调用，此时索引 0 的顶点属性数组将不会被使用</span></span><br><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="顶点数组对象（VAO）"><a href="#顶点数组对象（VAO）" class="headerlink" title="顶点数组对象（VAO）"></a>顶点数组对象（VAO）</h3><p>当使用 VAO 时，<code>glEnableVertexAttribArray</code> 和 <code>glVertexAttribPointer</code> 等顶点属性相关的状态是存储在 VAO 中的。这意味着当你绑定一个 VAO 时，它会恢复之前存储的所有顶点属性状态，包括哪些属性数组是启用的。这样，每个 VAO 可以拥有自己独立的顶点属性配置。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建并绑定第一个 VAO</span></span><br><span class="line">GLuint vao1;</span><br><span class="line">glGenVertexArrays(<span class="number">1</span>, &amp;vao1);</span><br><span class="line">glBindVertexArray(vao1);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置顶点属性指针和启用顶点属性数组</span></span><br><span class="line">glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">3</span> * <span class="keyword">sizeof</span>(GLfloat), (<span class="type">void</span>*)<span class="number">0</span>);</span><br><span class="line">glEnableVertexAttribArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解绑 VAO</span></span><br><span class="line">glBindVertexArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建并绑定第二个 VAO</span></span><br><span class="line">GLuint vao2;</span><br><span class="line">glGenVertexArrays(<span class="number">1</span>, &amp;vao2);</span><br><span class="line">glBindVertexArray(vao2);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置不同的顶点属性指针和启用顶点属性数组</span></span><br><span class="line">glVertexAttribPointer(<span class="number">1</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="number">2</span> * <span class="keyword">sizeof</span>(GLfloat), (<span class="type">void</span>*)<span class="number">0</span>);</span><br><span class="line">glEnableVertexAttribArray(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解绑 VAO</span></span><br><span class="line">glBindVertexArray(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用第一个 VAO 进行绘制</span></span><br><span class="line">glBindVertexArray(vao1);</span><br><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用第二个 VAO 进行绘制</span></span><br><span class="line">glBindVertexArray(vao2);</span><br><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中：</p>
+<ul>
+<li><code>vao1</code> 存储了顶点属性索引 0 的配置和使能状态。</li>
+<li><code>vao2</code> 存储了顶点属性索引 1 的配置和使能状态。</li>
+</ul>
+<p>绑定 <code>vao1</code> 会恢复其配置和状态，绑定 <code>vao2</code> 则会恢复其自身的配置和状态。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><strong>全局顶点属性数组使能状态</strong>：在不使用 VAO 时，<code>glEnableVertexAttribArray</code> 和 <code>glDisableVertexAttribArray</code> 对所有后续绘制调用生效，直到状态被改变。</li>
+<li><strong>顶点数组对象（VAO）</strong>：存储了顶点属性相关的所有状态，包括使能状态。当绑定 VAO 时，会恢复之前存储的顶点属性配置和使能状态，使得每个 VAO 拥有独立的顶点属性配置。</li>
+</ul>
+<p>使用 VAO 是管理复杂场景和多个对象的最佳实践，因为它简化了状态管理，并且可以提高渲染性能。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/" data-id="clz5bvaez000098vqe38i7f77" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-OpenGLES设置顶点属性的默认值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" class="article-date">
@@ -504,43 +557,6 @@
 
 
   
-    <article id="post-模板规则推导" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/" class="article-date">
-  <time datetime="2023-12-21T05:56:09.000Z" itemprop="datePublished">2023-12-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/">模板规则推导</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="模板推导规则"><a href="#模板推导规则" class="headerlink" title="模板推导规则"></a>模板推导规则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByRefFun(T&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByUniRefFun(T&amp;&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByValueFun(T val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void fun3(int&amp; a) &#123; &#125;</span><br><span class="line">void fun3(int&amp;&amp; a) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    int a = 0;          //a int</span><br><span class="line">    const int b = a;    //b const int</span><br><span class="line">    const int&amp; c = a;   //c const int&amp;</span><br><span class="line">    </span><br><span class="line">    passByRefFun(a);    // int&amp;</span><br><span class="line">    passByRefFun(b);    // const int&amp;</span><br><span class="line">    passByRefFun(c);    // const int&amp;</span><br><span class="line">    //passByRefFun(27);   // 报错</span><br><span class="line">    </span><br><span class="line">    passByUniRefFun(a); // int&amp;</span><br><span class="line">    passByUniRefFun(b); // const int&amp;</span><br><span class="line">    passByUniRefFun(c); // const int&amp;</span><br><span class="line">    passByUniRefFun(27); // int&amp;&amp;</span><br><span class="line">    </span><br><span class="line">    passByValueFun(a);  // int</span><br><span class="line">    passByValueFun(b);  // int</span><br><span class="line">    passByValueFun(c);  // int</span><br><span class="line">    passByValueFun(27); // int</span><br><span class="line">    </span><br><span class="line">    &#123;</span><br><span class="line">        int&amp;&amp; a = 10;</span><br><span class="line">        fun3(a);            // called void fun3(int&amp; a)</span><br><span class="line">        fun3(std::move(a)); // called void fun3(int&amp;&amp; a)</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/" data-id="clqeshu1l0000v6vqcr2v0kg0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -591,6 +607,10 @@
       <ul>
         
           <li>
+            <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
+          </li>
+        
+          <li>
             <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
           </li>
         
@@ -604,10 +624,6 @@
         
           <li>
             <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/">UTF编码内存角度比较.md</a>
           </li>
         
       </ul>

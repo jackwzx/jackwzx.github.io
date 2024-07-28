@@ -64,6 +64,57 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenGL-纹理贴图" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" class="article-date">
+  <time datetime="2017-01-03T03:11:26.000Z" itemprop="datePublished">2017-01-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/">纹理贴图</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1 VertexShader</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">attribute vec2 TexCoordIn; // New</span><br><span class="line">varying vec2 TexCoordOut; // New</span><br><span class="line"></span><br><span class="line">void main(void) &#123; </span><br><span class="line">    DestinationColor = SourceColor; </span><br><span class="line">    gl_Position = Projection * Modelview * Position;</span><br><span class="line">    TexCoordOut = TexCoordIn; // New</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2 FragmentShader</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">varying lowp vec4 DestinationColor;</span><br><span class="line">varying lowp vec2 TexCoordOut; // New</span><br><span class="line">uniform sampler2D Texture; // New</span><br><span class="line"></span><br><span class="line">void main(void) &#123;</span><br><span class="line">    gl_FragColor = DestinationColor * texture2D(Texture, TexCoordOut); // New</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3 将图片资源转换成位图数据，绑定到对应纹理ID中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">+ (GLuint)createTextureWithImage:(UIImage *)image&#123;</span><br><span class="line">    </span><br><span class="line">    //转换为CGImage，获取图片基本参数</span><br><span class="line">    CGImageRef cgImageRef = [image CGImage];</span><br><span class="line">    GLuint width = (GLuint)CGImageGetWidth(cgImageRef);</span><br><span class="line">    GLuint height = (GLuint)CGImageGetHeight(cgImageRef);</span><br><span class="line">    CGRect rect = CGRectMake(0, 0, width, height);</span><br><span class="line">    </span><br><span class="line">    //绘制图片</span><br><span class="line">    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();</span><br><span class="line">    void *imageData = malloc(width * height * 4);</span><br><span class="line">    CGContextRef context = CGBitmapContextCreate(imageData, width, height, 8, width * 4, colorSpace,kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);</span><br><span class="line">    CGContextTranslateCTM(context, 0, height);</span><br><span class="line">    CGContextScaleCTM(context, 1.0f, -1.0f);</span><br><span class="line">    CGColorSpaceRelease(colorSpace);</span><br><span class="line">    CGContextClearRect(context, rect);</span><br><span class="line">    CGContextDrawImage(context, rect, cgImageRef);</span><br><span class="line">    </span><br><span class="line">    GLuint textureID;</span><br><span class="line">    glGenTextures(1, &amp;textureID);</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</span><br><span class="line">    </span><br><span class="line">    //纹理一些设置，可有可无</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">    </span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);</span><br><span class="line">    </span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, 0);</span><br><span class="line">    </span><br><span class="line">    //释放内存</span><br><span class="line">    CGContextRelease(context);</span><br><span class="line">    free(imageData);</span><br><span class="line">    </span><br><span class="line">    return textureID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4 绘制时使用纹理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">glActiveTexture(GL_TEXTURE0);</span><br><span class="line">//载入纹理</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _textTureId);</span><br><span class="line"></span><br><span class="line">glUniform1i(_textureSlot, 0);</span><br><span class="line"></span><br><span class="line">const GLfloat texCoords[] = &#123;</span><br><span class="line">    0, 0,//左下</span><br><span class="line">    1, 0,//右下</span><br><span class="line">    0, 1,//左上</span><br><span class="line">    1, 1,//右上</span><br><span class="line">&#125;;</span><br><span class="line">glVertexAttribPointer(_textureCoordsSlot, 2, GL_FLOAT, GL_FALSE, 0, texCoords);</span><br><span class="line">glEnableVertexAttribArray(_textureCoordsSlot);</span><br></pre></td></tr></table></figure>
+
+<p>5 关于纹理坐标</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" data-id="cl9lffyw1000ry2vq1hiy961v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-OpenGL-光照学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" class="article-date">
@@ -455,6 +506,10 @@ _redView.frame = oldFrame;
       <ul>
         
           <li>
+            <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
+          </li>
+        
+          <li>
             <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
           </li>
         
@@ -468,10 +523,6 @@ _redView.frame = oldFrame;
         
           <li>
             <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/">UTF编码内存角度比较.md</a>
           </li>
         
       </ul>

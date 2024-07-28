@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>OpenGLES设置顶点属性的默认值 | Jack的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在 OpenGL ES 中，设置顶点属性的默认值和通过顶点缓冲对象（VBO）上传顶点属性是两种不同的处理顶点属性的方法。以下是详细的解释： 设置顶点属性默认值在 OpenGL ES 中，可以使用 glVertexAttrib4f（或其他类似的函数）来设置顶点属性的默认值。这些函数允许您为指定的顶点属性索引设置一个常量值，而不必为每个顶点提供一个值。例如： 12&#x2F;&#x2F; 设置索引为 0 的顶点属性的默认">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGLES设置顶点属性的默认值">
+<meta property="og:url" content="http://example.com/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/index.html">
+<meta property="og:site_name" content="Jack的博客">
+<meta property="og:description" content="在 OpenGL ES 中，设置顶点属性的默认值和通过顶点缓冲对象（VBO）上传顶点属性是两种不同的处理顶点属性的方法。以下是详细的解释： 设置顶点属性默认值在 OpenGL ES 中，可以使用 glVertexAttrib4f（或其他类似的函数）来设置顶点属性的默认值。这些函数允许您为指定的顶点属性索引设置一个常量值，而不必为每个顶点提供一个值。例如： 12&#x2F;&#x2F; 设置索引为 0 的顶点属性的默认">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-28T08:53:57.000Z">
+<meta property="article:modified_time" content="2024-07-28T08:54:37.531Z">
+<meta property="article:author" content="JackWang">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Jack的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Jack的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenGLES设置顶点属性的默认值" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" class="article-date">
+  <time datetime="2024-07-28T08:53:57.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenGLES设置顶点属性的默认值
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 OpenGL ES 中，设置顶点属性的默认值和通过顶点缓冲对象（VBO）上传顶点属性是两种不同的处理顶点属性的方法。以下是详细的解释：</p>
+<h3 id="设置顶点属性默认值"><a href="#设置顶点属性默认值" class="headerlink" title="设置顶点属性默认值"></a>设置顶点属性默认值</h3><p>在 OpenGL ES 中，可以使用 <code>glVertexAttrib4f</code>（或其他类似的函数）来设置顶点属性的默认值。这些函数允许您为指定的顶点属性索引设置一个常量值，而不必为每个顶点提供一个值。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置索引为 0 的顶点属性的默认值为 (1.0, 0.0, 0.0, 1.0)</span></span><br><span class="line">glVertexAttrib4f(<span class="number">0</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</span><br></pre></td></tr></table></figure>
+
+<p>请注意，这种方法直接在顶点着色器中使用常量值，因此适用于需要相同属性值的所有顶点的情况。</p>
+<h3 id="通过-VBO-上传顶点属性"><a href="#通过-VBO-上传顶点属性" class="headerlink" title="通过 VBO 上传顶点属性"></a>通过 VBO 上传顶点属性</h3><p>VBO 是一种在图形硬件上存储顶点数据的高效方式。使用 VBO 可以提高渲染性能，因为数据存储在 GPU 内存中，而不是通过每次绘制调用从 CPU 内存传输数据。以下是使用 VBO 上传顶点属性的步骤：</p>
+<ol>
+<li><p><strong>生成和绑定 VBO</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GLuint vbo;</span><br><span class="line">glGenBuffers(<span class="number">1</span>, &amp;vbo);</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, vbo);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>上传顶点数据</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GLfloat vertices[] = &#123;</span><br><span class="line">    <span class="comment">// 顶点数据，假设每个顶点包含 3 个浮点数 (x, y, z)</span></span><br><span class="line">    <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">&#125;;</span><br><span class="line">glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>设置顶点属性指针</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">3</span> * <span class="keyword">sizeof</span>(GLfloat), (<span class="type">void</span>*)<span class="number">0</span>);</span><br><span class="line">glEnableVertexAttribArray(<span class="number">0</span>);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>绘制</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="性能差别"><a href="#性能差别" class="headerlink" title="性能差别"></a>性能差别</h3><ul>
+<li><p><strong>设置顶点属性默认值</strong>：这种方法适用于所有顶点共享相同属性值的情况。其优点是简单直接，不需要额外的内存传输。然而，它缺乏灵活性，只能应用于特定的简单场景。</p>
+</li>
+<li><p><strong>通过 VBO 上传顶点属性</strong>：这种方法更为灵活，可以为每个顶点设置不同的属性值。因为数据存储在 GPU 内存中，所以渲染性能通常更高，特别是在处理大量顶点数据时。这种方法适用于大多数复杂的渲染任务。</p>
+</li>
+</ul>
+<p>总结来说，如果您的应用场景中所有顶点都共享相同的属性值，可以使用设置默认值的方法。如果不同顶点有不同的属性值，并且您希望获得更好的性能，应使用 VBO。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" data-id="clz5bqumy00000dvqcftnhw1e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">AddressSanitizer实现原理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C-11/" style="font-size: 13.33px;">C++11</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 16.67px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
+          </li>
+        
+          <li>
+            <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">AddressSanitizer实现原理</a>
+          </li>
+        
+          <li>
+            <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/">pthread_create设置栈size</a>
+          </li>
+        
+          <li>
+            <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
+          </li>
+        
+          <li>
+            <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/">UTF编码内存角度比较.md</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 JackWang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

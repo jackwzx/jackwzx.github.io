@@ -64,6 +64,65 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenGLES设置顶点属性的默认值" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" class="article-date">
+  <time datetime="2024-07-28T08:53:57.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 OpenGL ES 中，设置顶点属性的默认值和通过顶点缓冲对象（VBO）上传顶点属性是两种不同的处理顶点属性的方法。以下是详细的解释：</p>
+<h3 id="设置顶点属性默认值"><a href="#设置顶点属性默认值" class="headerlink" title="设置顶点属性默认值"></a>设置顶点属性默认值</h3><p>在 OpenGL ES 中，可以使用 <code>glVertexAttrib4f</code>（或其他类似的函数）来设置顶点属性的默认值。这些函数允许您为指定的顶点属性索引设置一个常量值，而不必为每个顶点提供一个值。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置索引为 0 的顶点属性的默认值为 (1.0, 0.0, 0.0, 1.0)</span></span><br><span class="line">glVertexAttrib4f(<span class="number">0</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>);</span><br></pre></td></tr></table></figure>
+
+<p>请注意，这种方法直接在顶点着色器中使用常量值，因此适用于需要相同属性值的所有顶点的情况。</p>
+<h3 id="通过-VBO-上传顶点属性"><a href="#通过-VBO-上传顶点属性" class="headerlink" title="通过 VBO 上传顶点属性"></a>通过 VBO 上传顶点属性</h3><p>VBO 是一种在图形硬件上存储顶点数据的高效方式。使用 VBO 可以提高渲染性能，因为数据存储在 GPU 内存中，而不是通过每次绘制调用从 CPU 内存传输数据。以下是使用 VBO 上传顶点属性的步骤：</p>
+<ol>
+<li><p><strong>生成和绑定 VBO</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GLuint vbo;</span><br><span class="line">glGenBuffers(<span class="number">1</span>, &amp;vbo);</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, vbo);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>上传顶点数据</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GLfloat vertices[] = &#123;</span><br><span class="line">    <span class="comment">// 顶点数据，假设每个顶点包含 3 个浮点数 (x, y, z)</span></span><br><span class="line">    <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">    <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">&#125;;</span><br><span class="line">glBufferData(GL_ARRAY_BUFFER, <span class="keyword">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>设置顶点属性指针</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glVertexAttribPointer(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">3</span> * <span class="keyword">sizeof</span>(GLfloat), (<span class="type">void</span>*)<span class="number">0</span>);</span><br><span class="line">glEnableVertexAttribArray(<span class="number">0</span>);</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>绘制</strong>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="性能差别"><a href="#性能差别" class="headerlink" title="性能差别"></a>性能差别</h3><ul>
+<li><p><strong>设置顶点属性默认值</strong>：这种方法适用于所有顶点共享相同属性值的情况。其优点是简单直接，不需要额外的内存传输。然而，它缺乏灵活性，只能应用于特定的简单场景。</p>
+</li>
+<li><p><strong>通过 VBO 上传顶点属性</strong>：这种方法更为灵活，可以为每个顶点设置不同的属性值。因为数据存储在 GPU 内存中，所以渲染性能通常更高，特别是在处理大量顶点数据时。这种方法适用于大多数复杂的渲染任务。</p>
+</li>
+</ul>
+<p>总结来说，如果您的应用场景中所有顶点都共享相同的属性值，可以使用设置默认值的方法。如果不同顶点有不同的属性值，并且您希望获得更好的性能，应使用 VBO。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" data-id="clz5bqumy00000dvqcftnhw1e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-AddressSanitizer实现原理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="article-date">
@@ -482,94 +541,6 @@
 
 
   
-    <article id="post-电子书目录" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" class="article-date">
-  <time datetime="2022-12-25T15:36:30.000Z" itemprop="datePublished">2022-12-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/">电子书目录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="渲染整理"><a href="#渲染整理" class="headerlink" title="渲染整理"></a>渲染整理</h2><h4 id="开放世界的场景管理"><a href="#开放世界的场景管理" class="headerlink" title="开放世界的场景管理"></a>开放世界的场景管理</h4><pre><code>1. 切成tile
-2. 数据分级LOD
-3. 根据天顶角，调整远平面，裁剪数据
-</code></pre>
-<h4 id="游戏引擎分层架构"><a href="#游戏引擎分层架构" class="headerlink" title="游戏引擎分层架构"></a>游戏引擎分层架构</h4><pre><code>1. EditorLayer
-2. FuntionLayer
-    1. Rendering
-    2. Animation
-    3. Camera
-    4. Physics
-    5. Script
-3. ResourceLayer
-4. CoreLayer
-    1. threadPoolManagement
-    2. memoryPool
-    3. mathLibrary
-5. PlatformLayer
-    1. RHI
-</code></pre>
-<h4 id="Renderable"><a href="#Renderable" class="headerlink" title="Renderable"></a>Renderable</h4><pre><code>1. shader
-    1. vs,fs
-    2. macro
-2. RenderState
-3. MVP 
-4. Texture
-5. DrawImp
-</code></pre>
-<h4 id="渲染效果"><a href="#渲染效果" class="headerlink" title="渲染效果"></a>渲染效果</h4><pre><code>1. 前向渲染
-      1. PBR
-      2. 布林冯模型
-2. 阴影shadowMap：
-    1. 根据相机的位置，对整个场景，绘制出深度图，表示光的可见性
-    2. 渲染时，将相机位置变化到光源位置，计算深度值与shadowmap进行比较，从而决定绘制的亮度
-3. 楼的倒影
-    1. 矩阵楼块插入地面
-    2. 模板测试，只有地面和水才绘制
-4. AO
-5. 聚光灯效果
-6. UV动画
-</code></pre>
-<h4 id="技术点提炼"><a href="#技术点提炼" class="headerlink" title="技术点提炼"></a>技术点提炼</h4><pre><code>1. 楼块
-    1. 切成小块
-    2. 柔化圆角
-    3. 贴UV
-2. 3d瓦片绘制
-    1. 瓦片的加载，与cache
-    2. 非实施例渲染，按材质进行分类渲染
-    3. 实例化渲染，动态计算lod进行渲染
-3. 模型渲染
-    1. PBR渲染
-    2. 非PBR渲染
-</code></pre>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" data-id="clc3jbpcq0001dlvq12d2ayeo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -620,6 +591,10 @@
       <ul>
         
           <li>
+            <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
+          </li>
+        
+          <li>
             <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">AddressSanitizer实现原理</a>
           </li>
         
@@ -633,10 +608,6 @@
         
           <li>
             <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/">UTF编码内存角度比较.md</a>
-          </li>
-        
-          <li>
-            <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/">SDF实现CornerRadius</a>
           </li>
         
       </ul>

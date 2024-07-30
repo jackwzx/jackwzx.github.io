@@ -7,15 +7,15 @@
   
   <title>从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵 | Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：[\begin{bmatrix}a &amp; b &amp; tx \c &amp; d &amp; ty \0 &amp; 0 &amp; 1\end{bmatrix}]  如果是4x4矩阵，形式如下： [\begin{bmatrix}a &amp;">
+  <meta name="description" content="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。 对于3x3矩阵：原3x3矩阵的形式如下： 123| a  b  tx || c  d  ty || 0  0  1  |  步骤：  提取旋转部分（左上2x2子矩阵）： 12| a  b || c  d | 计算缩放因子（可以使用行向量的范数或列向量的范数）： 1s &#x3D;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵">
 <meta property="og:url" content="http://example.com/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/index.html">
 <meta property="og:site_name" content="Jack的博客">
-<meta property="og:description" content="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：[\begin{bmatrix}a &amp; b &amp; tx \c &amp; d &amp; ty \0 &amp; 0 &amp; 1\end{bmatrix}]  如果是4x4矩阵，形式如下： [\begin{bmatrix}a &amp;">
+<meta property="og:description" content="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。 对于3x3矩阵：原3x3矩阵的形式如下： 123| a  b  tx || c  d  ty || 0  0  1  |  步骤：  提取旋转部分（左上2x2子矩阵）： 12| a  b || c  d | 计算缩放因子（可以使用行向量的范数或列向量的范数）： 1s &#x3D;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-07-30T04:26:12.000Z">
-<meta property="article:modified_time" content="2024-07-30T04:26:39.194Z">
+<meta property="article:modified_time" content="2024-07-30T04:29:47.353Z">
 <meta property="article:author" content="JackWang">
 <meta name="twitter:card" content="summary">
   
@@ -88,30 +88,34 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下："><a href="#要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：" class="headerlink" title="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下："></a>要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：</h3><p>[<br>\begin{bmatrix}<br>a &amp; b &amp; tx \<br>c &amp; d &amp; ty \<br>0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>] </p>
-<p>如果是4x4矩阵，形式如下：</p>
-<p>[<br>\begin{bmatrix}<br>a &amp; b &amp; c &amp; tx \<br>d &amp; e &amp; f &amp; ty \<br>g &amp; h &amp; i &amp; tz \<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>]</p>
-<p>其中，<code>a, b, c, d, e, f, g, h, i</code> 是旋转和缩放分量，<code>tx, ty, tz</code> 是平移分量。</p>
-<p>为了去除缩放分量，只保留平移和旋转分量，您需要对旋转部分进行归一化处理。</p>
-<h3 id="对于3x3矩阵："><a href="#对于3x3矩阵：" class="headerlink" title="对于3x3矩阵："></a>对于3x3矩阵：</h3><ol>
-<li><p>提取旋转部分（左上2x2子矩阵）：<br>[<br>\begin{bmatrix}<br>a &amp; b \<br>c &amp; d<br>\end{bmatrix}<br>]</p>
-</li>
-<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：<br>[<br>s = \sqrt{a^2 + c^2} = \sqrt{b^2 + d^2}<br>]</p>
-</li>
-<li><p>将旋转部分归一化：<br>[<br>\begin{bmatrix}<br>\frac{a}{s} &amp; \frac{b}{s} \<br>\frac{c}{s} &amp; \frac{d}{s}<br>\end{bmatrix}<br>]</p>
-</li>
-<li><p>构建新的3x3矩阵，包含平移分量：<br>[<br>\begin{bmatrix}<br>\frac{a}{s} &amp; \frac{b}{s} &amp; tx \<br>\frac{c}{s} &amp; \frac{d}{s} &amp; ty \<br>0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>]</p>
-</li>
+        <p>要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。</p>
+<h3 id="对于3x3矩阵："><a href="#对于3x3矩阵：" class="headerlink" title="对于3x3矩阵："></a>对于3x3矩阵：</h3><p>原3x3矩阵的形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a  b  tx |</span><br><span class="line">| c  d  ty |</span><br><span class="line">| 0  0  1  |</span><br></pre></td></tr></table></figure>
+
+<p>步骤：</p>
+<ol>
+<li><p>提取旋转部分（左上2x2子矩阵）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| a  b |</span><br><span class="line">| c  d |</span><br></pre></td></tr></table></figure></li>
+<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = sqrt(a^2 + c^2) = sqrt(b^2 + d^2)</span><br></pre></td></tr></table></figure></li>
+<li><p>将旋转部分归一化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| a/s  b/s |</span><br><span class="line">| c/s  d/s |</span><br></pre></td></tr></table></figure></li>
+<li><p>构建新的3x3矩阵，包含平移分量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a/s  b/s  tx |</span><br><span class="line">| c/s  d/s  ty |</span><br><span class="line">|  0    0    1 |</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="对于4x4矩阵："><a href="#对于4x4矩阵：" class="headerlink" title="对于4x4矩阵："></a>对于4x4矩阵：</h3><ol>
-<li><p>提取旋转部分（左上3x3子矩阵）：<br>[<br>\begin{bmatrix}<br>a &amp; b &amp; c \<br>d &amp; e &amp; f \<br>g &amp; h &amp; i<br>\end{bmatrix}<br>]</p>
-</li>
-<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：<br>[<br>s_x = \sqrt{a^2 + d^2 + g^2}<br>]<br>[<br>s_y = \sqrt{b^2 + e^2 + h^2}<br>]<br>[<br>s_z = \sqrt{c^2 + f^2 + i^2}<br>]</p>
-</li>
-<li><p>将旋转部分归一化：<br>[<br>\begin{bmatrix}<br>\frac{a}{s_x} &amp; \frac{b}{s_y} &amp; \frac{c}{s_z} \<br>\frac{d}{s_x} &amp; \frac{e}{s_y} &amp; \frac{f}{s_z} \<br>\frac{g}{s_x} &amp; \frac{h}{s_y} &amp; \frac{i}{s_z}<br>\end{bmatrix}<br>]</p>
-</li>
-<li><p>构建新的4x4矩阵，包含平移分量：<br>[<br>\begin{bmatrix}<br>\frac{a}{s_x} &amp; \frac{b}{s_y} &amp; \frac{c}{s_z} &amp; tx \<br>\frac{d}{s_x} &amp; \frac{e}{s_y} &amp; \frac{f}{s_z} &amp; ty \<br>\frac{g}{s_x} &amp; \frac{h}{s_y} &amp; \frac{i}{s_z} &amp; tz \<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>]</p>
-</li>
+<h3 id="对于4x4矩阵："><a href="#对于4x4矩阵：" class="headerlink" title="对于4x4矩阵："></a>对于4x4矩阵：</h3><p>原4x4矩阵的形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| a  b  c  tx |</span><br><span class="line">| d  e  f  ty |</span><br><span class="line">| g  h  i  tz |</span><br><span class="line">| 0  0  0   1 |</span><br></pre></td></tr></table></figure>
+
+<p>步骤：</p>
+<ol>
+<li><p>提取旋转部分（左上3x3子矩阵）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a  b  c |</span><br><span class="line">| d  e  f |</span><br><span class="line">| g  h  i |</span><br></pre></td></tr></table></figure></li>
+<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sx = sqrt(a^2 + d^2 + g^2)</span><br><span class="line">sy = sqrt(b^2 + e^2 + h^2)</span><br><span class="line">sz = sqrt(c^2 + f^2 + i^2)</span><br></pre></td></tr></table></figure></li>
+<li><p>将旋转部分归一化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a/sx  b/sy  c/sz |</span><br><span class="line">| d/sx  e/sy  f/sz |</span><br><span class="line">| g/sx  h/sy  i/sz |</span><br></pre></td></tr></table></figure></li>
+<li><p>构建新的4x4矩阵，包含平移分量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| a/sx  b/sy  c/sz  tx |</span><br><span class="line">| d/sx  e/sy  f/sz  ty |</span><br><span class="line">| g/sx  h/sy  i/sz  tz |</span><br><span class="line">|  0     0     0    1  |</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>这些步骤可以帮助您从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵。</p>
 

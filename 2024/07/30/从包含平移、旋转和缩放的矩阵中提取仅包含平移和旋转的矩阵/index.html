@@ -5,22 +5,19 @@
   
 
   
-  <title>iOS运行时消息转发 | Jack的博客</title>
+  <title>从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵 | Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近读了一遍apple 文档，对于iOS运行时消息转发机制发现有些细节还是理解有所偏差，写此文章加深理解  iOS 方法调用探讨这个话题还要从OC是一门动态语言说起，OC的动态性体现在编译和链接期，并没有直接绑定函数调用关系，编译器将方法调用转成objc_msgSend(receiver, selector, arg1, arg2, …)方法这种方式 在运行时，通过isa对象通过从子类到父类的方">
+  <meta name="description" content="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：[\begin{bmatrix}a &amp; b &amp; tx \c &amp; d &amp; ty \0 &amp; 0 &amp; 1\end{bmatrix}]  如果是4x4矩阵，形式如下： [\begin{bmatrix}a &amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS运行时消息转发">
-<meta property="og:url" content="http://example.com/2017/12/14/iOS-MessageForwarding/index.html">
+<meta property="og:title" content="从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵">
+<meta property="og:url" content="http://example.com/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/index.html">
 <meta property="og:site_name" content="Jack的博客">
-<meta property="og:description" content="最近读了一遍apple 文档，对于iOS运行时消息转发机制发现有些细节还是理解有所偏差，写此文章加深理解  iOS 方法调用探讨这个话题还要从OC是一门动态语言说起，OC的动态性体现在编译和链接期，并没有直接绑定函数调用关系，编译器将方法调用转成objc_msgSend(receiver, selector, arg1, arg2, …)方法这种方式 在运行时，通过isa对象通过从子类到父类的方">
+<meta property="og:description" content="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：[\begin{bmatrix}a &amp; b &amp; tx \c &amp; d &amp; ty \0 &amp; 0 &amp; 1\end{bmatrix}]  如果是4x4矩阵，形式如下： [\begin{bmatrix}a &amp;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://oh144b0ji.qnssl.com/OC%20runTime.jpg">
-<meta property="article:published_time" content="2017-12-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-23T12:47:39.457Z">
+<meta property="article:published_time" content="2024-07-30T04:26:12.000Z">
+<meta property="article:modified_time" content="2024-07-30T04:26:39.194Z">
 <meta property="article:author" content="JackWang">
-<meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://oh144b0ji.qnssl.com/OC%20runTime.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Jack的博客" type="application/atom+xml">
   
@@ -69,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-iOS-MessageForwarding" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/14/iOS-MessageForwarding/" class="article-date">
-  <time datetime="2017-12-13T16:00:00.000Z" itemprop="datePublished">2017-12-14</time>
+    <a href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/" class="article-date">
+  <time datetime="2024-07-30T04:26:12.000Z" itemprop="datePublished">2024-07-30</time>
 </a>
     
   </div>
@@ -83,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      iOS运行时消息转发
+      从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵
     </h1>
   
 
@@ -91,52 +88,49 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<p>最近读了一遍apple 文档，对于iOS运行时消息转发机制发现有些细节还是理解有所偏差，写此文章加深理解</p>
-</blockquote>
-<h3 id="iOS-方法调用探讨"><a href="#iOS-方法调用探讨" class="headerlink" title="iOS 方法调用探讨"></a>iOS 方法调用探讨</h3><p>这个话题还要从OC是一门动态语言说起，OC的动态性体现在编译和链接期，并没有直接绑定函数调用关系，编译器将方法调用转成objc_msgSend(receiver, selector, arg1, arg2, …)方法这种方式</p>
-<p>在运行时，通过isa对象通过从子类到父类的方法查找，找到具体的函数入口进行调用，这其中还包括cache等机制，这里不在赘述，这次主要讨论的是Dynamic Method Resolution和Message Forwarding</p>
-<p>如果调用的Seletor在类的方法列表中找不到，以实例对象的方法为例，将进入如下流程：</p>
-<p><img src="https://oh144b0ji.qnssl.com/OC%20runTime.jpg" alt="image.png"></p>
-<p>主要流程可以总结为，先进入消息动态处理流程，再进入消息转发流程</p>
-<p>1.消息动态处理流程：resloveInstanceMethod中可以通过class_addMethod为此对象动态添加方法，这样就使该对象正常响应此方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)aSEL&#123;</span><br><span class="line">  </span><br><span class="line">    if (aSEL == @selector(notFoundFunctiion)) &#123;</span><br><span class="line">        </span><br><span class="line">        class_addMethod([self class], aSEL, (IMP) dynamicMethodIMP, &quot;v@:&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return [super resolveInstanceMethod:aSEL];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    需要注意的是，不仅[self notFoundFunctiion]会触发这里，在</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self respondsToSelector:@selector(notFoundFunctiion)]</span><br></pre></td></tr></table></figure>
-
-<p>​    这句代码中，同样会触发消息动态处理流程，这和后面讲的消息转发有很大区别。</p>
-<p>2.如果上面的消息处理流程返回NO，那么就会进入消息转发流程</p>
-<p>可以将此消息转发给另外一个对象进行执行。首先进入的是forwardingTargetForSelector，这里可以返回一个可以响应此消息的对象，如果仍然返回nil，就会进入methodSignatureForSelector和forwardInvocation的流程，其实这两种方式本质的意义相同，只不过一个是通过另外的对象selector调用，一个是通过invocation的方式调用，但是要注意，这里的selector对于原来的对象来讲，respondsToSelector返回为NO</p>
-<h4 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h4><p><a target="_blank" rel="noopener" href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html">Objective-C Runtime Programming Guide</a></p>
+        <h3 id="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下："><a href="#要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：" class="headerlink" title="要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下："></a>要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。如果是3x3矩阵，形式如下：</h3><p>[<br>\begin{bmatrix}<br>a &amp; b &amp; tx \<br>c &amp; d &amp; ty \<br>0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>] </p>
+<p>如果是4x4矩阵，形式如下：</p>
+<p>[<br>\begin{bmatrix}<br>a &amp; b &amp; c &amp; tx \<br>d &amp; e &amp; f &amp; ty \<br>g &amp; h &amp; i &amp; tz \<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>]</p>
+<p>其中，<code>a, b, c, d, e, f, g, h, i</code> 是旋转和缩放分量，<code>tx, ty, tz</code> 是平移分量。</p>
+<p>为了去除缩放分量，只保留平移和旋转分量，您需要对旋转部分进行归一化处理。</p>
+<h3 id="对于3x3矩阵："><a href="#对于3x3矩阵：" class="headerlink" title="对于3x3矩阵："></a>对于3x3矩阵：</h3><ol>
+<li><p>提取旋转部分（左上2x2子矩阵）：<br>[<br>\begin{bmatrix}<br>a &amp; b \<br>c &amp; d<br>\end{bmatrix}<br>]</p>
+</li>
+<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：<br>[<br>s = \sqrt{a^2 + c^2} = \sqrt{b^2 + d^2}<br>]</p>
+</li>
+<li><p>将旋转部分归一化：<br>[<br>\begin{bmatrix}<br>\frac{a}{s} &amp; \frac{b}{s} \<br>\frac{c}{s} &amp; \frac{d}{s}<br>\end{bmatrix}<br>]</p>
+</li>
+<li><p>构建新的3x3矩阵，包含平移分量：<br>[<br>\begin{bmatrix}<br>\frac{a}{s} &amp; \frac{b}{s} &amp; tx \<br>\frac{c}{s} &amp; \frac{d}{s} &amp; ty \<br>0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>]</p>
+</li>
+</ol>
+<h3 id="对于4x4矩阵："><a href="#对于4x4矩阵：" class="headerlink" title="对于4x4矩阵："></a>对于4x4矩阵：</h3><ol>
+<li><p>提取旋转部分（左上3x3子矩阵）：<br>[<br>\begin{bmatrix}<br>a &amp; b &amp; c \<br>d &amp; e &amp; f \<br>g &amp; h &amp; i<br>\end{bmatrix}<br>]</p>
+</li>
+<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：<br>[<br>s_x = \sqrt{a^2 + d^2 + g^2}<br>]<br>[<br>s_y = \sqrt{b^2 + e^2 + h^2}<br>]<br>[<br>s_z = \sqrt{c^2 + f^2 + i^2}<br>]</p>
+</li>
+<li><p>将旋转部分归一化：<br>[<br>\begin{bmatrix}<br>\frac{a}{s_x} &amp; \frac{b}{s_y} &amp; \frac{c}{s_z} \<br>\frac{d}{s_x} &amp; \frac{e}{s_y} &amp; \frac{f}{s_z} \<br>\frac{g}{s_x} &amp; \frac{h}{s_y} &amp; \frac{i}{s_z}<br>\end{bmatrix}<br>]</p>
+</li>
+<li><p>构建新的4x4矩阵，包含平移分量：<br>[<br>\begin{bmatrix}<br>\frac{a}{s_x} &amp; \frac{b}{s_y} &amp; \frac{c}{s_z} &amp; tx \<br>\frac{d}{s_x} &amp; \frac{e}{s_y} &amp; \frac{f}{s_z} &amp; ty \<br>\frac{g}{s_x} &amp; \frac{h}{s_y} &amp; \frac{i}{s_z} &amp; tz \<br>0 &amp; 0 &amp; 0 &amp; 1<br>\end{bmatrix}<br>]</p>
+</li>
+</ol>
+<p>这些步骤可以帮助您从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2017/12/14/iOS-MessageForwarding/" data-id="cl9lffyw3000vy2vqc3e55i0z" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/" data-id="clz7x1xve00005zvqh9oe5l7x" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2022/09/18/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          C++ 构造函数
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/12/CALayer%E7%9A%84presentLayer%E9%82%A3%E7%82%B9%E4%BA%8B/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">iOSCALayer的presentLayer那点事</div>
+      <div class="article-nav-title">OpenGLE_VAO局部影响vs全局影响</div>
     </a>
   
 </nav>

@@ -64,6 +64,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-tweak环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time datetime="2017-03-07T00:43:58.000Z" itemprop="datePublished">2017-03-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">tweak环境搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0-设置环境变量-export-THEOS-opt-theos"><a href="#0-设置环境变量-export-THEOS-opt-theos" class="headerlink" title="0 设置环境变量 export THEOS=/opt/theos"></a>0 设置环境变量 export THEOS=/opt/theos</h3><p>可以设置~/.zshrc中添加，修改后用source命令重新加载</p>
+<h3 id="1下载theos（-jailbreak目录下已经下载过），放在-opt-theos下"><a href="#1下载theos（-jailbreak目录下已经下载过），放在-opt-theos下" class="headerlink" title="1下载theos（~/jailbreak目录下已经下载过），放在/opt/theos下"></a>1下载theos（~/jailbreak目录下已经下载过），放在/opt/theos下</h3><h3 id="2-下载ldid，放到-opt-theos-bin下"><a href="#2-下载ldid，放到-opt-theos-bin下" class="headerlink" title="2 下载ldid，放到/opt/theos/bin下"></a>2 下载ldid，放到/opt/theos/bin下</h3><p>sudo chmod 777 /opt/theos/bin/ldid</p>
+<h3 id="3-配置CydiaSubstrate"><a href="#3-配置CydiaSubstrate" class="headerlink" title="3 配置CydiaSubstrate"></a>3 配置CydiaSubstrate</h3><p>在Cydia中安装CydiaSbustrate，然后scp 讲iPhone上的 /Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate 拷贝到Mac /opt/theos/lib/下，并重命名为libsubstrate.dylib</p>
+<p>并将头文件substrate.h也scp 到/opt/theos/include下</p>
+<p>sudo /opt/theos/bin/bootstrap.sh substrate</p>
+<h3 id="4-将dm-pl重命名为dpkg-deb，cp到-opt-bin"><a href="#4-将dm-pl重命名为dpkg-deb，cp到-opt-bin" class="headerlink" title="4 将dm.pl重命名为dpkg-deb，cp到/opt/bin/"></a>4 将dm.pl重命名为dpkg-deb，cp到/opt/bin/</h3><p>suodo chmod 777 /opt/bin/dpkg-deb</p>
+<p>基本就搭建完成，可以练习创建工程</p>
+<p>/opt/theos/bin/nic.pl</p>
+<p>然后进行make package </p>
+<p>make package install</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-id="cl9lffyw80017y2vq1nzphzwc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-OpenGL-纹理贴图" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" class="article-date">
@@ -506,6 +554,10 @@ _redView.frame = oldFrame;
       <ul>
         
           <li>
+            <a href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/">从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵</a>
+          </li>
+        
+          <li>
             <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
           </li>
         
@@ -519,10 +571,6 @@ _redView.frame = oldFrame;
         
           <li>
             <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/">pthread_create设置栈size</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
           </li>
         
       </ul>

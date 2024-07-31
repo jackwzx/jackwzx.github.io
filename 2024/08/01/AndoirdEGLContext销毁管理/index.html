@@ -5,13 +5,17 @@
   
 
   
-  <title>Archives | Jack的博客</title>
+  <title>AndoirdEGLContext销毁管理 | Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Jack的博客">
-<meta property="og:url" content="http://example.com/archives/page/4/index.html">
+  <meta name="description" content="1234public interface EGLContextFactory &amp;#123;    EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig);    void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AndoirdEGLContext销毁管理">
+<meta property="og:url" content="http://example.com/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="Jack的博客">
+<meta property="og:description" content="1234public interface EGLContextFactory &amp;#123;    EGLContext createContext(EGL10 egl, EGLDisplay display, EGLConfig eglConfig);    void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context)">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-07-31T16:19:32.000Z">
+<meta property="article:modified_time" content="2024-07-31T16:20:35.092Z">
 <meta property="article:author" content="JackWang">
 <meta name="twitter:card" content="summary">
   
@@ -62,226 +66,55 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="archive-article-date">
-  <time datetime="2017-03-07T01:20:39.000Z" itemprop="datePublished">Mar 7</time>
+        <section id="main"><article id="post-AndoirdEGLContext销毁管理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/" class="article-date">
+  <time datetime="2024-07-31T16:19:32.000Z" itemprop="datePublished">2024-08-01</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">tweak心得</a>
+    <h1 class="article-title" itemprop="name">
+      AndoirdEGLContext销毁管理
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EGLContextFactory</span> &#123;</span><br><span class="line">    EGLContext <span class="title function_">createContext</span><span class="params">(EGL10 egl, EGLDisplay display, EGLConfig eglConfig)</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">destroyContext</span><span class="params">(EGL10 egl, EGLDisplay display, EGLContext context)</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h3 id="EGLContext-如果释放时，会删除在当前Context-下创建的bufffer-texture-以及fbo等资源吗"><a href="#EGLContext-如果释放时，会删除在当前Context-下创建的bufffer-texture-以及fbo等资源吗" class="headerlink" title="EGLContext 如果释放时，会删除在当前Context 下创建的bufffer,texture 以及fbo等资源吗"></a>EGLContext 如果释放时，会删除在当前Context 下创建的bufffer,texture 以及fbo等资源吗</h3><h3 id="在-OpenGL-ES-中，当一个-EGLContext-被销毁时，所有在该上下文中创建的-OpenGL-资源（如-buffer、texture-和-framebuffer-objects-FBO-等）都会被删除。这是因为这些资源是与特定的-OpenGL-上下文相关联的，一旦上下文被销毁，与之相关的所有资源也会被自动释放。"><a href="#在-OpenGL-ES-中，当一个-EGLContext-被销毁时，所有在该上下文中创建的-OpenGL-资源（如-buffer、texture-和-framebuffer-objects-FBO-等）都会被删除。这是因为这些资源是与特定的-OpenGL-上下文相关联的，一旦上下文被销毁，与之相关的所有资源也会被自动释放。" class="headerlink" title="在 OpenGL ES 中，当一个 EGLContext 被销毁时，所有在该上下文中创建的 OpenGL 资源（如 buffer、texture 和 framebuffer objects (FBO) 等）都会被删除。这是因为这些资源是与特定的 OpenGL 上下文相关联的，一旦上下文被销毁，与之相关的所有资源也会被自动释放。"></a>在 OpenGL ES 中，当一个 EGLContext 被销毁时，所有在该上下文中创建的 OpenGL 资源（如 buffer、texture 和 framebuffer objects (FBO) 等）都会被删除。这是因为这些资源是与特定的 OpenGL 上下文相关联的，一旦上下文被销毁，与之相关的所有资源也会被自动释放。</h3><p>具体来说，当你调用 <code>EGLContextFactory</code> 接口的 <code>destroyContext</code> 方法来销毁一个 EGLContext 时，OpenGL ES 会自动处理这个上下文的清理工作，包括删除所有在该上下文中创建的资源。</p>
+<p>因此，你不需要手动删除这些资源，销毁上下文的过程会自动处理它们的释放。</p>
+<p>不过，如果你需要提前释放某些资源以便在上下文还没有销毁之前释放内存，你可以在合适的时机手动删除这些资源（例如通过调用 <code>glDeleteBuffers</code>、<code>glDeleteTextures</code>、<code>glDeleteFramebuffers</code> 等方法）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/" data-id="clza200dn00007mvqeakhevbl" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="archive-article-date">
-  <time datetime="2017-03-07T00:43:58.000Z" itemprop="datePublished">Mar 7</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">tweak环境搭建</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" class="archive-article-date">
-  <time datetime="2017-01-03T03:11:26.000Z" itemprop="datePublished">Jan 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/">纹理贴图</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
-  <time datetime="2017-01-02T05:43:54.000Z" itemprop="datePublished">Jan 2</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/">光照学习</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/02/OpenGL-VBO/" class="archive-article-date">
-  <time datetime="2017-01-02T05:19:23.000Z" itemprop="datePublished">Jan 2</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/02/OpenGL-VBO/">VBO</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/30/OpenGL-uniform%E5%92%8Cattribute/" class="archive-article-date">
-  <time datetime="2016-12-30T08:17:50.000Z" itemprop="datePublished">Dec 30</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/30/OpenGL-uniform%E5%92%8Cattribute/">uniform和attribute区别</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/30/OpenGL-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E5%92%8C%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%9B%BE%E5%BD%A2/" class="archive-article-date">
-  <time datetime="2016-12-30T07:42:35.000Z" itemprop="datePublished">Dec 30</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/30/OpenGL-%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%E5%92%8C%E7%BB%98%E5%88%B6%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%9B%BE%E5%BD%A2/">opengl iOS创建OpenGL环境绘制一个简单三角形</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/12/30/CALayer-opaque/" class="archive-article-date">
-  <time datetime="2016-12-30T02:51:46.000Z" itemprop="datePublished">Dec 30</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/12/30/CALayer-opaque/">CALayer opaque</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/" class="archive-article-date">
-  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">Oct 26</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/">CALayer属性positon和anchor</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/" class="archive-article-date">
-  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">Oct 26</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/">怎么build apple watch app</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/archives/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span>
-  </nav>
 
 </section>
         

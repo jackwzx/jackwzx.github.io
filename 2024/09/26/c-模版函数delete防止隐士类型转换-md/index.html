@@ -5,15 +5,17 @@
   
 
   
-  <title>lamda 初始化捕获用法 | Jack的博客</title>
+  <title>c++模版函数delete防止隐士类型转换.md | Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="lamda 初始化捕获用法">
-<meta property="og:url" content="http://example.com/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/index.html">
+  <meta name="description" content="1234567891011121314151617181920struct Person &amp;#123;    int a &#x3D; 0;    operator int&amp;() &amp;#123; return a; &amp;#125;    operator const int&amp;() const &amp;#123; return a; &amp;#125;&amp;#125;;template &lt;typename">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++模版函数delete防止隐士类型转换.md">
+<meta property="og:url" content="http://example.com/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/index.html">
 <meta property="og:site_name" content="Jack的博客">
+<meta property="og:description" content="1234567891011121314151617181920struct Person &amp;#123;    int a &#x3D; 0;    operator int&amp;() &amp;#123; return a; &amp;#125;    operator const int&amp;() const &amp;#123; return a; &amp;#125;&amp;#125;;template &lt;typename">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-12-27T06:16:08.000Z">
-<meta property="article:modified_time" content="2023-12-27T06:16:08.722Z">
+<meta property="article:published_time" content="2024-09-26T06:29:27.000Z">
+<meta property="article:modified_time" content="2024-09-26T06:32:20.884Z">
 <meta property="article:author" content="JackWang">
 <meta name="twitter:card" content="summary">
   
@@ -64,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-lamda-初始化捕获用法" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-c-模版函数delete防止隐士类型转换-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" class="article-date">
-  <time datetime="2023-12-27T06:16:08.000Z" itemprop="datePublished">2023-12-27</time>
+    <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/" class="article-date">
+  <time datetime="2024-09-26T06:29:27.000Z" itemprop="datePublished">2024-09-26</time>
 </a>
     
   </div>
@@ -78,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      lamda 初始化捕获用法
+      c++模版函数delete防止隐士类型转换.md
     </h1>
   
 
@@ -86,11 +88,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">operator</span> <span class="type">int</span>&amp;() &#123; <span class="keyword">return</span> a; &#125;</span><br><span class="line">    <span class="keyword">operator</span> <span class="type">const</span> <span class="type">int</span>&amp;() <span class="type">const</span> &#123; <span class="keyword">return</span> a; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">testFunc</span><span class="params">(T arg)</span> </span>= <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">testFunc</span><span class="params">(<span class="type">int</span> arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;called testFunc int\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    Person a;</span><br><span class="line">    <span class="built_in">testFunc</span>(a); <span class="comment">//报错</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" data-id="clqnduo000000lfvq8kg5107n" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/" data-id="cm1k1mfg40000kwvqgsff0eou" class="article-share-link">Share</a>
       
       
     </footer>
@@ -99,19 +102,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          SDF实现CornerRadius
+          分支预测
         
       </div>
     </a>
   
   
-    <a href="/2023/12/24/tag-dispatch/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">tag dispatch</div>
+      <div class="article-nav-title">AndoirdEGLContext销毁管理</div>
     </a>
   
 </nav>

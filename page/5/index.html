@@ -5,15 +5,13 @@
   
 
   
-  <title>lamda 初始化捕获用法 | Jack的博客</title>
+  <title>Jack的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="lamda 初始化捕获用法">
-<meta property="og:url" content="http://example.com/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Jack的博客">
+<meta property="og:url" content="http://example.com/page/5/index.html">
 <meta property="og:site_name" content="Jack的博客">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-12-27T06:16:08.000Z">
-<meta property="article:modified_time" content="2023-12-27T06:16:08.722Z">
 <meta property="article:author" content="JackWang">
 <meta name="twitter:card" content="summary">
   
@@ -64,10 +62,12 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-lamda-初始化捕获用法" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main">
+  
+    <article id="post-CALayer属性positon和anchor" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" class="article-date">
-  <time datetime="2023-12-27T06:16:08.000Z" itemprop="datePublished">2023-12-27</time>
+    <a href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/" class="article-date">
+  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">2016-10-26</time>
 </a>
     
   </div>
@@ -77,8 +77,8 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      lamda 初始化捕获用法
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/">CALayer属性positon和anchor</a>
     </h1>
   
 
@@ -86,38 +86,87 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="CALayer-的frame，bounds-position和anchor"><a href="#CALayer-的frame，bounds-position和anchor" class="headerlink" title="CALayer 的frame，bounds, position和anchor"></a>CALayer 的frame，bounds, position和anchor</h3><p>frame描述的是在父layer上的坐标和尺寸</p>
+<p>bounds是类似于View的bounds</p>
+<p>anchor描述的是做动画时，比如旋转时的中心点，以某个点旋转，默认时（0.5，0.5）左上点是（0，0），右下点是（1，1）</p>
+<p>position描述的是anchor的在父layer的坐标</p>
+<p>举例来说，一个View的Frame是（40，40，100，100）</p>
+<p>那么layer的frame是（40，40，100，100）</p>
+<p>bound是（0，0，100，100）</p>
+<p>position是：（140，140）</p>
+<p>position计算：</p>
+<p>pos.x = origin.x + anchor.x*size.with</p>
+<p>pos.y = origin.y + anchor.y*size.height</p>
+<p>如果想修改anchor,一定要同时修改position，才能保证位置不变，否则，单独修改position或者anchor，根据上面公式会导致layer位置发生变化</p>
+<p>如果想修改anchor，而不影响layer移动，只需修改完成后，再设置一次layer的frame即可</p>
+<pre><code>CGRect oldFrame = _redView.frame;
+_redView.layer.anchorPoint = CGPointMake(0.5, 1);
+_redView.frame = oldFrame;
+</code></pre>
+<p>注意，position并不适用这一点</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" data-id="clqnduo000000lfvq8kg5107n" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/" data-id="cl9lffyvr000ay2vqgxs0fhnu" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          SDF实现CornerRadius
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2023/12/24/tag-dispatch/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">tag dispatch</div>
-    </a>
-  
-</nav>
+</article>
+
 
   
+    <article id="post-How to build Apple Watch App" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/" class="article-date">
+  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">2016-10-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/">怎么build apple watch app</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h3><p>在IphoneCom 的Embedded Binaries中添加Watch.app</p>
+<h3 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h3><p>Run IphoneCom</p>
+<h3 id="Step3"><a href="#Step3" class="headerlink" title="Step3"></a>Step3</h3><p>run WachApp</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2016/10/26/How%20to%20build%20Apple%20Watch%20App/" data-id="cl9lffyvu000fy2vq44oy9srb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
 </article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+  </nav>
 
 </section>
         

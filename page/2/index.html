@@ -64,6 +64,78 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-SDF实现CornerRadius" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" class="article-date">
+  <time datetime="2023-12-28T10:45:16.000Z" itemprop="datePublished">2023-12-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/">SDF实现CornerRadius</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" data-id="clygyir5k000002vqguxof5dd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-lamda-初始化捕获用法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" class="article-date">
+  <time datetime="2023-12-27T06:16:08.000Z" itemprop="datePublished">2023-12-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/">lamda 初始化捕获用法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" data-id="clqnduo000000lfvq8kg5107n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-tag-dispatch" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2023/12/24/tag-dispatch/" class="article-date">
@@ -164,6 +236,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h3 id="模板推导规则"><a href="#模板推导规则" class="headerlink" title="模板推导规则"></a>模板推导规则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByRefFun(T&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByUniRefFun(T&amp;&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByValueFun(T val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void fun3(int&amp; a) &#123; &#125;</span><br><span class="line">void fun3(int&amp;&amp; a) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    int a = 0;          //a int</span><br><span class="line">    const int b = a;    //b const int</span><br><span class="line">    const int&amp; c = a;   //c const int&amp;</span><br><span class="line">    </span><br><span class="line">    passByRefFun(a);    // int&amp;</span><br><span class="line">    passByRefFun(b);    // const int&amp;</span><br><span class="line">    passByRefFun(c);    // const int&amp;</span><br><span class="line">    //passByRefFun(27);   // 报错</span><br><span class="line">    </span><br><span class="line">    passByUniRefFun(a); // int&amp;</span><br><span class="line">    passByUniRefFun(b); // const int&amp;</span><br><span class="line">    passByUniRefFun(c); // const int&amp;</span><br><span class="line">    passByUniRefFun(27); // int&amp;&amp;</span><br><span class="line">    </span><br><span class="line">    passByValueFun(a);  // int</span><br><span class="line">    passByValueFun(b);  // int</span><br><span class="line">    passByValueFun(c);  // int</span><br><span class="line">    passByValueFun(27); // int</span><br><span class="line">    </span><br><span class="line">    &#123;</span><br><span class="line">        int&amp;&amp; a = 10;</span><br><span class="line">        fun3(a);            // called void fun3(int&amp; a)</span><br><span class="line">        fun3(std::move(a)); // called void fun3(int&amp;&amp; a)</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="SFINAE"><a href="#SFINAE" class="headerlink" title="SFINAE"></a>SFINAE</h3><p>SFINAE（Substitution Failure Is Not An Error）是 C++ 中的一个重要概念，主要用于模板编程。它的意思是，当模板参数替换导致错误时，编译器不会将其视为错误，而是会继续查找其他可能的匹配。这使得我们可以在模板中进行条件编译，选择合适的重载或特化</p>
+<p>SFINAE 的优势<br>条件编译：可以根据类型特征选择不同的实现，增强代码的灵活性和可重用性。<br>避免编译错误：当模板参数替换导致错误时，编译器不会将其视为错误，而是继续查找其他匹配的模板。<br>类型安全：通过类型特征，可以确保只有符合条件的类型才能使用特定的模板实现。</p>
+<p>SFINAE 是 C++ 模板编程中的一个强大工具，允许开发者根据类型特征选择合适的模板特化或重载。通过结合 std::enable_if 和类型特征，开发者可以编写更灵活和安全的代码。</p>
 
       
     </div>
@@ -470,105 +547,11 @@
 
 
   
-    <article id="post-C++实现完美转发" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/10/23/C++%E5%AE%9E%E7%8E%B0%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" class="article-date">
-  <time datetime="2022-10-23T12:36:59.000Z" itemprop="datePublished">2022-10-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/10/23/C++%E5%AE%9E%E7%8E%B0%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/">实现完美转发</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="什么是完美转发？"><a href="#什么是完美转发？" class="headerlink" title="什么是完美转发？"></a>什么是完美转发？</h3><h4 id="在理解什么是完美转发之前，需要知道什么是万能引用"><a href="#在理解什么是完美转发之前，需要知道什么是万能引用" class="headerlink" title="在理解什么是完美转发之前，需要知道什么是万能引用?"></a>在理解什么是完美转发之前，需要知道什么是万能引用?</h4><p>在模板推导过程中，使用T&amp;&amp; a,这时候，并不是类型T的右值引用，而是万能引用，如果a是左值，这时候，就是一个左值引用，如果a是右值，这时候就是一个右值引用，具体原理是发生引用折叠。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void Add(T&amp;&amp; a, T&amp;&amp; b) &#123;</span><br><span class="line">    cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    </span><br><span class="line">    Add(4, 5); // a，b的类型会被推导成int&amp;&amp;</span><br><span class="line">    int a = 0;</span><br><span class="line">    int b = 0;</span><br><span class="line">    Add(a, b); // a，b的类型会被推导成int&amp;</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>根据参数的具体类型，来实例化模板，准确的生成左值引用和右值引用的实例，这就是万能引用</p>
-<h4 id="万能引用遇到的问题？"><a href="#万能引用遇到的问题？" class="headerlink" title="万能引用遇到的问题？"></a>万能引用遇到的问题？</h4><p>上面的例子中，Add函数参数虽然是类型是右值引用，但是值确实左值，导致函数内继续使用调用其他函数时，参数类型由右值变成左值，也就是无法将右值引用这个类型继续转发.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void AddImp(T&amp;&amp; a, T&amp;&amp; b) &#123;</span><br><span class="line">    cout &lt;&lt; a &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; b &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void Add(T&amp;&amp; a, T&amp;&amp; b) &#123;</span><br><span class="line">    AddImp(a, b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    </span><br><span class="line">    Add(4, 5);</span><br><span class="line">    int a = 0;</span><br><span class="line">    int b = 0;</span><br><span class="line">    Add(a, b);</span><br><span class="line">    </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="解决方案-std-forward"><a href="#解决方案-std-forward" class="headerlink" title="解决方案: std::forward"></a>解决方案: std::forward<T></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void Add(T&amp;&amp; a, T&amp;&amp; b) &#123;</span><br><span class="line">    AddImp(std::forward&lt;T&gt;(a), std::forward&lt;T&gt;(b));</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>std::forward的具体实现</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">template &lt;class _Tp&gt;</span><br><span class="line">_Tp&amp;&amp; forward(typename remove_reference&lt;_Tp&gt;::type&amp; __t) </span><br><span class="line">&#123;</span><br><span class="line">  return static_cast&lt;_Tp&amp;&amp;&gt;(__t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>具体分析一下，也是通过引用折叠来实现</p>
-<ol>
-<li>如果_Tp的类型是int&amp;， 通过引用折叠 int&amp; &amp;&amp; 折叠后是左值引用int&amp;</li>
-<li>如果_Tp的类型是int&amp;&amp;， 通过引用折叠 int&amp;&amp; &amp;&amp; 折叠后是int&amp;&amp;</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/10/23/C++%E5%AE%9E%E7%8E%B0%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" data-id="cl9lffyvn0004y2vq69avcwmr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-add-Image" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/09/25/add-Image/" class="article-date">
-  <time datetime="2022-09-25T12:26:19.000Z" itemprop="datePublished">2022-09-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/09/25/add-Image/">add Image</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>###测试插入一张图片</p>
-<p><img src="/2022/09/25/add-Image/sharedptr1.png"></p>
-<p>test end</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2022/09/25/add-Image/" data-id="cl9lffyw2000ty2vqh991a146" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test/" rel="tag">test</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -601,7 +584,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -614,6 +597,14 @@
       <ul>
         
           <li>
+            <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/">分支预测</a>
+          </li>
+        
+          <li>
+            <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/">c++模版函数delete防止隐士类型转换.md</a>
+          </li>
+        
+          <li>
             <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/">AndoirdEGLContext销毁管理</a>
           </li>
         
@@ -623,14 +614,6 @@
         
           <li>
             <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">AddressSanitizer实现原理</a>
           </li>
         
       </ul>

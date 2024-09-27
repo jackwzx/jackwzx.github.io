@@ -64,6 +64,92 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS准确计时" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/17/iOS%E5%87%86%E7%A1%AE%E8%AE%A1%E6%97%B6/" class="article-date">
+  <time datetime="2017-09-16T16:00:00.000Z" itemprop="datePublished">2017-09-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/17/iOS%E5%87%86%E7%A1%AE%E8%AE%A1%E6%97%B6/">iOS不受用户手动修改时间的影响的计时技术</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="iOS不受用户手动修改时间的影响的计时技术"><a href="#iOS不受用户手动修改时间的影响的计时技术" class="headerlink" title="iOS不受用户手动修改时间的影响的计时技术"></a>iOS不受用户手动修改时间的影响的计时技术</h3><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这几天的项目中，要求实现一个用户计时的功能，其中遇到了经理了几种技术方法，分别是利用NSTimer，NSDate，都有各自的问题，Timer计时不够精准，以及需要程序在后台执行，NSDate会受到用户修改系统时间，而导致计时不准，最后找到了一种完美的解决方案</p>
+<h3 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h3><p>直接说最终方案</p>
+<p><code>[[NSProcessInfo processInfo] systemUptime];</code></p>
+<p>这个函数返回的是开机到当前的时间，秒数为单位，并且<strong>不受系统时钟的影响</strong>，在一些需要准确记录时间长度的场景里，配合Timer非常适合，解决了前沿描述的所有痛点.</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/nsprocessinfo/1414553-systemuptime?language=objc">苹果接口文档</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/09/17/iOS%E5%87%86%E7%A1%AE%E8%AE%A1%E6%97%B6/" data-id="cl9lffyw5000zy2vqavs7hjwf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-iOS手势事件分发原理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/01/iOS%E6%89%8B%E5%8A%BF%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2017-06-30T16:00:00.000Z" itemprop="datePublished">2017-07-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/01/iOS%E6%89%8B%E5%8A%BF%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%8E%9F%E7%90%86/">iOS手势事件分发原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>HitTest的主要目的就是找到对于UIEvent的响应者，本文实现代码是根据apple文档描述的一种猜测实现，帮助大家理解原理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">- (UIView *)hitTest:(CGPoint)point withEvent:(nullable UIEvent *)event&#123;</span><br><span class="line">    </span><br><span class="line">    //apple文档描述，不接受事件的情况</span><br><span class="line">    if (self.userInteractionEnabled == NO || self.isHidden == YES || self.alpha &lt; 0.01) &#123;</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //如果当前View包含此Point</span><br><span class="line">    if ([self pointInside:point withEvent:event]) &#123;</span><br><span class="line">        </span><br><span class="line">        //遍历子View，这里注意要从后往前遍历，因为后面的是越靠近用户的</span><br><span class="line">        for (NSInteger i=self.subviews.count-1; i&gt;=0; i--) &#123;</span><br><span class="line">            </span><br><span class="line">            UIView* subView = [self.subviews objectAtIndex:i];</span><br><span class="line">            </span><br><span class="line">            //将父View的Point转换成子View坐标系的Point</span><br><span class="line">            CGPoint pointInSubView = [subView convertPoint:point fromView:self];</span><br><span class="line">            </span><br><span class="line">            //递归子View调用HitTest:</span><br><span class="line">            UIView* resultView = [subView hitTest:pointInSubView withEvent:event];</span><br><span class="line">            </span><br><span class="line">            //找到了子View可以响应</span><br><span class="line">            if (resultView) &#123;</span><br><span class="line">                return resultView;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //没有找到可以响应的子View，返回自己</span><br><span class="line">        return self;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //返回nil，告诉上一级自己无法响应此事件</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>流程图总结</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2042621-dcfdbeeda6c9ce40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/07/01/iOS%E6%89%8B%E5%8A%BF%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%8E%9F%E7%90%86/" data-id="cl9lffyw70014y2vqbt2h0g5p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-tweak使用说明" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="article-date">
@@ -454,108 +540,11 @@
 
 
   
-    <article id="post-CALayer属性positon和anchor" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/" class="article-date">
-  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">2016-10-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/">CALayer属性positon和anchor</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="CALayer-的frame，bounds-position和anchor"><a href="#CALayer-的frame，bounds-position和anchor" class="headerlink" title="CALayer 的frame，bounds, position和anchor"></a>CALayer 的frame，bounds, position和anchor</h3><p>frame描述的是在父layer上的坐标和尺寸</p>
-<p>bounds是类似于View的bounds</p>
-<p>anchor描述的是做动画时，比如旋转时的中心点，以某个点旋转，默认时（0.5，0.5）左上点是（0，0），右下点是（1，1）</p>
-<p>position描述的是anchor的在父layer的坐标</p>
-<p>举例来说，一个View的Frame是（40，40，100，100）</p>
-<p>那么layer的frame是（40，40，100，100）</p>
-<p>bound是（0，0，100，100）</p>
-<p>position是：（140，140）</p>
-<p>position计算：</p>
-<p>pos.x = origin.x + anchor.x*size.with</p>
-<p>pos.y = origin.y + anchor.y*size.height</p>
-<p>如果想修改anchor,一定要同时修改position，才能保证位置不变，否则，单独修改position或者anchor，根据上面公式会导致layer位置发生变化</p>
-<p>如果想修改anchor，而不影响layer移动，只需修改完成后，再设置一次layer的frame即可</p>
-<pre><code>CGRect oldFrame = _redView.frame;
-_redView.layer.anchorPoint = CGPointMake(0.5, 1);
-_redView.frame = oldFrame;
-</code></pre>
-<p>注意，position并不适用这一点</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2016/10/26/CALayer%E5%B1%9E%E6%80%A7positon%E5%92%8Canchor/" data-id="cl9lffyvr000ay2vqgxs0fhnu" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-How to build Apple Watch App" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/" class="article-date">
-  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">2016-10-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/">怎么build apple watch app</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h3><p>在IphoneCom 的Embedded Binaries中添加Watch.app</p>
-<h3 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h3><p>Run IphoneCom</p>
-<h3 id="Step3"><a href="#Step3" class="headerlink" title="Step3"></a>Step3</h3><p>run WachApp</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2016/10/26/How%20to%20build%20Apple%20Watch%20App/" data-id="cl9lffyvu000fy2vq44oy9srb" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -588,7 +577,7 @@ _redView.frame = oldFrame;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -601,6 +590,14 @@ _redView.frame = oldFrame;
       <ul>
         
           <li>
+            <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/">分支预测</a>
+          </li>
+        
+          <li>
+            <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/">c++模版函数delete防止隐士类型转换.md</a>
+          </li>
+        
+          <li>
             <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/">AndoirdEGLContext销毁管理</a>
           </li>
         
@@ -610,14 +607,6 @@ _redView.frame = oldFrame;
         
           <li>
             <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">AddressSanitizer实现原理</a>
           </li>
         
       </ul>

@@ -64,6 +64,152 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-c-继承权限" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" class="article-date">
+  <time datetime="2022-12-04T14:52:54.000Z" itemprop="datePublished">2022-12-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/">c++继承权限</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>继承有三种权限，public，proteced，private，默认不写是private</p>
+</li>
+<li><p>权限的最低是public，其次是protected，最高private</p>
+</li>
+<li><p>继承方式代表是父类属性在当前类中的最低呈现</p>
+</li>
+<li><p>父类中的privated属性在子类中不可访问</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" data-id="clbiwqnu50000dbvqewni94x2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenGL模板测试流程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" class="article-date">
+  <time datetime="2022-11-08T03:51:27.000Z" itemprop="datePublished">2022-11-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="模板测试流程"><a href="#模板测试流程" class="headerlink" title="模板测试流程"></a>模板测试流程</h3><p>不考虑earlyZ的情况下，fragment执行后，进行模板测试，通过后，进入深度测试</p>
+<h4 id="模板测试一般使用流程："><a href="#模板测试一般使用流程：" class="headerlink" title="模板测试一般使用流程："></a>模板测试一般使用流程：</h4><pre><code>1. 启用模板缓冲写入
+2. 渲染物体，更新模板缓冲
+3. 禁用模板缓冲写入
+4. 渲染其他物体，根据模板缓冲内容决定是否丢弃片段
+</code></pre>
+<h5 id="使用模板测试绘制物体轮廓的例子"><a href="#使用模板测试绘制物体轮廓的例子" class="headerlink" title="使用模板测试绘制物体轮廓的例子"></a>使用模板测试绘制物体轮廓的例子</h5><pre><code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glStencilMask();</span><br><span class="line">glStencilFunc(GLenum func, GLint ref, GLuint mask);</span><br><span class="line">glStencilOp(GLenum sfail, GLenum dpfail, GLenum dppass);</span><br></pre></td></tr></table></figure>
+
+1. 开启模板测试和深度测试
+2. 第一次render pass，主要是绘制，并写入模板
+    1. 开启模板测试和深度测试
+    2. glStencilMask(0xFF);
+    3. glStencilOp(keep, keep, replace);
+    4. glStencilFunc(always, 1, 0xFF);
+    5. 绘制物体
+3. 第二次render pass, 放大物体，通过模板测试剔除非边缘像素
+    1. 将物体缩放变大
+    2. 关闭深度测试 //因为这里的边缘不需要有拓扑关系
+    3. 关闭模板写入glStencilMask(0x00);
+    4. glStencilFunc(not_equal, 1, 0xFF);
+    5. 绘制物体
+</code></pre>
+<h3 id="关于OpenGL里面的Mask"><a href="#关于OpenGL里面的Mask" class="headerlink" title="关于OpenGL里面的Mask"></a>关于OpenGL里面的Mask</h3><pre><code>1. 写入颜色是，r，g，b，a 分别与对应的mask，进行&amp;运算后写入
+2. depth也是同样道理，如果设置成true，就是允许写入，设置成false，不允许写入
+3. stencil的Mask，是0xFF~0x00，之间的256个数，一般设置是0xFF，允许任意值写入，0x00是不允许写入
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" data-id="cla7onlj70000ztvqh5nb73ei" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-trivially-copyable-拷贝不变" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/" class="article-date">
+  <time datetime="2022-10-25T08:55:46.000Z" itemprop="datePublished">2022-10-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/">trivially copyable(拷贝不变)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/10/25/trivially-copyable-%E6%8B%B7%E8%B4%9D%E4%B8%8D%E5%8F%98/" data-id="cla7m84aj00004zvq6iv84leh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-C++实现完美转发" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/10/23/C++%E5%AE%9E%E7%8E%B0%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" class="article-date">
@@ -473,147 +619,6 @@
 
 
   
-    <article id="post-CALayer的presentLayer那点事" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/12/CALayer%E7%9A%84presentLayer%E9%82%A3%E7%82%B9%E4%BA%8B/" class="article-date">
-  <time datetime="2017-11-11T16:00:00.000Z" itemprop="datePublished">2017-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/12/CALayer%E7%9A%84presentLayer%E9%82%A3%E7%82%B9%E4%BA%8B/">iOSCALayer的presentLayer那点事</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>最近开发过程中遇到的一个问题，要求在一个View的动画过程中，获取它的实时位置，这里讲如何解决</p>
-</blockquote>
-<h3 id="动画过程中，如何获取它的实时位置"><a href="#动画过程中，如何获取它的实时位置" class="headerlink" title="动画过程中，如何获取它的实时位置"></a>动画过程中，如何获取它的实时位置</h3><p>这个话题涉及对CALayer的理解和使用</p>
-<p>CALayer内部系统维护着三种LayerTree，分别为modelLayer，presentLayer和renderLayer，renderLayer为系统渲染时内部维护，对于开发者来讲是透明不可见的，这里指讨论modelLayer和presentLayer</p>
-<ul>
-<li>modelLayer 实际上就是通常操作的layer，我们可以修改这个layer的各种属性，可以理解这个layer只保存数据</li>
-<li>presentLayer 是当使用CoreAnimation做动画时，每一帧动的位置都可以从这个layer中读取到，我们可以通过下面的代码来测试</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">UIView* view = [[UIView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];</span><br><span class="line"></span><br><span class="line">    view.backgroundColor = [UIColor redColor];</span><br><span class="line"></span><br><span class="line">    [self.view addSubview:view];</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;model   Layeer = %@&quot;, NSStringFromCGRect([view.layer modelLayer].frame));</span><br><span class="line"></span><br><span class="line">    NSLog(@&quot;present Layeer = %@&quot;, NSStringFromCGRect([view.layer presentationLayer].frame));</span><br><span class="line"></span><br><span class="line">    [UIView animateWithDuration:10 animations:^&#123;</span><br><span class="line"></span><br><span class="line">        view.frame = CGRectMake(200, 100, 100, 100);</span><br><span class="line">        </span><br><span class="line">    &#125; completion:^(BOOL finished) &#123;</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES block:^(NSTimer * _Nonnull timer) &#123;</span><br><span class="line">    </span><br><span class="line">        NSLog(@&quot;model   Layeer = %@&quot;, NSStringFromCGRect([view.layer modelLayer].frame));</span><br><span class="line">        NSLog(@&quot;present Layeer = %@&quot;, NSStringFromCGRect([view.layer presentationLayer].frame));</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>通过控制台日志可以分析看到，presentLayer在没有做动画的时候是nil，在有动画时才有数值，并且是实时的view的位置</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/11/12/CALayer%E7%9A%84presentLayer%E9%82%A3%E7%82%B9%E4%BA%8B/" data-id="cl9lffyvt000dy2vq2v714z0j" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-MacOS下ruby安装" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/19/MacOS%E4%B8%8Bruby%E5%AE%89%E8%A3%85/" class="article-date">
-  <time datetime="2017-09-18T16:00:00.000Z" itemprop="datePublished">2017-09-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/19/MacOS%E4%B8%8Bruby%E5%AE%89%E8%A3%85/">Mac环境下安装Ruby</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用rvm来安装ruby"><a href="#使用rvm来安装ruby" class="headerlink" title="使用rvm来安装ruby"></a>使用rvm来安装ruby</h2><h3 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -L get.rvm.io | bash -s stable  </span><br></pre></td></tr></table></figure>
-<h3 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/.bashrc $ source ~/.bash_profile$ rvm -v  </span><br><span class="line">$ source ~/.bash_profile  </span><br><span class="line">$ rvm -v  </span><br></pre></td></tr></table></figure>
-<h3 id="step3"><a href="#step3" class="headerlink" title="step3"></a>step3</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rvm list known  </span><br></pre></td></tr></table></figure>
-<h3 id="step4"><a href="#step4" class="headerlink" title="step4"></a>step4</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rvm install 2.2.0  </span><br></pre></td></tr></table></figure>
-
-<h3 id="如果Step4失败，可以进行如下尝试"><a href="#如果Step4失败，可以进行如下尝试" class="headerlink" title="如果Step4失败，可以进行如下尝试"></a>如果Step4失败，可以进行如下尝试</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R $(whoami):admin /usr/local</span><br><span class="line">cd /usr/local</span><br><span class="line">git remote set-url origin git://mirrors.ustc.edu.cn/brew.git</span><br><span class="line">brew update</span><br><span class="line">sudo chown root:wheel /usr/local</span><br><span class="line">rvm install 2.2.0</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/09/19/MacOS%E4%B8%8Bruby%E5%AE%89%E8%A3%85/" data-id="cl9lffyvw000iy2vqeknfd1ia" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-iOS11 Simulator OpenGL Slowly" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/" class="article-date">
-  <time datetime="2017-09-18T16:00:00.000Z" itemprop="datePublished">2017-09-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/">iOS11模拟器运行OpenGL相关程序卡顿</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>最近升级Xcode9.0后发现模拟器上运行OpenGL程序非常卡顿，查了一下原因，原来是苹果的一处bug</p>
-</blockquote>
-<h3 id="具体的解决方案是"><a href="#具体的解决方案是" class="headerlink" title="具体的解决方案是"></a>具体的解决方案是</h3><p>替换此路径下的文件用附件文件，替换此路径下文件即可</p>
-<p><em>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/OpenGLES.framework/libCoreVMClient.dylib</em>  </p>
-<p><a target="_blank" rel="noopener" href="http://ox0sey9ue.bkt.clouddn.com/libCoreVMClient.dylib">libCoreVMClient.dylib下载链接</a></p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a target="_blank" rel="noopener" href="https://forums.developer.apple.com/thread/83570">苹果开发者论坛</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/09/19/iOS11%20Simulator%20OpenGL%20Slowly/" data-id="cl9lffyw4000xy2vq3jqdfy1n" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -651,7 +656,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -664,23 +669,23 @@
       <ul>
         
           <li>
+            <a href="/2024/10/06/texelFetch/">texelFetch</a>
+          </li>
+        
+          <li>
+            <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/">traits设计和用法</a>
+          </li>
+        
+          <li>
+            <a href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">shell和子shell环境变量</a>
+          </li>
+        
+          <li>
             <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/">分支预测</a>
           </li>
         
           <li>
             <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/">c++模版函数delete防止隐士类型转换.md</a>
-          </li>
-        
-          <li>
-            <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/">AndoirdEGLContext销毁管理</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/">从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵</a>
-          </li>
-        
-          <li>
-            <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
           </li>
         
       </ul>

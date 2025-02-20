@@ -64,6 +64,214 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-C++中operator的重载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/" class="article-date">
+  <time datetime="2022-09-18T07:10:20.000Z" itemprop="datePublished">2022-09-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/">c++中operator的重载</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="两种函数允许编译器进行隐士类型转换"><a href="#两种函数允许编译器进行隐士类型转换" class="headerlink" title="两种函数允许编译器进行隐士类型转换"></a>两种函数允许编译器进行隐士类型转换</h2><ol>
+<li>单一参数调用成功的constructors</li>
+<li>隐士转换操作符</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    //1 隐士构造函数</span><br><span class="line">    Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    //2 隐士类型转换函数</span><br><span class="line">    operator double() const &#123;</span><br><span class="line">        return 5.0f;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    cout &lt;&lt; ration &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何阻止构造函数发生不期望的隐士类型转换"><a href="#如何阻止构造函数发生不期望的隐士类型转换" class="headerlink" title="如何阻止构造函数发生不期望的隐士类型转换"></a>如何阻止构造函数发生不期望的隐士类型转换</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    explicit Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    </span><br><span class="line">    //构造函数声明为explicit 阻止隐士类型转换 ration == 2 会编译报错</span><br><span class="line">    if (ration == 2) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="重载操作符可以在globe-scope或者class-scope中进行，但是切记不要重载-amp-amp-操作符，-原因是改变了短路运算的语义，变成函数调用。"><a href="#重载操作符可以在globe-scope或者class-scope中进行，但是切记不要重载-amp-amp-操作符，-原因是改变了短路运算的语义，变成函数调用。" class="headerlink" title="重载操作符可以在globe scope或者class scope中进行，但是切记不要重载 &amp;&amp; || 操作符， 原因是改变了短路运算的语义，变成函数调用。"></a>重载操作符可以在globe scope或者class scope中进行，但是切记不要重载 &amp;&amp; || 操作符， 原因是改变了短路运算的语义，变成函数调用。</h3><h4 id="这里还有一个细节，c-中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。"><a href="#这里还有一个细节，c-中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。" class="headerlink" title="这里还有一个细节，c++中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。"></a>这里还有一个细节，c++中并未明确定义函数调用动作中各参数的评估顺序，而短路运算是从左到右的。</h4><p>###重载(),当重载 () 时，不是创造了一种新的调用函数的方式，相反地，这是创建一个可以传递任意数目参数的运算符函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Ration &#123;</span><br><span class="line">public:</span><br><span class="line">    explicit Ration(int a) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int operator() (int a , int b, int c)</span><br><span class="line">    &#123;</span><br><span class="line">        return 10;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    int operator() (int a , int b)</span><br><span class="line">    &#123;</span><br><span class="line">        return 5;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Ration ration(1);</span><br><span class="line">    ration(1, 2, 3);</span><br><span class="line">    ration(1, 3);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/09/18/C++%E4%B8%ADoperator%E7%9A%84%E9%87%8D%E8%BD%BD/" data-id="cl9lffyvj0001y2vqbzv818m7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-C++构造函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/09/18/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2022-09-18T02:54:51.000Z" itemprop="datePublished">2022-09-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/09/18/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">C++ 构造函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="C-构造函数"><a href="#C-构造函数" class="headerlink" title="C++ 构造函数"></a>C++ 构造函数</h2><ol>
+<li>默认构造</li>
+<li>copy构造</li>
+<li>移动构造</li>
+<li>operator= 赋值函数</li>
+</ol>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
+<li>对于赋值函数和copy构造函数来说，直接实现实现const的版本即可，如果参数不是const，会调用const，只有实现了非const的参数，才会调用</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">class Person</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Person() &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Person()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line">    ~Person() &#123;</span><br><span class="line">        cout &lt;&lt; &quot;~Person()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    Person(const Person&amp; Person) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Person(Person&amp; Person)&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Person(Person&amp;&amp; Person) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Person(Person&amp;&amp; Person)&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Person&amp; operator=(const Person&amp;)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;operator=(const Person&amp;)&quot; &lt;&lt; endl;</span><br><span class="line">        return *this;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>对于构造函数，copy构造函数和移动构造函数来说，只要实现其中任何一个，剩余其他的，编译器就不会帮助生成。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class Person</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">//    Person() &#123;</span><br><span class="line">//        cout &lt;&lt; &quot;Person()&quot; &lt;&lt; endl;</span><br><span class="line">//    &#125;;</span><br><span class="line">    ~Person() &#123;</span><br><span class="line">        cout &lt;&lt; &quot;~Person()&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">//    Person(const Person&amp; Person) &#123;</span><br><span class="line">//        cout &lt;&lt; &quot;Person(Person&amp; Person)&quot; &lt;&lt; endl;</span><br><span class="line">//    &#125;</span><br><span class="line"></span><br><span class="line">    Person(Person&amp;&amp; Person) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;Person(Person&amp;&amp; Person)&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Person&amp; operator=(const Person&amp;)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; &quot;operator=(const Person&amp;)&quot; &lt;&lt; endl;</span><br><span class="line">        return *this;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Person person; //编译报错，找不到匹配的构造函数</span><br><span class="line">    return 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/09/18/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" data-id="cl9lffyvo0005y2vq4sih91wm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-iOS-MessageForwarding" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/14/iOS-MessageForwarding/" class="article-date">
+  <time datetime="2017-12-13T16:00:00.000Z" itemprop="datePublished">2017-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/14/iOS-MessageForwarding/">iOS运行时消息转发</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近读了一遍apple 文档，对于iOS运行时消息转发机制发现有些细节还是理解有所偏差，写此文章加深理解</p>
+</blockquote>
+<h3 id="iOS-方法调用探讨"><a href="#iOS-方法调用探讨" class="headerlink" title="iOS 方法调用探讨"></a>iOS 方法调用探讨</h3><p>这个话题还要从OC是一门动态语言说起，OC的动态性体现在编译和链接期，并没有直接绑定函数调用关系，编译器将方法调用转成objc_msgSend(receiver, selector, arg1, arg2, …)方法这种方式</p>
+<p>在运行时，通过isa对象通过从子类到父类的方法查找，找到具体的函数入口进行调用，这其中还包括cache等机制，这里不在赘述，这次主要讨论的是Dynamic Method Resolution和Message Forwarding</p>
+<p>如果调用的Seletor在类的方法列表中找不到，以实例对象的方法为例，将进入如下流程：</p>
+<p><img src="https://oh144b0ji.qnssl.com/OC%20runTime.jpg" alt="image.png"></p>
+<p>主要流程可以总结为，先进入消息动态处理流程，再进入消息转发流程</p>
+<p>1.消息动态处理流程：resloveInstanceMethod中可以通过class_addMethod为此对象动态添加方法，这样就使该对象正常响应此方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)aSEL&#123;</span><br><span class="line">  </span><br><span class="line">    if (aSEL == @selector(notFoundFunctiion)) &#123;</span><br><span class="line">        </span><br><span class="line">        class_addMethod([self class], aSEL, (IMP) dynamicMethodIMP, &quot;v@:&quot;);</span><br><span class="line">        return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    return [super resolveInstanceMethod:aSEL];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    需要注意的是，不仅[self notFoundFunctiion]会触发这里，在</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self respondsToSelector:@selector(notFoundFunctiion)]</span><br></pre></td></tr></table></figure>
+
+<p>​    这句代码中，同样会触发消息动态处理流程，这和后面讲的消息转发有很大区别。</p>
+<p>2.如果上面的消息处理流程返回NO，那么就会进入消息转发流程</p>
+<p>可以将此消息转发给另外一个对象进行执行。首先进入的是forwardingTargetForSelector，这里可以返回一个可以响应此消息的对象，如果仍然返回nil，就会进入methodSignatureForSelector和forwardInvocation的流程，其实这两种方式本质的意义相同，只不过一个是通过另外的对象selector调用，一个是通过invocation的方式调用，但是要注意，这里的selector对于原来的对象来讲，respondsToSelector返回为NO</p>
+<h4 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h4><p><a target="_blank" rel="noopener" href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html">Objective-C Runtime Programming Guide</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/12/14/iOS-MessageForwarding/" data-id="cl9lffyw3000vy2vqc3e55i0z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-CALayer的presentLayer那点事" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/11/12/CALayer%E7%9A%84presentLayer%E9%82%A3%E7%82%B9%E4%BA%8B/" class="article-date">
@@ -386,154 +594,6 @@
 
 
   
-    <article id="post-OpenGL-纹理贴图" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" class="article-date">
-  <time datetime="2017-01-03T03:11:26.000Z" itemprop="datePublished">2017-01-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/">纹理贴图</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1 VertexShader</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">attribute vec2 TexCoordIn; // New</span><br><span class="line">varying vec2 TexCoordOut; // New</span><br><span class="line"></span><br><span class="line">void main(void) &#123; </span><br><span class="line">    DestinationColor = SourceColor; </span><br><span class="line">    gl_Position = Projection * Modelview * Position;</span><br><span class="line">    TexCoordOut = TexCoordIn; // New</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2 FragmentShader</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">varying lowp vec4 DestinationColor;</span><br><span class="line">varying lowp vec2 TexCoordOut; // New</span><br><span class="line">uniform sampler2D Texture; // New</span><br><span class="line"></span><br><span class="line">void main(void) &#123;</span><br><span class="line">    gl_FragColor = DestinationColor * texture2D(Texture, TexCoordOut); // New</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>3 将图片资源转换成位图数据，绑定到对应纹理ID中</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">+ (GLuint)createTextureWithImage:(UIImage *)image&#123;</span><br><span class="line">    </span><br><span class="line">    //转换为CGImage，获取图片基本参数</span><br><span class="line">    CGImageRef cgImageRef = [image CGImage];</span><br><span class="line">    GLuint width = (GLuint)CGImageGetWidth(cgImageRef);</span><br><span class="line">    GLuint height = (GLuint)CGImageGetHeight(cgImageRef);</span><br><span class="line">    CGRect rect = CGRectMake(0, 0, width, height);</span><br><span class="line">    </span><br><span class="line">    //绘制图片</span><br><span class="line">    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();</span><br><span class="line">    void *imageData = malloc(width * height * 4);</span><br><span class="line">    CGContextRef context = CGBitmapContextCreate(imageData, width, height, 8, width * 4, colorSpace,kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);</span><br><span class="line">    CGContextTranslateCTM(context, 0, height);</span><br><span class="line">    CGContextScaleCTM(context, 1.0f, -1.0f);</span><br><span class="line">    CGColorSpaceRelease(colorSpace);</span><br><span class="line">    CGContextClearRect(context, rect);</span><br><span class="line">    CGContextDrawImage(context, rect, cgImageRef);</span><br><span class="line">    </span><br><span class="line">    GLuint textureID;</span><br><span class="line">    glGenTextures(1, &amp;textureID);</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</span><br><span class="line">    </span><br><span class="line">    //纹理一些设置，可有可无</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">    </span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);</span><br><span class="line">    </span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, 0);</span><br><span class="line">    </span><br><span class="line">    //释放内存</span><br><span class="line">    CGContextRelease(context);</span><br><span class="line">    free(imageData);</span><br><span class="line">    </span><br><span class="line">    return textureID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>4 绘制时使用纹理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">glActiveTexture(GL_TEXTURE0);</span><br><span class="line">//载入纹理</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _textTureId);</span><br><span class="line"></span><br><span class="line">glUniform1i(_textureSlot, 0);</span><br><span class="line"></span><br><span class="line">const GLfloat texCoords[] = &#123;</span><br><span class="line">    0, 0,//左下</span><br><span class="line">    1, 0,//右下</span><br><span class="line">    0, 1,//左上</span><br><span class="line">    1, 1,//右上</span><br><span class="line">&#125;;</span><br><span class="line">glVertexAttribPointer(_textureCoordsSlot, 2, GL_FLOAT, GL_FALSE, 0, texCoords);</span><br><span class="line">glEnableVertexAttribArray(_textureCoordsSlot);</span><br></pre></td></tr></table></figure>
-
-<p>5 关于纹理坐标</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" data-id="cl9lffyw1000ry2vq1hiy961v" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenGL-光照学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" class="article-date">
-  <time datetime="2017-01-02T05:43:54.000Z" itemprop="datePublished">2017-01-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/">光照学习</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>1 发射光（emission）：物体本身发的光，如果物体不发光，一般无此属性</p>
-<p>2 环境光（ambient）：在环境中充分散射的光，光线在物体表面各个方向均匀泛射在openGL中，全局光强度为（0.2，0.2，0.2，1.0）</p>
-<p>3 漫反射光（diffuse）：关于来自某个方向，但是在物体表面向各个方向反射</p>
-<p>4 镜面高光：光线来自某一个特定的方向，然后在物体表面，以一个特定方向反射出去，在OpenGL中，镜面反射的强度，可以通过光泽度（shiness）来调节</p>
-<h3 id="光的计算："><a href="#光的计算：" class="headerlink" title="光的计算："></a>光的计算：</h3><p>1 发射光计算：发射颜色=物体的发射材质颜色</p>
-<p>2 环境光计算</p>
-<p>环境颜色 = 光源的环境光颜色*物体的环境材质颜色</p>
-<p>3 漫反射计算：</p>
-<p>漫反射颜色=光源的漫反射光颜色 * 物体的漫反射材质颜色 * DiffuseFactor</p>
-<p>其中DiffuseFactor = max（0，dot（N，L））</p>
-<p>dot表示两个向量夹角的cos</p>
-<p>4 镜面反射：</p>
-<p>镜面反射颜色 = 光源的镜面光颜色 * 物体的镜面材质颜色 * SpecularFactor</p>
-<p>SpecularFactor = power（max（0， dot（N，H）），shininess）</p>
-<p>H = normalise（L+E）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" data-id="cl9lffyvz000ny2vq61m3em0n" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-OpenGL-VBO" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/02/OpenGL-VBO/" class="article-date">
-  <time datetime="2017-01-02T05:19:23.000Z" itemprop="datePublished">2017-01-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/02/OpenGL-VBO/">VBO</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="VBO的目的："><a href="#VBO的目的：" class="headerlink" title="VBO的目的："></a>VBO的目的：</h3><p>主要是为了提高效率，减少在CPU向GPU中传输数据，直接在GPU上申请内存空间</p>
-<p>两种target分别是GL_ARRAY_BUFFER和GL_ELEMENT_ARRAY_BUFFER</p>
-<p>分别对应顶点数据和索引</p>
-<p>使用glVertexAttribPointer和glDrawElements的流程和以前大致保持一致，区别在于，最后一个参数不是传指针了，而是传bindBuffer的偏移量</p>
-<h3 id="VBO使用的大概流程："><a href="#VBO使用的大概流程：" class="headerlink" title="VBO使用的大概流程："></a>VBO使用的大概流程：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//获取一个操作句柄</span><br><span class="line">glGenBuffers(1, &amp;_vertexBuffer);</span><br><span class="line">//设置缓存对象类型，数据缓存对象，还是元素缓存对象，通俗的说就是数组还是索引</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);</span><br><span class="line">//分配内存空间</span><br><span class="line">glBufferData(GL_ARRAY_BUFFER, 7*3*sizeof(GLfloat), vertices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">在绘制代码Draw时，可以使用，绘制代码与正常并无冥想差别</span><br><span class="line">glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);</span><br><span class="line">glVertexAttribPointer(_positionSlot, 3, GL_FLOAT, GL_FALSE, 7*sizeof(float), 0);</span><br><span class="line">glEnableVertexAttribArray(_positionSlot);</span><br><span class="line"></span><br><span class="line">glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _triangleIndexBuffer);</span><br><span class="line">glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, 0);</span><br><span class="line"></span><br><span class="line">//可以在清理时，释放VBO</span><br><span class="line">glDeleteBuffers(1, &amp;_vertexBuffer);</span><br><span class="line">_vertexBuffer = 0;</span><br><span class="line"></span><br><span class="line">glDeleteBuffers(1, &amp;_triangleIndexBuffer);</span><br><span class="line">_triangleIndexBuffer = 0;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2017/01/02/OpenGL-VBO/" data-id="cl9lffyvx000jy2vq8dnc9pxr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -571,7 +631,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -584,23 +644,23 @@
       <ul>
         
           <li>
+            <a href="/2024/11/04/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%9A%E9%85%8D%E7%AC%A6/">命令行通配符</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/11/%E6%AD%A3%E5%88%99%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%BA%E5%88%AB/">正则与通配符区别</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/">std::nth_element实现</a>
+          </li>
+        
+          <li>
             <a href="/2024/10/06/texelFetch/">texelFetch</a>
           </li>
         
           <li>
             <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/">traits设计和用法</a>
-          </li>
-        
-          <li>
-            <a href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">shell和子shell环境变量</a>
-          </li>
-        
-          <li>
-            <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/">分支预测</a>
-          </li>
-        
-          <li>
-            <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/">c++模版函数delete防止隐士类型转换.md</a>
           </li>
         
       </ul>
@@ -615,7 +675,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2024 JackWang<br>
+      &copy; 2025 JackWang<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

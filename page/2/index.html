@@ -64,6 +64,72 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/" class="article-date">
+  <time datetime="2024-07-30T04:26:12.000Z" itemprop="datePublished">2024-07-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/">从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。</p>
+<h3 id="对于3x3矩阵："><a href="#对于3x3矩阵：" class="headerlink" title="对于3x3矩阵："></a>对于3x3矩阵：</h3><p>原3x3矩阵的形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a  b  tx |</span><br><span class="line">| c  d  ty |</span><br><span class="line">| 0  0  1  |</span><br></pre></td></tr></table></figure>
+
+<p>步骤：</p>
+<ol>
+<li><p>提取旋转部分（左上2x2子矩阵）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| a  b |</span><br><span class="line">| c  d |</span><br></pre></td></tr></table></figure></li>
+<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = sqrt(a^2 + c^2) = sqrt(b^2 + d^2)</span><br></pre></td></tr></table></figure></li>
+<li><p>将旋转部分归一化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| a/s  b/s |</span><br><span class="line">| c/s  d/s |</span><br></pre></td></tr></table></figure></li>
+<li><p>构建新的3x3矩阵，包含平移分量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a/s  b/s  tx |</span><br><span class="line">| c/s  d/s  ty |</span><br><span class="line">|  0    0    1 |</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="对于4x4矩阵："><a href="#对于4x4矩阵：" class="headerlink" title="对于4x4矩阵："></a>对于4x4矩阵：</h3><p>原4x4矩阵的形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| a  b  c  tx |</span><br><span class="line">| d  e  f  ty |</span><br><span class="line">| g  h  i  tz |</span><br><span class="line">| 0  0  0   1 |</span><br></pre></td></tr></table></figure>
+
+<p>步骤：</p>
+<ol>
+<li><p>提取旋转部分（左上3x3子矩阵）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a  b  c |</span><br><span class="line">| d  e  f |</span><br><span class="line">| g  h  i |</span><br></pre></td></tr></table></figure></li>
+<li><p>计算缩放因子（可以使用行向量的范数或列向量的范数）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sx = sqrt(a^2 + d^2 + g^2)</span><br><span class="line">sy = sqrt(b^2 + e^2 + h^2)</span><br><span class="line">sz = sqrt(c^2 + f^2 + i^2)</span><br></pre></td></tr></table></figure></li>
+<li><p>将旋转部分归一化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a/sx  b/sy  c/sz |</span><br><span class="line">| d/sx  e/sy  f/sz |</span><br><span class="line">| g/sx  h/sy  i/sz |</span><br></pre></td></tr></table></figure></li>
+<li><p>构建新的4x4矩阵，包含平移分量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| a/sx  b/sy  c/sz  tx |</span><br><span class="line">| d/sx  e/sy  f/sz  ty |</span><br><span class="line">| g/sx  h/sy  i/sz  tz |</span><br><span class="line">|  0     0     0    1  |</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>这些步骤可以帮助您从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/" data-id="clz7x1xve00005zvqh9oe5l7x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-OpenGLE-VAO局部影响vs全局影响" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/" class="article-date">
@@ -521,42 +587,6 @@
 
 
   
-    <article id="post-smoothStep实现" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/" class="article-date">
-  <time datetime="2023-12-22T11:51:30.000Z" itemprop="datePublished">2023-12-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/">smoothStep实现</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/" data-id="clqgkmoy200004avqgnft9c27" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -594,7 +624,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -605,6 +635,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/03/15/what-is-mpx/">what is mpx</a>
+          </li>
         
           <li>
             <a href="/2024/11/04/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%9A%E9%85%8D%E7%AC%A6/">命令行通配符</a>
@@ -620,10 +654,6 @@
         
           <li>
             <a href="/2024/10/06/texelFetch/">texelFetch</a>
-          </li>
-        
-          <li>
-            <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/">traits设计和用法</a>
           </li>
         
       </ul>

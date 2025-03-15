@@ -64,6 +64,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-tweak环境搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time datetime="2017-03-07T00:43:58.000Z" itemprop="datePublished">2017-03-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">tweak环境搭建</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0-设置环境变量-export-THEOS-opt-theos"><a href="#0-设置环境变量-export-THEOS-opt-theos" class="headerlink" title="0 设置环境变量 export THEOS=/opt/theos"></a>0 设置环境变量 export THEOS=/opt/theos</h3><p>可以设置~/.zshrc中添加，修改后用source命令重新加载</p>
+<h3 id="1下载theos（-jailbreak目录下已经下载过），放在-opt-theos下"><a href="#1下载theos（-jailbreak目录下已经下载过），放在-opt-theos下" class="headerlink" title="1下载theos（~/jailbreak目录下已经下载过），放在/opt/theos下"></a>1下载theos（~/jailbreak目录下已经下载过），放在/opt/theos下</h3><h3 id="2-下载ldid，放到-opt-theos-bin下"><a href="#2-下载ldid，放到-opt-theos-bin下" class="headerlink" title="2 下载ldid，放到/opt/theos/bin下"></a>2 下载ldid，放到/opt/theos/bin下</h3><p>sudo chmod 777 /opt/theos/bin/ldid</p>
+<h3 id="3-配置CydiaSubstrate"><a href="#3-配置CydiaSubstrate" class="headerlink" title="3 配置CydiaSubstrate"></a>3 配置CydiaSubstrate</h3><p>在Cydia中安装CydiaSbustrate，然后scp 讲iPhone上的 /Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate 拷贝到Mac /opt/theos/lib/下，并重命名为libsubstrate.dylib</p>
+<p>并将头文件substrate.h也scp 到/opt/theos/include下</p>
+<p>sudo /opt/theos/bin/bootstrap.sh substrate</p>
+<h3 id="4-将dm-pl重命名为dpkg-deb，cp到-opt-bin"><a href="#4-将dm-pl重命名为dpkg-deb，cp到-opt-bin" class="headerlink" title="4 将dm.pl重命名为dpkg-deb，cp到/opt/bin/"></a>4 将dm.pl重命名为dpkg-deb，cp到/opt/bin/</h3><p>suodo chmod 777 /opt/bin/dpkg-deb</p>
+<p>基本就搭建完成，可以练习创建工程</p>
+<p>/opt/theos/bin/nic.pl</p>
+<p>然后进行make package </p>
+<p>make package install</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2017/03/07/tweak%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" data-id="cl9lffyw80017y2vq1nzphzwc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-OpenGL-纹理贴图" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" class="article-date">
@@ -493,7 +541,7 @@ _redView.frame = oldFrame;
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -504,6 +552,10 @@ _redView.frame = oldFrame;
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/03/15/what-is-mpx/">what is mpx</a>
+          </li>
         
           <li>
             <a href="/2024/11/04/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%9A%E9%85%8D%E7%AC%A6/">命令行通配符</a>
@@ -519,10 +571,6 @@ _redView.frame = oldFrame;
         
           <li>
             <a href="/2024/10/06/texelFetch/">texelFetch</a>
-          </li>
-        
-          <li>
-            <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/">traits设计和用法</a>
           </li>
         
       </ul>

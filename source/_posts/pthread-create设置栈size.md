@@ -4,6 +4,10 @@ date: 2024-07-28 10:44:09
 tags:
 ---
 
+本文演示如何在使用 `pthread_create` 创建线程时设置自定义的栈大小。通过 `pthread_attr_setstacksize` 函数可以控制线程的栈空间大小，这在需要大量栈空间或者优化内存使用时非常有用。
+
+<!-- more -->
+
 ```cpp
 #include <pthread.h>
 #include <stdio.h>

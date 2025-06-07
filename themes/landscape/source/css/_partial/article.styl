@@ -124,17 +124,18 @@
 .article-more-link a
   display: inline-block
   line-height: 1em
-  padding: 6px 15px
-  border-radius: 15px
-  background: color-background
-  color: color-grey
-  text-shadow: 0 1px #fff
+  padding: 8px 20px
+  border-radius: 20px
+  background: color-link
+  color: #fff
+  text-shadow: 0 1px darken(color-link, 20%)
   text-decoration: none
+  margin-top: 15px
+  font-weight: bold
+  transition: background 0.3s ease
   &:hover
-    background: color-link
-    color: #fff
+    background: darken(color-link, 10%)
     text-decoration: none
-    text-shadow: 0 1px darken(color-link, 20%)
 
 .article-footer
   clearfix()

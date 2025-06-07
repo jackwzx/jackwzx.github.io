@@ -128,3 +128,10 @@ feed:
   order_by: -date
   icon: icon.png
   autodiscovery: true
+
+# 搜索功能配置
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html

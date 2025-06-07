@@ -1,0 +1,160 @@
+<div class="local-search-popup">
+  <div class="local-search-box">
+    <div class="local-search-input-wrapper">
+      <input id="local-search-input" type="text" placeholder="搜索..." />
+    </div>
+    <span class="search-close-button">×</span>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<script>
+// 搜索功能实现
+window.addEventListener('DOMContentLoaded', function() {
+  var isXml = true;
+  var searchPath = "<%= config.search.path %>";
+  if (searchPath.length === 0) {
+    searchPath = "search.xml";
+  } else if (/json$/i.test(searchPath)) {
+    isXml = false;
+  }
+  var path = "<%= config.root %>" + searchPath;
+  var input = document.getElementById("local-search-input");
+  var resultContent = document.getElementById("local-search-result");
+  var searchData = [];
+
+  // 加载搜索索引
+  loadSearchData();
+
+  function loadSearchData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', path, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          if (isXml) {
+            var xmlDoc = new DOMParser().parseFromString(xhr.responseText, "text/xml");
+            var entries = xmlDoc.getElementsByTagName("entry");
+            searchData = Array.from(entries).map(function(entry) {
+              return {
+                title: entry.getElementsByTagName("title")[0].textContent,
+                content: entry.getElementsByTagName("content")[0].textContent,
+                url: entry.getElementsByTagName("url")[0].textContent
+              };
+            });
+          } else {
+            searchData = JSON.parse(xhr.responseText);
+          }
+          
+          // 添加搜索事件监听
+          input.addEventListener('input', search);
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  function search() {
+    var searchText = input.value.trim().toLowerCase();
+    var keywords = searchText.split(/[\s\-]+/);
+    resultContent.innerHTML = "";
+    
+    if (searchText.length > 0) {
+      // 执行搜索
+      searchData.forEach(function(data) {
+        var isMatch = true;
+        var dataTitle = data.title.trim().toLowerCase();
+        var dataContent = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+        var dataUrl = data.url;
+        var indexTitle = -1;
+        var indexContent = -1;
+        var firstOccur = -1;
+        
+        // 只匹配非空关键字
+        if (keywords.length > 0) {
+          keywords.forEach(function(keyword, i) {
+            indexTitle = dataTitle.indexOf(keyword);
+            indexContent = dataContent.indexOf(keyword);
+            if (indexTitle < 0 && indexContent < 0) {
+              isMatch = false;
+            } else {
+              if (indexContent < 0) {
+                indexContent = 0;
+              }
+              if (i == 0) {
+                firstOccur = indexContent;
+              }
+            }
+          });
+        }
+        
+        // 显示搜索结果
+        if (isMatch) {
+          var resultItem = document.createElement("div");
+          resultItem.className = "search-result-item";
+          
+          // 标题
+          var resultTitle = document.createElement("div");
+          resultTitle.className = "search-result-title";
+          var resultLink = document.createElement("a");
+          resultLink.href = dataUrl;
+          resultLink.textContent = data.title;
+          resultTitle.appendChild(resultLink);
+          resultItem.appendChild(resultTitle);
+          
+          // 内容
+          if (firstOccur >= 0) {
+            // 截取内容
+            var content = dataContent;
+            var start = Math.max(0, firstOccur - 20);
+            var end = Math.min(content.length, firstOccur + 80);
+            if (start > 0) {
+              content = '...' + content.substring(start, end) + '...';
+            } else {
+              content = content.substring(start, end) + '...';
+            }
+            
+            // 高亮关键字
+            keywords.forEach(function(keyword) {
+              var regS = new RegExp(keyword, "gi");
+              content = content.replace(regS, '<strong class="search-keyword">' + keyword + '</strong>');
+            });
+            
+            var resultContentDiv = document.createElement("div");
+            resultContentDiv.className = "search-result-content";
+            resultContentDiv.innerHTML = content;
+            resultItem.appendChild(resultContentDiv);
+          }
+          
+          resultContent.appendChild(resultItem);
+        }
+      });
+    }
+  }
+
+  // 搜索框弹出与关闭
+  var searchBtn = document.getElementById("nav-search-btn");
+  var searchPopup = document.querySelector(".local-search-popup");
+  var closeBtn = document.querySelector(".search-close-button");
+  
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      searchPopup.style.display = "block";
+      input.focus();
+    });
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      searchPopup.style.display = "none";
+    });
+  }
+  
+  document.addEventListener('keyup', function(e) {
+    if (e.key === "Escape") {
+      searchPopup.style.display = "none";
+    }
+  });
+});
+</script> 

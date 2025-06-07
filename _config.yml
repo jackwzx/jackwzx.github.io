@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: https://jackwzx.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -108,3 +108,10 @@ deploy:
   type: git
   repository: git@github.com:jackwzx/jackwzx.github.io.git
   branch: master
+
+# 网站地图配置
+sitemap:
+  path: sitemap.xml
+  
+baidusitemap:
+  path: baidusitemap.xml

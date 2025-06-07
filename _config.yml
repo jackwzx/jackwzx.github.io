@@ -115,3 +115,16 @@ sitemap:
   
 baidusitemap:
   path: baidusitemap.xml
+
+# RSS Feed配置
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true

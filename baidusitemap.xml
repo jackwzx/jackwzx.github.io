@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jackwzx.github.io/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/</loc>
+    <lastmod>2025-06-13</lastmod>
+  </url>
+  <url>
     <loc>https://jackwzx.github.io/2025/06/08/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%99%B7%E9%98%B1-%E6%9C%89%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83/</loc>
     <lastmod>2025-06-12</lastmod>
   </url>

@@ -81,6 +81,171 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenGLES设置顶点属性的默认值" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" class="article-date">
+  <time datetime="2024-07-28T08:53:57.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 OpenGL ES 中，设置顶点属性的默认值和通过顶点缓冲对象（VBO）上传顶点属性是两种不同的处理顶点属性的方法。以下是详细的解释：</p>
+<h3 id="设置顶点属性默认值"><a href="#设置顶点属性默认值" class="headerlink" title="设置顶点属性默认值"></a>设置顶点属性默认值</h3>
+        
+          <p class="article-more-link">
+            <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" data-id="cmbt3hg8e00121xcod1kr81j1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-AddressSanitizer实现原理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2024-07-28T04:23:56.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">AddressSanitizer实现原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AddressSanitizer（简称ASan）是一种内存错误检测工具，用于捕捉诸如缓冲区溢出、使用已释放内存、堆栈溢出等内存错误。ASan在编译时和运行时对程序进行处理，以检测和报告内存相关的错误。以下是AddressSanitizer的实现原理的详细解释：</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" data-id="cmbt3hg8700011xco7ltc5v13" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-pthread-create设置栈size" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/" class="article-date">
+  <time datetime="2024-07-28T02:44:09.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/">pthread_create设置栈size</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文演示如何在使用 <code>pthread_create</code> 创建线程时设置自定义的栈大小。通过 <code>pthread_attr_setstacksize</code> 函数可以控制线程的栈空间大小，这在需要大量栈空间或者优化内存使用时非常有用。</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/" data-id="cmbt3hg8i001x1xco9vr4f7om" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用-asan-unpoison-memory-region屏蔽某处内存检查" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/" class="article-date">
+  <time datetime="2024-07-22T00:45:16.000Z" itemprop="datePublished">2024-07-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>__asan_unpoison_memory_region</code> 是 AddressSanitizer (ASan) 库中的一个函数。ASan 是一个用于检测内存错误的工具，主要用于 C 和 C++ 程序开发者。<code>__asan_unpoison_memory_region</code> 的作用是标记一段内存区域为“未污染”状态，这意味着这段内存可以被访问且不会触发 ASan 的错误报告。</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/" data-id="cmbt3hg8k002o1xco76q0exyf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-UTF编码内存角度比较-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" class="article-date">
@@ -125,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" data-id="cmbthobku001ajxcogalj96bx" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" data-id="cmbt3hg8f001a1xco7605glpg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -166,10 +331,53 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/" data-id="cmbu9ooab0000docoatgg86un" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/" data-id="cmc9xgo8p00005tco0slledk0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-C++11委托构造函数和继承构造函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/01/15/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" class="article-date">
+  <time datetime="2024-01-15T02:30:00.000Z" itemprop="datePublished">2024-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/01/15/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">C++11 委托构造函数和继承构造函数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="C-11-委托构造函数和继承构造函数"><a href="#C-11-委托构造函数和继承构造函数" class="headerlink" title="C++11 委托构造函数和继承构造函数"></a>C++11 委托构造函数和继承构造函数</h2><p>C++11 引入了两个重要的构造函数特性：委托构造函数（Delegating Constructors）和继承构造函数（Inheriting Constructors）。这两个特性都旨在减少代码重复，提高代码的可维护性和可读性。</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/01/15/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/01/15/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" data-id="cmca8bv4200007ofyb87c6yek" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" rel="tag">构造函数</a></li></ul>
 
     </footer>
   </div>
@@ -206,7 +414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" data-id="cmbthobku0017jxcoevl0g2sq" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" data-id="cmbt3hg8f00171xco1w9ybc1q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -244,7 +452,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" data-id="cmbthobkw001rjxco3dx87c62" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" data-id="cmbt3hg8g001s1xco5tcv4t6k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -285,219 +493,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/24/tag-dispatch/" data-id="cmbthobky0024jxcodk9n1lrn" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-smoothStep实现" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/" class="article-date">
-  <time datetime="2023-12-22T11:51:30.000Z" itemprop="datePublished">2023-12-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/">smoothStep实现</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文将介绍smoothStep函数的实现原理和应用。</p>
-<!-- 内容待补充 -->
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/" data-id="cmbthobkx001zjxco10xh0v95" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-模板规则推导" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/" class="article-date">
-  <time datetime="2023-12-21T05:56:09.000Z" itemprop="datePublished">2023-12-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/">模板规则推导</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="模板推导规则"><a href="#模板推导规则" class="headerlink" title="模板推导规则"></a>模板推导规则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByRefFun(T&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByUniRefFun(T&amp;&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByValueFun(T val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void fun3(int&amp; a) &#123; &#125;</span><br><span class="line">void fun3(int&amp;&amp; a) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    int a = 0;          //a int</span><br><span class="line">    const int b = a;    //b const int</span><br><span class="line">    const int&amp; c = a;   //c const int&amp;</span><br><span class="line">    </span><br><span class="line">    passByRefFun(a);    // int&amp;</span><br><span class="line">    passByRefFun(b);    // const int&amp;</span><br><span class="line">    passByRefFun(c);    // const int&amp;</span><br><span class="line">    //passByRefFun(27);   // 报错</span><br><span class="line">    </span><br><span class="line">    passByUniRefFun(a); // int&amp;</span><br><span class="line">    passByUniRefFun(b); // const int&amp;</span><br><span class="line">    passByUniRefFun(c); // const int&amp;</span><br><span class="line">    passByUniRefFun(27); // int&amp;&amp;</span><br><span class="line">    </span><br><span class="line">    passByValueFun(a);  // int</span><br><span class="line">    passByValueFun(b);  // int</span><br><span class="line">    passByValueFun(c);  // int</span><br><span class="line">    passByValueFun(27); // int</span><br><span class="line">    </span><br><span class="line">    &#123;</span><br><span class="line">        int&amp;&amp; a = 10;</span><br><span class="line">        fun3(a);            // called void fun3(int&amp; a)</span><br><span class="line">        fun3(std::move(a)); // called void fun3(int&amp;&amp; a)</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/" data-id="cmbthobl2002wjxcoh4cp2w4n" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-电子书目录" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" class="article-date">
-  <time datetime="2022-12-25T15:36:30.000Z" itemprop="datePublished">2022-12-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/">电子书目录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="渲染整理"><a href="#渲染整理" class="headerlink" title="渲染整理"></a>渲染整理</h2><h4 id="开放世界的场景管理"><a href="#开放世界的场景管理" class="headerlink" title="开放世界的场景管理"></a>开放世界的场景管理</h4><pre><code>1. 切成tile
-2. 数据分级LOD
-3. 根据天顶角，调整远平面，裁剪数据
-</code></pre>
-        
-          <p class="article-more-link">
-            <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" data-id="cmbthobl20031jxcoai0z8qxh" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-c-可变参数模板" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" class="article-date">
-  <time datetime="2022-12-11T06:50:04.000Z" itemprop="datePublished">2022-12-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/">c++ 可变参数模板</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="可变模版参数-variadic-templates"><a href="#可变模版参数-variadic-templates" class="headerlink" title="可变模版参数(variadic templates)"></a>可变模版参数(variadic templates)</h3><p>可以对参数进行高度泛化，标识0到任意个数参数</p>
-        
-          <p class="article-more-link">
-            <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" data-id="cmbthobku001ejxco7qhj3oyh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-c-继承权限" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" class="article-date">
-  <time datetime="2022-12-04T14:52:54.000Z" itemprop="datePublished">2022-12-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/">c++继承权限</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li><p>继承有三种权限，public，proteced，private，默认不写是private</p>
-</li>
-<li><p>权限的最低是public，其次是protected，最高private</p>
-</li>
-<li><p>继承方式代表是父类属性在当前类中的最低呈现</p>
-</li>
-<li><p>父类中的privated属性在子类中不可访问</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" data-id="cmbthobkv001hjxco6cdf6xf6" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2023/12/24/tag-dispatch/" data-id="cmbt3hg8j00241xcoe3e137mh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -522,7 +518,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/">家庭教育</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93/">图形渲染</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/">家庭教育</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/">C++</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -532,7 +528,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%A6%E5%8D%95/" rel="tag">书单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%B2%E5%AD%90/" rel="tag">亲子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" rel="tag">儿童教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" rel="tag">手机成瘾</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E8%82%B2/" rel="tag">教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" rel="tag">编程陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GLSL/" rel="tag">GLSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSAO/" rel="tag">SSAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shader/" rel="tag">Shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%A6%E5%8D%95/" rel="tag">书单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%B2%E5%AD%90/" rel="tag">亲子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" rel="tag">儿童教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" rel="tag">图形编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" rel="tag">宏定义</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" rel="tag">手机成瘾</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%92%AD%E5%AE%A2/" rel="tag">播客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E8%82%B2/" rel="tag">教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" rel="tag">构造函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" rel="tag">移动端优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" rel="tag">编程陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" rel="tag">预处理器</a></li></ul>
     </div>
   </div>
 
@@ -542,7 +538,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/C-11/" style="font-size: 15px;">C++11</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 17.5px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E4%B9%A6%E5%8D%95/" style="font-size: 10px;">书单</a> <a href="/tags/%E4%BA%B2%E5%AD%90/" style="font-size: 12.5px;">亲子</a> <a href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" style="font-size: 10px;">儿童教育</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 10px;">动态库</a> <a href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" style="font-size: 10px;">手机成瘾</a> <a href="/tags/%E6%95%99%E8%82%B2/" style="font-size: 10px;">教育</a> <a href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 10px;">类型转换</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" style="font-size: 10px;">编程陷阱</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 12.5px;">阅读</a>
+      <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 15px;">C++</a> <a href="/tags/C-11/" style="font-size: 17.5px;">C++11</a> <a href="/tags/GLSL/" style="font-size: 10px;">GLSL</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/SSAO/" style="font-size: 10px;">SSAO</a> <a href="/tags/Shader/" style="font-size: 10px;">Shader</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 17.5px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E4%B9%A6%E5%8D%95/" style="font-size: 10px;">书单</a> <a href="/tags/%E4%BA%B2%E5%AD%90/" style="font-size: 12.5px;">亲子</a> <a href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" style="font-size: 10px;">儿童教育</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 10px;">动态库</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">图形学</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">图形编程</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" style="font-size: 10px;">宏定义</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" style="font-size: 10px;">手机成瘾</a> <a href="/tags/%E6%92%AD%E5%AE%A2/" style="font-size: 10px;">播客</a> <a href="/tags/%E6%95%99%E8%82%B2/" style="font-size: 10px;">教育</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" style="font-size: 10px;">构造函数</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" style="font-size: 10px;">移动端优化</a> <a href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 10px;">类型转换</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" style="font-size: 10px;">编程陷阱</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">计算机图形学</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 12.5px;">阅读</a> <a href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" style="font-size: 10px;">预处理器</a>
     </div>
   </div>
 
@@ -551,7 +547,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -562,6 +558,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2025/06/15/cpp-macro-analysis-podcast/">C++宏定义陷阱与#、##操作符详解 - 播客分析</a>
+          </li>
         
           <li>
             <a href="/2025/06/08/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%99%B7%E9%98%B1-%E6%9C%89%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83/">C++类型转换陷阱：有符号和无符号整数比较</a>
@@ -577,10 +577,6 @@
         
           <li>
             <a href="/2025/03/15/type-script/">type script</a>
-          </li>
-        
-          <li>
-            <a href="/2025/03/15/what-is-mpx/">what is mpx</a>
           </li>
         
       </ul>

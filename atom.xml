@@ -6,7 +6,7 @@
   <link href="https://jackwzx.github.io/atom.xml" rel="self"/>
   
   <link href="https://jackwzx.github.io/"/>
-  <updated>2025-06-12T08:08:28.440Z</updated>
+  <updated>2025-06-15T03:13:50.380Z</updated>
   <id>https://jackwzx.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++宏定义陷阱与#、##操作符详解 - 播客分析</title>
+    <link href="https://jackwzx.github.io/2025/06/15/cpp-macro-analysis-podcast/"/>
+    <id>https://jackwzx.github.io/2025/06/15/cpp-macro-analysis-podcast/</id>
+    <published>2025-06-15T02:00:00.000Z</published>
+    <updated>2025-06-15T03:13:50.380Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;播客分析：C-宏定义的陷阱与-、-操作符详解&quot;&gt;&lt;a href=&quot;#播客分析：C-宏定义的陷阱与-、-操作符详解&quot; class=&quot;headerlink&quot; title=&quot;播客分析：C++宏定义的陷阱与#、##操作符详解&quot;&gt;&lt;/a&gt;播客分析：C++宏定义的陷阱与#、##操作符详解&lt;/h2&gt;&lt;h3 id=&quot;C-宏中的-和-操作符详解&quot;&gt;&lt;a href=&quot;#C-宏中的-和-操作符详解&quot; class=&quot;headerlink&quot; title=&quot;C++宏中的#和##操作符详解&quot;&gt;&lt;/a&gt;C++宏中的#和##操作符详解&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="编程技术" scheme="https://jackwzx.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
+    <category term="C++" scheme="https://jackwzx.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/"/>
+    
+    
+    <category term="C++" scheme="https://jackwzx.github.io/tags/C/"/>
+    
+    <category term="宏定义" scheme="https://jackwzx.github.io/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/"/>
+    
+    <category term="预处理器" scheme="https://jackwzx.github.io/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/"/>
+    
+    <category term="播客" scheme="https://jackwzx.github.io/tags/%E6%92%AD%E5%AE%A2/"/>
+    
+  </entry>
   
   <entry>
     <title>C++类型转换陷阱：有符号和无符号整数比较</title>
@@ -54,13 +81,13 @@
     <category term="家庭教育" scheme="https://jackwzx.github.io/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/"/>
     
     
+    <category term="亲子" scheme="https://jackwzx.github.io/tags/%E4%BA%B2%E5%AD%90/"/>
+    
     <category term="阅读" scheme="https://jackwzx.github.io/tags/%E9%98%85%E8%AF%BB/"/>
     
     <category term="书单" scheme="https://jackwzx.github.io/tags/%E4%B9%A6%E5%8D%95/"/>
     
     <category term="儿童教育" scheme="https://jackwzx.github.io/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/"/>
-    
-    <category term="亲子" scheme="https://jackwzx.github.io/tags/%E4%BA%B2%E5%AD%90/"/>
     
   </entry>
   
@@ -79,11 +106,11 @@
     <category term="家庭教育" scheme="https://jackwzx.github.io/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/"/>
     
     
-    <category term="阅读" scheme="https://jackwzx.github.io/tags/%E9%98%85%E8%AF%BB/"/>
+    <category term="教育" scheme="https://jackwzx.github.io/tags/%E6%95%99%E8%82%B2/"/>
     
     <category term="亲子" scheme="https://jackwzx.github.io/tags/%E4%BA%B2%E5%AD%90/"/>
     
-    <category term="教育" scheme="https://jackwzx.github.io/tags/%E6%95%99%E8%82%B2/"/>
+    <category term="阅读" scheme="https://jackwzx.github.io/tags/%E9%98%85%E8%AF%BB/"/>
     
     <category term="手机成瘾" scheme="https://jackwzx.github.io/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/"/>
     
@@ -116,6 +143,75 @@
     
     
     
+    
+  </entry>
+  
+  <entry>
+    <title>高性能std::string实现分析</title>
+    <link href="https://jackwzx.github.io/2025/01/27/high-performance-string-implementation/"/>
+    <id>https://jackwzx.github.io/2025/01/27/high-performance-string-implementation/</id>
+    <published>2025-01-27T02:00:00.000Z</published>
+    <updated>2025-06-15T03:42:06.156Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;高性能std-string实现分析&quot;&gt;&lt;a href=&quot;#高性能std-string实现分析&quot; class=&quot;headerlink&quot; title=&quot;高性能std::string实现分析&quot;&gt;&lt;/a&gt;高性能std::string实现分析&lt;/h1&gt;&lt;h2 id=&quot;1-字符串存储策略&quot;&gt;&lt;a href=&quot;#1-字符串存储策略&quot; class=&quot;headerlink&quot; title=&quot;1. 字符串存储策略&quot;&gt;&lt;/a&gt;1. 字符串存储策略&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="编程技术" scheme="https://jackwzx.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="C++" scheme="https://jackwzx.github.io/tags/C/"/>
+    
+    <category term="字符串" scheme="https://jackwzx.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    
+    <category term="性能优化" scheme="https://jackwzx.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>移动端SSAO实现方案分析</title>
+    <link href="https://jackwzx.github.io/2025/01/27/mobile-ssao-implementation/"/>
+    <id>https://jackwzx.github.io/2025/01/27/mobile-ssao-implementation/</id>
+    <published>2025-01-27T02:00:00.000Z</published>
+    <updated>2025-06-15T03:40:42.108Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;移动端SSAO实现方案分析&quot;&gt;&lt;a href=&quot;#移动端SSAO实现方案分析&quot; class=&quot;headerlink&quot; title=&quot;移动端SSAO实现方案分析&quot;&gt;&lt;/a&gt;移动端SSAO实现方案分析&lt;/h1&gt;&lt;h2 id=&quot;1-核心依赖&quot;&gt;&lt;a href=&quot;#1-核心依赖&quot; class=&quot;headerlink&quot; title=&quot;1. 核心依赖&quot;&gt;&lt;/a&gt;1. 核心依赖&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="图形渲染" scheme="https://jackwzx.github.io/categories/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93/"/>
+    
+    
+    <category term="图形学" scheme="https://jackwzx.github.io/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    <category term="SSAO" scheme="https://jackwzx.github.io/tags/SSAO/"/>
+    
+    <category term="移动端优化" scheme="https://jackwzx.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GLSL中的smoothstep函数详解</title>
+    <link href="https://jackwzx.github.io/2024/12/18/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/"/>
+    <id>https://jackwzx.github.io/2024/12/18/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/</id>
+    <published>2024-12-18T12:00:00.000Z</published>
+    <updated>2025-06-24T02:34:18.488Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;在GLSL(OpenGL Shading Language)编程中，&lt;code&gt;smoothstep&lt;/code&gt;函数是一个非常有用且常用的内置函数。它能够在两个值之间创建平滑的插值，广泛应用于边缘软化、渐变效果、动画过渡等场景。本文将深入介绍smoothstep函数的用法、数学原理和实际应用。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="GLSL" scheme="https://jackwzx.github.io/tags/GLSL/"/>
+    
+    <category term="Shader" scheme="https://jackwzx.github.io/tags/Shader/"/>
+    
+    <category term="图形编程" scheme="https://jackwzx.github.io/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/"/>
+    
+    <category term="计算机图形学" scheme="https://jackwzx.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
     
   </entry>
   
@@ -292,67 +388,6 @@
     
     
     <summary type="html">&lt;h3 id=&quot;全局顶点属性数组使能状态&quot;&gt;&lt;a href=&quot;#全局顶点属性数组使能状态&quot; class=&quot;headerlink&quot; title=&quot;全局顶点属性数组使能状态&quot;&gt;&lt;/a&gt;全局顶点属性数组使能状态&lt;/h3&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>OpenGLES设置顶点属性的默认值</title>
-    <link href="https://jackwzx.github.io/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/"/>
-    <id>https://jackwzx.github.io/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/</id>
-    <published>2024-07-28T08:53:57.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在 OpenGL ES 中，设置顶点属性的默认值和通过顶点缓冲对象（VBO）上传顶点属性是两种不同的处理顶点属性的方法。以下是详细的解释：&lt;/p&gt;
-&lt;h3 id=&quot;设置顶点属性默认值&quot;&gt;&lt;a href=&quot;#设置顶点属性默认值&quot; class=&quot;headerlink&quot; title=&quot;设置顶点属性默认值&quot;&gt;&lt;/a&gt;设置顶点属性默认值&lt;/h3&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>AddressSanitizer实现原理</title>
-    <link href="https://jackwzx.github.io/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/"/>
-    <id>https://jackwzx.github.io/2024/07/28/AddressSanitizer%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</id>
-    <published>2024-07-28T04:23:56.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;AddressSanitizer（简称ASan）是一种内存错误检测工具，用于捕捉诸如缓冲区溢出、使用已释放内存、堆栈溢出等内存错误。ASan在编译时和运行时对程序进行处理，以检测和报告内存相关的错误。以下是AddressSanitizer的实现原理的详细解释：&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>pthread_create设置栈size</title>
-    <link href="https://jackwzx.github.io/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/"/>
-    <id>https://jackwzx.github.io/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/</id>
-    <published>2024-07-28T02:44:09.000Z</published>
-    <updated>2025-06-07T09:24:45.445Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文演示如何在使用 &lt;code&gt;pthread_create&lt;/code&gt; 创建线程时设置自定义的栈大小。通过 &lt;code&gt;pthread_attr_setstacksize&lt;/code&gt; 函数可以控制线程的栈空间大小，这在需要大量栈空间或者优化内存使用时非常有用。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>使用__asan_unpoison_memory_region屏蔽某处内存检查</title>
-    <link href="https://jackwzx.github.io/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/"/>
-    <id>https://jackwzx.github.io/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/</id>
-    <published>2024-07-22T00:45:16.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;code&gt;__asan_unpoison_memory_region&lt;/code&gt; 是 AddressSanitizer (ASan) 库中的一个函数。ASan 是一个用于检测内存错误的工具，主要用于 C 和 C++ 程序开发者。&lt;code&gt;__asan_unpoison_memory_region&lt;/code&gt; 的作用是标记一段内存区域为“未污染”状态，这意味着这段内存可以被访问且不会触发 ASan 的错误报告。&lt;/p&gt;</summary>
     
     
     

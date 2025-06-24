@@ -2,6 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://jackwzx.github.io/2024/01/15/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</loc>
+    
+    <lastmod>2025-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/2024/12/18/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/</loc>
+    
+    <lastmod>2025-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/2025/01/27/high-performance-string-implementation/</loc>
+    
+    <lastmod>2025-06-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/2025/01/27/mobile-ssao-implementation/</loc>
+    
+    <lastmod>2025-06-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/2025/06/15/cpp-macro-analysis-podcast/</loc>
+    
+    <lastmod>2025-06-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jackwzx.github.io/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/</loc>
     
     <lastmod>2025-06-13</lastmod>
@@ -227,6 +272,15 @@
   </url>
   
   <url>
+    <loc>https://jackwzx.github.io/2016/10/26/How%20to%20build%20Apple%20Watch%20App/</loc>
+    
+    <lastmod>2025-02-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://jackwzx.github.io/2017/11/12/CALayer%E7%9A%84presentLayer%E9%82%A3%E7%82%B9%E4%BA%8B/</loc>
     
     <lastmod>2025-02-20</lastmod>
@@ -254,7 +308,7 @@
   </url>
   
   <url>
-    <loc>https://jackwzx.github.io/2016/10/26/How%20to%20build%20Apple%20Watch%20App/</loc>
+    <loc>https://jackwzx.github.io/2016/12/30/OpenGL-uniform%E5%92%8Cattribute/</loc>
     
     <lastmod>2025-02-20</lastmod>
     
@@ -264,15 +318,6 @@
   
   <url>
     <loc>https://jackwzx.github.io/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/</loc>
-    
-    <lastmod>2025-02-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/2016/12/30/OpenGL-uniform%E5%92%8Cattribute/</loc>
     
     <lastmod>2025-02-20</lastmod>
     
@@ -407,15 +452,6 @@
   </url>
   
   <url>
-    <loc>https://jackwzx.github.io/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/</loc>
-    
-    <lastmod>2025-02-20</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://jackwzx.github.io/2023/12/24/tag-dispatch/</loc>
     
     <lastmod>2025-02-20</lastmod>
@@ -425,7 +461,7 @@
   </url>
   
   <url>
-    <loc>https://jackwzx.github.io/2024/10/06/texelFetch/</loc>
+    <loc>https://jackwzx.github.io/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2025-02-20</lastmod>
     
@@ -443,7 +479,7 @@
   </url>
   
   <url>
-    <loc>https://jackwzx.github.io/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
+    <loc>https://jackwzx.github.io/2024/10/06/texelFetch/</loc>
     
     <lastmod>2025-02-20</lastmod>
     
@@ -461,7 +497,7 @@
   </url>
   
   <url>
-    <loc>https://jackwzx.github.io/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/</loc>
+    <loc>https://jackwzx.github.io/2017/03/07/tweak%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
     
     <lastmod>2025-02-20</lastmod>
     
@@ -471,6 +507,15 @@
   
   <url>
     <loc>https://jackwzx.github.io/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/</loc>
+    
+    <lastmod>2025-02-20</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/</loc>
     
     <lastmod>2025-02-20</lastmod>
     
@@ -517,7 +562,7 @@
 
   <url>
     <loc>https://jackwzx.github.io/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -525,126 +570,217 @@
   
   <url>
     <loc>https://jackwzx.github.io/tags/C-11/</loc>
-    <lastmod>2025-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/tags/C/</loc>
-    <lastmod>2025-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/</loc>
-    <lastmod>2025-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/iOS/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/C/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/ruby/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/openGL/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/test/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/c-11/</loc>
-    <lastmod>2025-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/tags/%E9%98%85%E8%AF%BB/</loc>
-    <lastmod>2025-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/tags/%E4%B9%A6%E5%8D%95/</loc>
-    <lastmod>2025-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/</loc>
-    <lastmod>2025-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://jackwzx.github.io/tags/%E4%BA%B2%E5%AD%90/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/%E6%95%99%E8%82%B2/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E4%BA%B2%E5%AD%90/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E4%B9%A6%E5%8D%95/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E6%92%AD%E5%AE%A2/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/SSAO/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/Android/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/JNI/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/tags/%E5%8A%A8%E6%80%81%E5%BA%93/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/GLSL/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/Shader/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -653,14 +789,28 @@
   
   <url>
     <loc>https://jackwzx.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://jackwzx.github.io/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/</loc>
-    <lastmod>2025-06-13</lastmod>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/categories/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93/</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

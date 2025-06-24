@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jackwzx.github.io/2024/01/15/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</loc>
+    <loc>https://jackwzx.github.io/2025/06/24/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/</loc>
     
     <lastmod>2025-06-24</lastmod>
     
@@ -11,7 +11,16 @@
   </url>
   
   <url>
-    <loc>https://jackwzx.github.io/2024/12/18/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/</loc>
+    <loc>https://jackwzx.github.io/2025/06/24/HSV%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4%E5%92%8C%E6%8F%92%E5%80%BC%E4%BC%98%E5%8A%BF%E8%AF%A6%E8%A7%A3/</loc>
+    
+    <lastmod>2025-06-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/2025/06/24/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</loc>
     
     <lastmod>2025-06-24</lastmod>
     
@@ -780,6 +789,20 @@
   
   <url>
     <loc>https://jackwzx.github.io/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://jackwzx.github.io/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

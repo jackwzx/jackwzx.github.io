@@ -6,7 +6,7 @@
   <link href="https://jackwzx.github.io/atom.xml" rel="self"/>
   
   <link href="https://jackwzx.github.io/"/>
-  <updated>2025-06-24T09:01:55.360Z</updated>
+  <updated>2025-06-25T04:05:34.599Z</updated>
   <id>https://jackwzx.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++原子操作函数详解：多线程编程的利器</title>
+    <link href="https://jackwzx.github.io/2025/06/25/C++%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/"/>
+    <id>https://jackwzx.github.io/2025/06/25/C++%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/</id>
+    <published>2025-06-25T02:00:00.000Z</published>
+    <updated>2025-06-25T04:05:34.599Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在多线程编程中，数据竞争和同步问题一直是开发者面临的挑战。C++11引入的原子操作（atomic operations）为解决这些问题提供了强有力的工具。本文将详细介绍几个重要的原子操作函数：&lt;code&gt;atomic_store&lt;/code&gt;、&lt;code&gt;atomic_compare_exchange_strong_explicit&lt;/code&gt;、&lt;code&gt;atomic_load_explicit&lt;/code&gt; 和 &lt;code&gt;atomic_fetch_sub_explicit&lt;/code&gt;，帮助你在多线程编程中正确使用这些函数。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="C++编程" scheme="https://jackwzx.github.io/categories/C-%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="C++" scheme="https://jackwzx.github.io/tags/C/"/>
+    
+    <category term="多线程" scheme="https://jackwzx.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    <category term="原子操作" scheme="https://jackwzx.github.io/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/"/>
+    
+    <category term="并发编程" scheme="https://jackwzx.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>GLSL中的smoothstep函数详解</title>
@@ -380,22 +405,6 @@
     
     
     <summary type="html">&lt;p&gt;本文展示如何使用C++模板函数的&lt;code&gt;delete&lt;/code&gt;关键字来防止不必要的隐式类型转换。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>AndoirdEGLContext销毁管理</title>
-    <link href="https://jackwzx.github.io/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/"/>
-    <id>https://jackwzx.github.io/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/</id>
-    <published>2024-07-31T16:19:32.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title class_&quot;&gt;EGLContextFactory&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    EGLContext &lt;span class=&quot;title function_&quot;&gt;createContext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(EGL10 egl, EGLDisplay display, EGLConfig eglConfig)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title function_&quot;&gt;destroyContext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(EGL10 egl, EGLDisplay display, EGLContext context)&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;EGLContext-如果释放时，会删除在当前Context-下创建的bufffer-texture-以及fbo等资源吗&quot;&gt;&lt;a href=&quot;#EGLContext-如果释放时，会删除在当前Context-下创建的bufffer-texture-以及fbo等资源吗&quot; class=&quot;headerlink&quot; title=&quot;EGLContext 如果释放时，会删除在当前Context 下创建的bufffer,texture 以及fbo等资源吗&quot;&gt;&lt;/a&gt;EGLContext 如果释放时，会删除在当前Context 下创建的bufffer,texture 以及fbo等资源吗&lt;/h3&gt;</summary>
     
     
     

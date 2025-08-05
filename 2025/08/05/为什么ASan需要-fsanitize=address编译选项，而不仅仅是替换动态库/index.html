@@ -22,19 +22,23 @@
 <!-- End Google AdSense -->
  
   
-  <title>光照学习 | Xujing的博客</title>
+  <title>为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？ | Xujing的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基本概念1 发射光（emission）：物体本身发的光，如果物体不发光，一般无此属性">
+  <meta name="description" content="为什么 ASan 需要 -fsanitize&#x3D;address 编译选项，而不仅仅是替换动态库？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="光照学习">
-<meta property="og:url" content="https://jackwzx.github.io/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="为什么 ASan 需要 &#96;-fsanitize&#x3D;address&#96; 编译选项，而不仅仅是替换动态库？">
+<meta property="og:url" content="https://jackwzx.github.io/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/index.html">
 <meta property="og:site_name" content="Xujing的博客">
-<meta property="og:description" content="基本概念1 发射光（emission）：物体本身发的光，如果物体不发光，一般无此属性">
+<meta property="og:description" content="为什么 ASan 需要 -fsanitize&#x3D;address 编译选项，而不仅仅是替换动态库？">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2017-01-02T05:43:54.000Z">
-<meta property="article:modified_time" content="2025-02-20T13:07:48.000Z">
+<meta property="article:published_time" content="2025-08-05T06:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-05T12:05:28.649Z">
 <meta property="article:author" content="Xujing">
-<meta property="article:tag" content="openGL">
+<meta property="article:tag" content="计算机图形学">
+<meta property="article:tag" content="线性代数">
+<meta property="article:tag" content="3D图形学">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="OpenGL">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Xujing的博客" type="application/atom+xml">
@@ -84,12 +88,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-OpenGL-光照学习" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-为什么ASan需要-fsanitize=address编译选项，而不仅仅是替换动态库" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" class="article-date">
-  <time datetime="2017-01-02T05:43:54.000Z" itemprop="datePublished">2017-01-02</time>
+    <a href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/" class="article-date">
+  <time datetime="2025-08-05T06:00:00.000Z" itemprop="datePublished">2025-08-05</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>►<a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -98,7 +106,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      光照学习
+      为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？
     </h1>
   
 
@@ -106,31 +114,116 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>1 发射光（emission）：物体本身发的光，如果物体不发光，一般无此属性</p>
-<span id="more"></span>
+        <h3 id="为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？"><a href="#为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？" class="headerlink" title="为什么 ASan 需要 -fsanitize=address 编译选项，而不仅仅是替换动态库？"></a><strong>为什么 ASan 需要 <code>-fsanitize=address</code> 编译选项，而不仅仅是替换动态库？</strong></h3><span id="more"></span>
 
-<p>2 环境光（ambient）：在环境中充分散射的光，光线在物体表面各个方向均匀泛射在openGL中，全局光强度为（0.2，0.2，0.2，1.0）</p>
-<p>3 漫反射光（diffuse）：关于来自某个方向，但是在物体表面向各个方向反射</p>
-<p>4 镜面高光：光线来自某一个特定的方向，然后在物体表面，以一个特定方向反射出去，在OpenGL中，镜面反射的强度，可以通过光泽度（shiness）来调节</p>
-<h3 id="光的计算："><a href="#光的计算：" class="headerlink" title="光的计算："></a>光的计算：</h3><p>1 发射光计算：发射颜色=物体的发射材质颜色</p>
-<p>2 环境光计算</p>
-<p>环境颜色 = 光源的环境光颜色*物体的环境材质颜色</p>
-<p>3 漫反射计算：</p>
-<p>漫反射颜色=光源的漫反射光颜色 * 物体的漫反射材质颜色 * DiffuseFactor</p>
-<p>其中DiffuseFactor = max（0，dot（N，L））</p>
-<p>dot表示两个向量夹角的cos</p>
-<p>4 镜面反射：</p>
-<p>镜面反射颜色 = 光源的镜面光颜色 * 物体的镜面材质颜色 * SpecularFactor</p>
-<p>SpecularFactor = power（max（0， dot（N，H）），shininess）</p>
-<p>H = normalise（L+E）</p>
+<p>ASan（AddressSanitizer）的工作机制不仅仅是 <strong>替换动态库（如 <code>libasan.so</code>）</strong>，它还需要 <strong>编译时插桩（Instrumentation）</strong> 来监控内存访问。以下是详细解释：</p>
+<hr>
+<h2 id="1-ASan-的两大核心机制"><a href="#1-ASan-的两大核心机制" class="headerlink" title="1. ASan 的两大核心机制"></a><strong>1. ASan 的两大核心机制</strong></h2><p>ASan 的完整实现依赖 <strong>两个关键部分</strong>：</p>
+<ol>
+<li><p><strong>编译时插桩（Instrumentation）</strong>  </p>
+<ul>
+<li>在代码中插入额外的检查逻辑，监控 <strong>每一次内存访问</strong>（如数组访问、指针解引用）。  </li>
+<li>例如，<code>array[i]</code> 会被编译器改写成 <code>__asan_check_access(array, i)</code>，检查是否越界。  </li>
+<li><strong>必须通过 <code>-fsanitize=address</code> 启用</strong>，因为编译器需要修改生成的汇编代码。</li>
+</ul>
+</li>
+<li><p><strong>运行时库（<code>libasan.so</code>）</strong>  </p>
+<ul>
+<li>提供 <strong>影子内存（Shadow Memory）</strong> 管理、错误报告、<code>malloc/free</code> 替换等功能。  </li>
+<li>动态库替换（如 <code>LD_PRELOAD=libasan.so</code>）只能处理这部分，但 <strong>无法实现内存访问插桩</strong>。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="2-为什么不能仅靠替换动态库实现-ASan？"><a href="#2-为什么不能仅靠替换动态库实现-ASan？" class="headerlink" title="2. 为什么不能仅靠替换动态库实现 ASan？"></a><strong>2. 为什么不能仅靠替换动态库实现 ASan？</strong></h2><p>如果只替换动态库（如 <code>libasan.so</code>），而不进行编译时插桩：</p>
+<ul>
+<li><strong>无法监控栈变量和全局变量的访问</strong>：  <ul>
+<li>ASan 需要插桩来检查 <strong>栈上的数组越界</strong>（如 <code>int buf[10]; buf[11] = 0;</code>）。  </li>
+<li>动态库无法直接修改编译器生成的栈访问指令。</li>
+</ul>
+</li>
+<li><strong>无法监控所有内存读写</strong>：  <ul>
+<li>动态库只能拦截 <strong>显式的函数调用</strong>（如 <code>malloc</code>/<code>free</code>），但无法拦截 <strong>直接的指针操作</strong>（如 <code>*ptr = 10</code>）。  </li>
+<li>ASan 插桩会在每次内存读写前插入检查逻辑。</li>
+</ul>
+</li>
+<li><strong>性能优化</strong>：  <ul>
+<li>插桩可以 <strong>选择性检查</strong>（如跳过某些安全的内存区域），而纯动态库方案无法做到。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-动态库替换（libasan-so）的作用"><a href="#3-动态库替换（libasan-so）的作用" class="headerlink" title="3. 动态库替换（libasan.so）的作用"></a><strong>3. 动态库替换（<code>libasan.so</code>）的作用</strong></h2><p>ASan 的动态库主要负责：</p>
+<ol>
+<li><strong>替换内存分配函数</strong>（如 <code>malloc</code>、<code>free</code>、<code>calloc</code>），在分配时标记内存状态。  </li>
+<li><strong>管理影子内存</strong>（Shadow Memory），记录哪些内存是合法/非法的。  </li>
+<li><strong>错误报告</strong>，当检测到问题时打印调用栈和错误信息。  </li>
+</ol>
+<p>但如果没有编译时插桩，动态库 <strong>无法知道内存是如何被访问的</strong>。</p>
+<hr>
+<h2 id="4-示例：ASan-如何工作"><a href="#4-示例：ASan-如何工作" class="headerlink" title="4. 示例：ASan 如何工作"></a><strong>4. 示例：ASan 如何工作</strong></h2><h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a><strong>源代码</strong></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.c</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> *arr = <span class="built_in">malloc</span>(<span class="number">10</span> * <span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">    arr[<span class="number">10</span>] = <span class="number">0</span>;  <span class="comment">// 越界写入</span></span><br><span class="line">    <span class="built_in">free</span>(arr);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译时插桩（关键步骤）"><a href="#编译时插桩（关键步骤）" class="headerlink" title="编译时插桩（关键步骤）"></a><strong>编译时插桩（关键步骤）</strong></h3><ol>
+<li><strong>启用 ASan</strong>：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clang -fsanitize=address -g test.c -o <span class="built_in">test</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>编译器修改代码</strong>（伪代码）：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> *arr = __asan_malloc(<span class="number">10</span> * <span class="keyword">sizeof</span>(<span class="type">int</span>));  <span class="comment">// ASan 替换的 malloc</span></span><br><span class="line">    __asan_check_access(arr, <span class="number">10</span>);  <span class="comment">// 插入越界检查</span></span><br><span class="line">    arr[<span class="number">10</span>] = <span class="number">0</span>;  <span class="comment">// 如果越界，ASan 会在此处终止程序</span></span><br><span class="line">    __asan_free(arr);  <span class="comment">// ASan 替换的 free</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>运行时检测</strong>：<ul>
+<li><code>__asan_check_access</code> 会查询 <strong>影子内存</strong>，发现 <code>arr[10]</code> 是非法访问，触发错误：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: AddressSanitizer: heap-buffer-overflow</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="5-对比：纯动态库替换方案"><a href="#5-对比：纯动态库替换方案" class="headerlink" title="5. 对比：纯动态库替换方案"></a><strong>5. 对比：纯动态库替换方案</strong></h2><p>假设我们 <strong>不</strong> 使用 <code>-fsanitize=address</code>，仅替换 <code>malloc/free</code>：</p>
+<ul>
+<li><strong>能检测的问题</strong>：<ul>
+<li>部分堆内存错误（如 <code>use-after-free</code>、<code>double-free</code>）。</li>
+</ul>
+</li>
+<li><strong>不能检测的问题</strong>：<ul>
+<li>栈溢出（如 <code>int buf[10]; buf[20] = 0;</code>）。</li>
+<li>全局变量溢出。</li>
+<li>直接指针越界（如 <code>*(ptr + 100) = 0</code>）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="6-为什么其他工具（如-Valgrind）不需要重新编译？"><a href="#6-为什么其他工具（如-Valgrind）不需要重新编译？" class="headerlink" title="6. 为什么其他工具（如 Valgrind）不需要重新编译？"></a><strong>6. 为什么其他工具（如 Valgrind）不需要重新编译？</strong></h2><ul>
+<li><strong>Valgrind</strong> 使用 <strong>动态二进制插桩（DBI）</strong>，在运行时修改程序指令，但性能开销极大（~20x  slowdown）。  </li>
+<li><strong>ASan</strong> 的编译时插桩使得它的性能损失较低（~2x slowdown），但必须重新编译。</li>
+</ul>
+<hr>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a><strong>7. 总结</strong></h2><table>
+<thead>
+<tr>
+<th>机制</th>
+<th>是否需要 <code>-fsanitize=address</code></th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>编译时插桩</strong></td>
+<td>✅ 必须</td>
+<td>监控所有内存访问（栈/堆/全局变量）</td>
+</tr>
+<tr>
+<td><strong>动态库替换</strong></td>
+<td>❌ 可选（但通常自动链接）</td>
+<td>替换 <code>malloc/free</code>，管理影子内存</td>
+</tr>
+</tbody></table>
+<p><strong>结论</strong>：</p>
+<ul>
+<li><strong>仅替换动态库无法实现完整的 ASan 功能</strong>，必须通过 <code>-fsanitize=address</code> 让编译器插入检查代码。  </li>
+<li>ASan 的高效性依赖于 <strong>编译时插桩 + 运行时库协作</strong>。  </li>
+</ul>
+<p>如果想深入理解 ASan 的插桩逻辑，可以研究 <strong>LLVM 的 ASan 源码</strong>（如 <code>compiler-rt/lib/asan</code>）。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" data-id="cmbt3hg8e000x1xco28iu75za" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/" data-id="cmdyhtcnl0000nofy660m021x" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">3D图形学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
 
     </footer>
   </div>
@@ -138,19 +231,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          纹理贴图
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/02/OpenGL-VBO/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2025/07/02/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9D%80%E8%89%B2%E5%99%A8%E6%A8%A1%E6%8B%9FDouble%E7%B2%BE%E5%BA%A6%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B8%B2%E6%9F%93/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">VBO</div>
+      <div class="article-nav-title">移动端着色器模拟Double精度实现批量渲染</div>
     </a>
   
 </nav>

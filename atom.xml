@@ -6,7 +6,7 @@
   <link href="https://jackwzx.github.io/atom.xml" rel="self"/>
   
   <link href="https://jackwzx.github.io/"/>
-  <updated>2025-07-02T12:06:50.778Z</updated>
+  <updated>2025-08-05T12:05:28.649Z</updated>
   <id>https://jackwzx.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？</title>
+    <link href="https://jackwzx.github.io/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/"/>
+    <id>https://jackwzx.github.io/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/</id>
+    <published>2025-08-05T06:00:00.000Z</published>
+    <updated>2025-08-05T12:05:28.649Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？&quot;&gt;&lt;a href=&quot;#为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？&quot; class=&quot;headerlink&quot; title=&quot;为什么 ASan 需要 -fsanitize=address 编译选项，而不仅仅是替换动态库？&quot;&gt;&lt;/a&gt;&lt;strong&gt;为什么 ASan 需要 &lt;code&gt;-fsanitize=address&lt;/code&gt; 编译选项，而不仅仅是替换动态库？&lt;/strong&gt;&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="计算机图形学" scheme="https://jackwzx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    <category term="数学基础" scheme="https://jackwzx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
+    
+    
+    <category term="计算机图形学" scheme="https://jackwzx.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    <category term="线性代数" scheme="https://jackwzx.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+    <category term="3D图形学" scheme="https://jackwzx.github.io/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    <category term="数学" scheme="https://jackwzx.github.io/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+    <category term="OpenGL" scheme="https://jackwzx.github.io/tags/OpenGL/"/>
+    
+  </entry>
   
   <entry>
     <title>移动端着色器模拟Double精度实现批量渲染</title>
@@ -416,21 +445,6 @@
     
     
     <summary type="html">&lt;p&gt;在 C++ 中，&lt;strong&gt;Traits&lt;/strong&gt;（特性）是一种设计模式，通常用于提供类型信息或行为的模板类。Traits 允许在编译时获取类型的特性，从而实现更灵活和可扩展的代码。Traits 模式广泛应用于标准库和现代 C++ 编程中，尤其是在模板编程和泛型编程中。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>shell和子shell环境变量</title>
-    <link href="https://jackwzx.github.io/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/"/>
-    <id>https://jackwzx.github.io/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</id>
-    <published>2024-09-29T06:12:02.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在 Shell 脚本中，命令替换（command substitution）是指将命令的输出作为字符串插入到另一个命令中。命令替换通常使用反引号（&lt;code&gt;`command`&lt;/code&gt;）或 &lt;code&gt;$()&lt;/code&gt; 语法来实现。命令替换会在一个子 Shell 中执行指定的命令，这意味着在子 Shell 中定义的变量不会影响父 Shell 中的变量。&lt;/p&gt;</summary>
     
     
     

@@ -22,19 +22,14 @@
 <!-- End Google AdSense -->
  
   
-  <title>光照学习 | Xujing的博客</title>
+  <title>Archives: 2025/8 | Xujing的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基本概念1 发射光（emission）：物体本身发的光，如果物体不发光，一般无此属性">
-<meta property="og:type" content="article">
-<meta property="og:title" content="光照学习">
-<meta property="og:url" content="https://jackwzx.github.io/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Xujing的博客">
+<meta property="og:url" content="https://jackwzx.github.io/archives/2025/08/index.html">
 <meta property="og:site_name" content="Xujing的博客">
-<meta property="og:description" content="基本概念1 发射光（emission）：物体本身发的光，如果物体不发光，一般无此属性">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2017-01-02T05:43:54.000Z">
-<meta property="article:modified_time" content="2025-02-20T13:07:48.000Z">
 <meta property="article:author" content="Xujing">
-<meta property="article:tag" content="openGL">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Xujing的博客" type="application/atom+xml">
@@ -84,79 +79,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-OpenGL-光照学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" class="article-date">
-  <time datetime="2017-01-02T05:43:54.000Z" itemprop="datePublished">2017-01-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      光照学习
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2025" class="archive-year">2025</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/" class="archive-article-date">
+  <time datetime="2025-08-05T06:00:00.000Z" itemprop="datePublished">Aug 5</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/">为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>1 发射光（emission）：物体本身发的光，如果物体不发光，一般无此属性</p>
-<span id="more"></span>
-
-<p>2 环境光（ambient）：在环境中充分散射的光，光线在物体表面各个方向均匀泛射在openGL中，全局光强度为（0.2，0.2，0.2，1.0）</p>
-<p>3 漫反射光（diffuse）：关于来自某个方向，但是在物体表面向各个方向反射</p>
-<p>4 镜面高光：光线来自某一个特定的方向，然后在物体表面，以一个特定方向反射出去，在OpenGL中，镜面反射的强度，可以通过光泽度（shiness）来调节</p>
-<h3 id="光的计算："><a href="#光的计算：" class="headerlink" title="光的计算："></a>光的计算：</h3><p>1 发射光计算：发射颜色=物体的发射材质颜色</p>
-<p>2 环境光计算</p>
-<p>环境颜色 = 光源的环境光颜色*物体的环境材质颜色</p>
-<p>3 漫反射计算：</p>
-<p>漫反射颜色=光源的漫反射光颜色 * 物体的漫反射材质颜色 * DiffuseFactor</p>
-<p>其中DiffuseFactor = max（0，dot（N，L））</p>
-<p>dot表示两个向量夹角的cos</p>
-<p>4 镜面反射：</p>
-<p>镜面反射颜色 = 光源的镜面光颜色 * 物体的镜面材质颜色 * SpecularFactor</p>
-<p>SpecularFactor = power（max（0， dot（N，H）），shininess）</p>
-<p>H = normalise（L+E）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2017/01/02/OpenGL-%E5%85%89%E7%85%A7%E5%AD%A6%E4%B9%A0/" data-id="cmbt3hg8e000x1xco28iu75za" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/01/03/OpenGL-%E7%BA%B9%E7%90%86%E8%B4%B4%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          纹理贴图
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/01/02/OpenGL-VBO/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">VBO</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         

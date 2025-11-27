@@ -6,7 +6,7 @@
   <link href="https://jackwzx.github.io/atom.xml" rel="self"/>
   
   <link href="https://jackwzx.github.io/"/>
-  <updated>2025-08-05T12:05:28.649Z</updated>
+  <updated>2025-11-12T09:32:30.407Z</updated>
   <id>https://jackwzx.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java中的布尔类型</title>
+    <link href="https://jackwzx.github.io/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/"/>
+    <id>https://jackwzx.github.io/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/</id>
+    <published>2025-11-11T16:00:00.000Z</published>
+    <updated>2025-11-12T09:32:30.407Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Java 中的 &lt;code&gt;boolean&lt;/code&gt; 与数值类型（&lt;code&gt;int&lt;/code&gt; 等）是不同的原始类型，语言层面既不允许隐式转换，也不允许显式强制转换。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不允许的示例&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;int i = true;&lt;/code&gt;、&lt;code&gt;boolean b = 1;&lt;/code&gt;、&lt;code&gt;b = (boolean) 1;&lt;/code&gt; 都会编译报错&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;if (1) &amp;#123;&amp;#125;&lt;/code&gt; 在 Java 中非法（不同于 C/C++），只能 &lt;code&gt;if (b)&lt;/code&gt; 或 &lt;code&gt;if (表达式为 boolean)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="iOS" scheme="https://jackwzx.github.io/tags/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title>为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？</title>
@@ -46,35 +70,6 @@
   </entry>
   
   <entry>
-    <title>移动端着色器模拟Double精度实现批量渲染</title>
-    <link href="https://jackwzx.github.io/2025/07/02/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9D%80%E8%89%B2%E5%99%A8%E6%A8%A1%E6%8B%9FDouble%E7%B2%BE%E5%BA%A6%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B8%B2%E6%9F%93/"/>
-    <id>https://jackwzx.github.io/2025/07/02/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%9D%80%E8%89%B2%E5%99%A8%E6%A8%A1%E6%8B%9FDouble%E7%B2%BE%E5%BA%A6%E5%AE%9E%E7%8E%B0%E6%89%B9%E9%87%8F%E6%B8%B2%E6%9F%93/</id>
-    <published>2025-07-02T03:00:00.000Z</published>
-    <updated>2025-07-02T12:06:50.778Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;移动端着色器模拟Double精度实现批量渲染&quot;&gt;&lt;a href=&quot;#移动端着色器模拟Double精度实现批量渲染&quot; class=&quot;headerlink&quot; title=&quot;移动端着色器模拟Double精度实现批量渲染&quot;&gt;&lt;/a&gt;移动端着色器模拟Double精度实现批量渲染&lt;/h1&gt;&lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;</summary>
-    
-    
-    
-    <category term="图形编程" scheme="https://jackwzx.github.io/categories/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="GLSL" scheme="https://jackwzx.github.io/tags/GLSL/"/>
-    
-    <category term="OpenGL" scheme="https://jackwzx.github.io/tags/OpenGL/"/>
-    
-    <category term="着色器" scheme="https://jackwzx.github.io/tags/%E7%9D%80%E8%89%B2%E5%99%A8/"/>
-    
-    <category term="移动端" scheme="https://jackwzx.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF/"/>
-    
-    <category term="精度" scheme="https://jackwzx.github.io/tags/%E7%B2%BE%E5%BA%A6/"/>
-    
-    <category term="批量渲染" scheme="https://jackwzx.github.io/tags/%E6%89%B9%E9%87%8F%E6%B8%B2%E6%9F%93/"/>
-    
-  </entry>
-  
-  <entry>
     <title>3D图形学中的平面方程：从线性代数到Vector4f表示</title>
     <link href="https://jackwzx.github.io/2025/06/30/3D%E5%B9%B3%E9%9D%A2%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B3%95%E5%90%91%E9%87%8F%E8%AF%A6%E8%A7%A3/"/>
     <id>https://jackwzx.github.io/2025/06/30/3D%E5%B9%B3%E9%9D%A2%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B3%95%E5%90%91%E9%87%8F%E8%AF%A6%E8%A7%A3/</id>
@@ -100,6 +95,49 @@
     <category term="数学" scheme="https://jackwzx.github.io/tags/%E6%95%B0%E5%AD%A6/"/>
     
     <category term="OpenGL" scheme="https://jackwzx.github.io/tags/OpenGL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>c++迭代器</title>
+    <link href="https://jackwzx.github.io/2025/06/30/c++%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%86%E7%B1%BB/"/>
+    <id>https://jackwzx.github.io/2025/06/30/c++%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%86%E7%B1%BB/</id>
+    <published>2025-06-30T06:00:00.000Z</published>
+    <updated>2025-11-27T08:13:38.422Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;C++ 中有 &lt;strong&gt;5 种主要的迭代器类型&lt;/strong&gt;，它们形成一个&lt;strong&gt;层次结构&lt;/strong&gt;，每种都有不同的功能和限制。&lt;/p&gt;
+&lt;hr&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>C++多重继承到Java/TypeScript接口适配问题分析</title>
+    <link href="https://jackwzx.github.io/2025/06/30/C++%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF%E5%88%B0Java-TypeScript%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/"/>
+    <id>https://jackwzx.github.io/2025/06/30/C++%E5%A4%9A%E9%87%8D%E7%BB%A7%E6%89%BF%E5%88%B0Java-TypeScript%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90/</id>
+    <published>2025-06-30T02:00:00.000Z</published>
+    <updated>2025-06-30T08:15:07.435Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;引言&quot;&gt;&lt;a href=&quot;#引言&quot; class=&quot;headerlink&quot; title=&quot;引言&quot;&gt;&lt;/a&gt;引言&lt;/h2&gt;&lt;p&gt;在跨语言开发中，经常需要将C++的多重继承类转换为Java或TypeScript对象。这种转换过程中，接口适配是一个关键问题，特别是当使用&lt;code&gt;void*&lt;/code&gt;存储指针并进行强制类型转换时，可能会遇到一些陷阱。本文将从技术角度深入分析这个问题。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程技术" scheme="https://jackwzx.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="C++" scheme="https://jackwzx.github.io/tags/C/"/>
+    
+    <category term="Java" scheme="https://jackwzx.github.io/tags/Java/"/>
+    
+    <category term="TypeScript" scheme="https://jackwzx.github.io/tags/TypeScript/"/>
+    
+    <category term="设计模式" scheme="https://jackwzx.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    <category term="接口适配" scheme="https://jackwzx.github.io/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/"/>
     
   </entry>
   
@@ -368,6 +406,24 @@
   </entry>
   
   <entry>
+    <title>ARM-64架构中寄存器</title>
+    <link href="https://jackwzx.github.io/2024/12/19/%E5%AF%84%E5%AD%98%E5%99%A8%E4%BB%8B%E7%BB%8D/"/>
+    <id>https://jackwzx.github.io/2024/12/19/%E5%AF%84%E5%AD%98%E5%99%A8%E4%BB%8B%E7%BB%8D/</id>
+    <published>2024-12-19T02:00:00.000Z</published>
+    <updated>2025-11-27T08:17:20.525Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;让我详细解释ARM-64架构中这些寄存器的用途：&lt;/p&gt;
+&lt;h2 id=&quot;核心寄存器&quot;&gt;&lt;a href=&quot;#核心寄存器&quot; class=&quot;headerlink&quot; title=&quot;核心寄存器&quot;&gt;&lt;/a&gt;核心寄存器&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="技术分析" scheme="https://jackwzx.github.io/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>命令行通配符</title>
     <link href="https://jackwzx.github.io/2024/11/04/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%9A%E9%85%8D%E7%AC%A6/"/>
     <id>https://jackwzx.github.io/2024/11/04/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%9A%E9%85%8D%E7%AC%A6/</id>
@@ -399,52 +455,6 @@
     
     <summary type="html">&lt;p&gt;正则表达式（Regular Expressions）和通配符（Wildcards）都是用于模式匹配的工具，但它们在功能、语法和应用场景上有显著的区别。以下是它们之间的主要区别：&lt;/p&gt;
 &lt;h3 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1. 定义&quot;&gt;&lt;/a&gt;1. 定义&lt;/h3&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>std::nth_element实现</title>
-    <link href="https://jackwzx.github.io/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/"/>
-    <id>https://jackwzx.github.io/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/</id>
-    <published>2024-10-08T09:37:18.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;code&gt;std::nth_element&lt;/code&gt; 是 C++ 标准库中的一个算法，用于在一个范围内重新排列元素，使得第 &lt;code&gt;n&lt;/code&gt; 个元素位于其最终位置，并且该元素左侧的所有元素都小于或等于它，右侧的所有元素都大于或等于它。这个算法的时间复杂度为 O(n) 平均情况下，最坏情况下为 O(n^2)。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>texelFetch</title>
-    <link href="https://jackwzx.github.io/2024/10/06/texelFetch/"/>
-    <id>https://jackwzx.github.io/2024/10/06/texelFetch/</id>
-    <published>2024-10-06T10:16:59.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;&lt;code&gt;texelFetch&lt;/code&gt; 是一个在着色器编程中用于从纹理中获取特定纹素（texel）的函数。与常规的纹理采样不同，&lt;code&gt;texelFetch&lt;/code&gt; 使用整数纹理坐标来直接访问纹理数据，不进行过滤或插值。&lt;/p&gt;
-&lt;p&gt;在 OpenGL 的 GLSL（OpenGL Shading Language）中，&lt;code&gt;texelFetch&lt;/code&gt; 的用法如下：&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>traits设计和用法</title>
-    <link href="https://jackwzx.github.io/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/"/>
-    <id>https://jackwzx.github.io/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/</id>
-    <published>2024-09-29T09:25:47.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在 C++ 中，&lt;strong&gt;Traits&lt;/strong&gt;（特性）是一种设计模式，通常用于提供类型信息或行为的模板类。Traits 允许在编译时获取类型的特性，从而实现更灵活和可扩展的代码。Traits 模式广泛应用于标准库和现代 C++ 编程中，尤其是在模板编程和泛型编程中。&lt;/p&gt;</summary>
     
     
     

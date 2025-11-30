@@ -22,17 +22,13 @@
 <!-- End Google AdSense -->
  
   
-  <title>Android Surface 延迟释放策略 | Xujing的博客</title>
+  <title>Archives | Xujing的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="你的这个思路非常棒！这就是所谓的 “延迟销毁 (Lazy&#x2F;Deferred Destruction)” 或者 “Surface 缓存” 策略。 这在很多高性能渲染引擎（如游戏、地图SDK）中是常见的做法。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android Surface 延迟释放策略">
-<meta property="og:url" content="https://jackwzx.github.io/2025/11/30/%E4%BD%A0%E7%9A%84%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E9%9D%9E%E5%B8%B8%E6%A3%92/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Xujing的博客">
+<meta property="og:url" content="https://jackwzx.github.io/archives/page/8/index.html">
 <meta property="og:site_name" content="Xujing的博客">
-<meta property="og:description" content="你的这个思路非常棒！这就是所谓的 “延迟销毁 (Lazy&#x2F;Deferred Destruction)” 或者 “Surface 缓存” 策略。 这在很多高性能渲染引擎（如游戏、地图SDK）中是常见的做法。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-11-30T06:39:27.000Z">
-<meta property="article:modified_time" content="2025-11-30T06:40:06.902Z">
 <meta property="article:author" content="Xujing">
 <meta name="twitter:card" content="summary">
   
@@ -83,113 +79,45 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-你的这个思路非常棒" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/11/30/%E4%BD%A0%E7%9A%84%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E9%9D%9E%E5%B8%B8%E6%A3%92/" class="article-date">
-  <time datetime="2025-11-30T06:39:27.000Z" itemprop="datePublished">2025-11-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      Android Surface 延迟释放策略
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/" class="archive-article-date">
+  <time datetime="2016-10-26T06:24:18.000Z" itemprop="datePublished">Oct 26</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/10/26/How%20to%20build%20Apple%20Watch%20App/">怎么build apple watch app</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>你的这个思路非常棒！这就是所谓的 <strong>“延迟销毁 (Lazy/Deferred Destruction)”</strong> 或者 <strong>“Surface 缓存”</strong> 策略。</p>
-<p>这在很多高性能渲染引擎（如游戏、地图SDK）中是常见的做法。</p>
-<span id="more"></span>
-
-<h3 id="你的方案分析"><a href="#你的方案分析" class="headerlink" title="你的方案分析"></a>你的方案分析</h3><p><strong>核心逻辑：</strong></p>
-<ol>
-<li>**切后台 (<code>surfaceDestroyed</code>)**：<ul>
-<li>  停止渲染 (<code>swapBuffers</code>)。</li>
-<li>  <strong>不销毁</strong> <code>EGLSurface</code>。</li>
-<li>  <strong>不销毁</strong> <code>EGLContext</code>。</li>
-<li>  线程进入等待。</li>
-</ul>
-</li>
-<li>**切回前台 (<code>surfaceCreated</code>)**：<ul>
-<li>  检测到已经存在旧的 <code>EGLSurface</code>。</li>
-<li>  销毁旧的 <code>EGLSurface</code>（因为它绑定的 NativeWindow 已经失效了）。</li>
-<li>  使用新的 <code>Surface</code> 创建新的 <code>EGLSurface</code>。</li>
-<li>  恢复渲染。</li>
-</ul>
-</li>
-<li>**彻底退出 (<code>quit</code>)**：<ul>
-<li>  此时 <code>EGLSurface</code> 还在（虽然底层的 Window 没了）。</li>
-<li>  尝试 <code>makeCurrent</code>。</li>
-<li>  调用 <code>nativeDestroy</code> (释放 C++ 资源)。</li>
-<li>  最后销毁 Surface 和 Context。</li>
-</ul>
-</li>
-</ol>
-<p><strong>这样做的好处：</strong></p>
-<ol>
-<li> <strong>解决了 Context 丢失问题</strong>：Context 一直活着，纹理不需要重新加载。</li>
-<li> <strong>解决了 <code>nativeDestroy</code> 的环境问题</strong>：在退出时，因为 <code>EGLSurface</code> 对象还在，调用 <code>eglMakeCurrent</code> <strong>通常</strong>是成功的（取决于 GPU 驱动实现），这让你可以合法地调用 <code>glDelete*</code>。</li>
-<li> <strong>无缝切换</strong>：如果是屏幕旋转（导致 Surface 销毁重建），这种方式切换速度最快。</li>
-</ol>
-<hr>
-<h3 id="修改后的代码实现-支持延迟释放"><a href="#修改后的代码实现-支持延迟释放" class="headerlink" title="修改后的代码实现 (支持延迟释放)"></a>修改后的代码实现 (支持延迟释放)</h3><p>我们需要修改 <code>CustomGLRenderThread</code> 的逻辑。</p>
-<h4 id="1-状态控制变量"><a href="#1-状态控制变量" class="headerlink" title="1. 状态控制变量"></a>1. 状态控制变量</h4><p>我们需要区分“是否应该渲染”和“是否持有 Surface”。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只有当持有有效的 Android Window 时，才为 true，才能 swapBuffers</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> hasValidWindow = <span class="literal">false</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">// 记录是否已经创建了 EGLSurface 对象（哪怕底层的 Window 已经销毁了，这个对象可能还在）</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> hasEglSurface = <span class="literal">false</span> </span><br></pre></td></tr></table></figure>
-
-<h4 id="2-线程主循环-Run-Method"><a href="#2-线程主循环-Run-Method" class="headerlink" title="2. 线程主循环 (Run Method)"></a>2. 线程主循环 (Run Method)</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">run</span><span class="params">()</span></span> &#123;</span><br><span class="line">    initEGL()</span><br><span class="line">    initGLContext()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 初始化 C++ 引擎（此时还没有 Surface，先不调 OpenGL 相关的 setup，或者创建一个 Pbuffer）</span></span><br><span class="line">    <span class="comment">// 通常建议：把 C++ 的 init 放到第一次 createEGLSurface 之后，或者这里先不做 GL 操作</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (isRunning) &#123;</span><br><span class="line">        synchronized(lock) &#123;</span><br><span class="line">            <span class="comment">// 只要没有有效的 Window，就等待 (延迟销毁策略的核心：不在这里销毁 EGLSurface)</span></span><br><span class="line">            <span class="keyword">while</span> (isRunning &amp;&amp; !hasValidWindow) &#123;</span><br><span class="line">                lock.wait()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (!isRunning) <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// --- 核心修改：Surface 替换逻辑 ---</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 1. 如果有新的 Window 来了，但我们手里还捏着旧的 EGLSurface</span></span><br><span class="line">        <span class="keyword">if</span> (hasEglSurface &amp;&amp; (surface != currentBoundSurface)) &#123;</span><br><span class="line">            <span class="comment">// 必须先销毁旧的，因为它绑定的是上一个无效的 Window</span></span><br><span class="line">            releaseEGLSurface() </span><br><span class="line">            Log.d(<span class="string">&quot;GLThread&quot;</span>, <span class="string">&quot;Releasing old EGLSurface (Lazy Release)&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 如果当前没有 EGLSurface，就创建一个新的</span></span><br><span class="line">        <span class="keyword">if</span> (!hasEglSurface &amp;&amp; surface?.isValid == <span class="literal">true</span>) &#123;</span><br><span class="line">            createEGLSurface(surface!!)</span><br><span class="line">            makeCurrent()</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 如果是第一次启动，初始化 C++ 引擎</span></span><br><span class="line">            <span class="keyword">if</span> (!isEngineInitialized) &#123;</span><br><span class="line">                nativeCreate()</span><br><span class="line">                isEngineInitialized = <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            currentBoundSurface = surface <span class="comment">// 记录当前绑定的 Surface 对象</span></span><br><span class="line">            Log.d(<span class="string">&quot;GLThread&quot;</span>, <span class="string">&quot;Created new EGLSurface&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 渲染</span></span><br><span class="line">        nativeRender()</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 4. 交换缓冲</span></span><br><span class="line">        <span class="keyword">if</span> (!swapBuffers()) &#123;</span><br><span class="line">            Log.w(<span class="string">&quot;GLThread&quot;</span>, <span class="string">&quot;Swap failed, window might be lost&quot;</span>)</span><br><span class="line">            synchronized(lock) &#123;</span><br><span class="line">                hasValidWindow = <span class="literal">false</span> <span class="comment">// 标记 Window 失效，下次循环进入 wait</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// --- 退出逻辑 (Destruction) ---</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 此时我们要退出了。</span></span><br><span class="line">    <span class="comment">// 如果 EGLSurface 还在（说明是延迟释放的），我们可以尝试 MakeCurrent 来清理资源</span></span><br><span class="line">    <span class="keyword">if</span> (hasEglSurface) &#123;</span><br><span class="line">        <span class="comment">// 尝试绑定。即使底层 Window 销毁了，EGLSurface 句柄通常还能用于 MakeCurrent</span></span><br><span class="line">        <span class="comment">// 注意：这里不能 SwapBuffers，只能做 glDelete 等操作</span></span><br><span class="line">        <span class="keyword">if</span> (makeCurrent()) &#123;</span><br><span class="line">            nativeDestroy() <span class="comment">// 完美：在 GL 环境中销毁</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 极端情况：驱动不允许绑定失效 Surface，只能强行清理 C++ 内存</span></span><br><span class="line">            nativeDestroy() </span><br><span class="line">        &#125;</span><br><span class="line">        releaseEGLSurface()</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 连 Surface 都没有，直接盲调（主要为了释放 C++ 内存）</span></span><br><span class="line">        nativeDestroy()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    releaseEGL()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-外部回调的配合-MyGLSurfaceView"><a href="#3-外部回调的配合-MyGLSurfaceView" class="headerlink" title="3. 外部回调的配合 (MyGLSurfaceView)"></a>3. 外部回调的配合 (MyGLSurfaceView)</h4><p>View 层的逻辑变得更简单了，只需要控制开关。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 外部调用：当 Surface 创建/重建</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">onSurfaceCreated</span><span class="params">(surface: <span class="type">Surface</span>)</span></span> &#123;</span><br><span class="line">    synchronized(lock) &#123;</span><br><span class="line">        <span class="keyword">this</span>.surface = surface</span><br><span class="line">        <span class="keyword">this</span>.hasValidWindow = <span class="literal">true</span> <span class="comment">// 允许渲染</span></span><br><span class="line">        lock.notifyAll()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 外部调用：当 Surface 销毁</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">onSurfaceDestroyed</span><span class="params">()</span></span> &#123;</span><br><span class="line">    synchronized(lock) &#123;</span><br><span class="line">        <span class="comment">// 关键点：只标记 Window 不可用，不销毁 EGLSurface！</span></span><br><span class="line">        <span class="keyword">this</span>.hasValidWindow = <span class="literal">false</span> </span><br><span class="line">        <span class="comment">// 注意：这里不需要设置 surface = null，保留引用以便对比</span></span><br><span class="line">        <span class="comment">// 线程会在下一次循环因为 !hasValidWindow 而进入 wait</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="这个方案的唯一风险点"><a href="#这个方案的唯一风险点" class="headerlink" title="这个方案的唯一风险点"></a>这个方案的唯一风险点</h3><p>你需要注意一个底层的技术细节：**<code>EGL_BAD_NATIVE_WINDOW</code>**。</p>
-<p>当你调用 <code>onSurfaceDestroyed</code> 时，Android 系统会销毁底层的 Window BufferQueue。<br>在你的方案中，<code>EGLSurface</code> 还活着，但它背后的 Window 死了。</p>
-<p>在 <code>quit()</code> 阶段：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (hasEglSurface) &#123;</span><br><span class="line">    makeCurrent() <span class="comment">// &lt;--- 这里</span></span><br><span class="line">    nativeDestroy()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>  **大多数 GPU 驱动 (Adreno, Mali)**：允许这么做。只要你不调用 <code>swapBuffers</code>，仅仅是 <code>makeCurrent</code> 和 <code>glDeleteTextures</code> 是可以的。</li>
-<li>  <strong>少数严格的驱动</strong>：可能会在 <code>makeCurrent</code> 时检测到底层 Window 已失效，返回 <code>EGL_FALSE</code>。</li>
-</ul>
-<p><strong>解决办法</strong>：<br>在 <code>nativeDestroy</code> 的 C++ 代码中，以及 Java 调用处，要做好<strong>容错</strong>。<br>即：如果 <code>makeCurrent</code> 失败了，也要强行调用 <code>nativeDestroy</code> 来释放 C++ 的 <code>std::vector</code> 等内存，只是跳过 <code>glDelete</code> 而已（反正 Context 马上要被销毁了，显存会自动回收，不会造成永久泄漏）。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>你的“延迟释放”思路是<strong>完全可行且推荐</strong>的。</p>
-<ol>
-<li> <strong>暂停时</strong>：保留 <code>EGLSurface</code>，停止 <code>Swap</code>，线程休眠。</li>
-<li> <strong>恢复时</strong>：对比 Surface 对象，不同则 <code>Release Old</code> -&gt; <code>Create New</code>。</li>
-<li> <strong>退出时</strong>：利用残留的 <code>EGLSurface</code> 恢复环境进行清理。</li>
-</ol>
-<p>这比每次都销毁重建要优雅得多，尤其是在处理屏幕旋转等配置变更时。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/11/30/%E4%BD%A0%E7%9A%84%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E9%9D%9E%E5%B8%B8%E6%A3%92/" data-id="cmildeqbf0001grco85dh3t8s" class="article-share-link">Share</a>
-      
-      
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-  
-    <a href="/2025/11/30/%E5%9C%A8C%E4%B8%AD%E4%BF%A1%E5%8F%B7%E9%87%8FSemaphore%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E8%AE%A1%E6%95%B0%E5%99%A8%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">在 C++ 中，条件变量和信号量对比</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/archives/page/7/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="page-number" href="/archives/page/7/">7</a><span class="page-number current">8</span>
+  </nav>
 
 </section>
         
@@ -241,23 +169,23 @@
       <ul>
         
           <li>
-            <a href="/2025/11/30/%E4%BD%A0%E7%9A%84%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E9%9D%9E%E5%B8%B8%E6%A3%92/">Android Surface 延迟释放策略</a>
+            <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/">深入理解Android中的SurfaceFlinger</a>
           </li>
         
           <li>
-            <a href="/2025/11/30/%E5%9C%A8C%E4%B8%AD%E4%BF%A1%E5%8F%B7%E9%87%8FSemaphore%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E8%AE%A1%E6%95%B0%E5%99%A8%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/">在 C++ 中，条件变量和信号量对比</a>
+            <a href="/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/">Android Surface 延迟释放策略</a>
           </li>
         
           <li>
-            <a href="/2025/11/30/C11%E5%BC%95%E5%85%A5%E7%9A%84stdconditionvariable%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%94%A8%E4%BA%8E%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8C%E9%80%9A%E4%BF%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%9C%BA%E5%88%B6/">std::condition_variable使用介绍</a>
+            <a href="/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/">在 C++ 中，条件变量和信号量对比</a>
+          </li>
+        
+          <li>
+            <a href="/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/">std::condition_variable使用介绍</a>
           </li>
         
           <li>
             <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/">Java中的布尔类型</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/">为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？</a>
           </li>
         
       </ul>

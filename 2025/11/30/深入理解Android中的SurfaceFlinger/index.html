@@ -22,17 +22,17 @@
 <!-- End Google AdSense -->
  
   
-  <title>std::condition_variable使用介绍 | Xujing的博客</title>
+  <title>深入理解Android中的SurfaceFlinger | Xujing的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="C++11 引入的 std::condition_variable（条件变量）是多线程编程中用于线程间同步和通信的重要机制。它允许一个线程挂起（阻塞），直到另一个线程通知它某个特定的条件已经满足。">
+  <meta name="description" content="这是一篇关于 Android 图形系统核心——SurfaceFlinger 的深度解析。 既然你已经掌握了如何使用 EGLContext 和独立线程进行渲染，那么理解 SurfaceFlinger 将帮助你打通从 swapBuffers 到屏幕显示的“最后一公里”。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="std::condition_variable使用介绍">
-<meta property="og:url" content="https://jackwzx.github.io/2025/11/30/C11%E5%BC%95%E5%85%A5%E7%9A%84stdconditionvariable%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%94%A8%E4%BA%8E%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8C%E9%80%9A%E4%BF%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:title" content="深入理解Android中的SurfaceFlinger">
+<meta property="og:url" content="https://jackwzx.github.io/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/index.html">
 <meta property="og:site_name" content="Xujing的博客">
-<meta property="og:description" content="C++11 引入的 std::condition_variable（条件变量）是多线程编程中用于线程间同步和通信的重要机制。它允许一个线程挂起（阻塞），直到另一个线程通知它某个特定的条件已经满足。">
+<meta property="og:description" content="这是一篇关于 Android 图形系统核心——SurfaceFlinger 的深度解析。 既然你已经掌握了如何使用 EGLContext 和独立线程进行渲染，那么理解 SurfaceFlinger 将帮助你打通从 swapBuffers 到屏幕显示的“最后一公里”。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-11-30T05:54:27.000Z">
-<meta property="article:modified_time" content="2025-11-30T05:55:23.342Z">
+<meta property="article:published_time" content="2025-11-30T07:09:15.000Z">
+<meta property="article:modified_time" content="2025-11-30T07:09:41.701Z">
 <meta property="article:author" content="Xujing">
 <meta name="twitter:card" content="summary">
   
@@ -83,10 +83,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-C11引入的stdconditionvariable条件变量是多线程编程中用于线程间同步和通信的重要机制" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-深入理解Android中的SurfaceFlinger" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2025/11/30/C11%E5%BC%95%E5%85%A5%E7%9A%84stdconditionvariable%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%94%A8%E4%BA%8E%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8C%E9%80%9A%E4%BF%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%9C%BA%E5%88%B6/" class="article-date">
-  <time datetime="2025-11-30T05:54:27.000Z" itemprop="datePublished">2025-11-30</time>
+    <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/" class="article-date">
+  <time datetime="2025-11-30T07:09:15.000Z" itemprop="datePublished">2025-11-30</time>
 </a>
     
   </div>
@@ -97,7 +97,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      std::condition_variable使用介绍
+      深入理解Android中的SurfaceFlinger
     </h1>
   
 
@@ -105,83 +105,122 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>C++11 引入的 <code>std::condition_variable</code>（条件变量）是多线程编程中用于<strong>线程间同步</strong>和<strong>通信</strong>的重要机制。它允许一个线程挂起（阻塞），直到另一个线程通知它某个特定的条件已经满足。</p>
+        <p>这是一篇关于 Android 图形系统核心——<strong>SurfaceFlinger</strong> 的深度解析。</p>
+<p>既然你已经掌握了如何使用 <code>EGLContext</code> 和独立线程进行渲染，那么理解 SurfaceFlinger 将帮助你打通从 <code>swapBuffers</code> 到屏幕显示的“最后一公里”。</p>
 <span id="more"></span>
 
-<p>相比于“忙等待”（Busy Waiting，即在一个循环里不停地检查变量），条件变量能节省 CPU 资源，因为线程在等待时会真正进入休眠状态。</p>
-<p>下面我将从<strong>基本概念、核心机制、虚假唤醒、应用场景</strong>以及<strong>代码示例</strong>五个方面详细讲解。</p>
 <hr>
-<h3 id="1-基本概念与头文件"><a href="#1-基本概念与头文件" class="headerlink" title="1. 基本概念与头文件"></a>1. 基本概念与头文件</h3><p>要使用条件变量，需要包含头文件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;condition_variable&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<p>通常，条件变量需要配合以下两个组件一起工作：</p>
-<ol>
-<li> **<code>std::mutex</code>**：用于保护共享数据。</li>
-<li> **<code>std::unique_lock&lt;std::mutex&gt;</code>**：用于在等待期间自动解锁和重新加锁（注意：必须是 <code>unique_lock</code>，不能是 <code>lock_guard</code>，原因后面会讲）。</li>
-</ol>
-<h3 id="2-核心操作"><a href="#2-核心操作" class="headerlink" title="2. 核心操作"></a>2. 核心操作</h3><p><code>std::condition_variable</code> 主要有三个核心动作：</p>
+<h3 id="1-什么是-SurfaceFlinger？"><a href="#1-什么是-SurfaceFlinger？" class="headerlink" title="1. 什么是 SurfaceFlinger？"></a>1. 什么是 SurfaceFlinger？</h3><p>用一句话概括：<strong>SurfaceFlinger 是 Android 系统级的“合成器” (Compositor)。</strong></p>
+<p>你的 App（包括状态栏、导航栏、壁纸）各自都在画画，每个人都有一块自己的画布（Surface）。但是手机屏幕只有一个。<br>SurfaceFlinger 的工作就是：<strong>把所有 App 绘制产生的“图层”，按照位置、层级（Z-order）、透明度，合成（Composite）为一张最终的图像，然后交给屏幕显示。</strong></p>
+<h3 id="2-核心架构：生产者与消费者模型"><a href="#2-核心架构：生产者与消费者模型" class="headerlink" title="2. 核心架构：生产者与消费者模型"></a>2. 核心架构：生产者与消费者模型</h3><p>理解 SurfaceFlinger 最好的方式是通过 <strong>BufferQueue</strong>（缓冲队列）。</p>
 <ul>
-<li>**<code>wait(lock, predicate)</code>**：<ul>
-<li>  <strong>阻塞</strong>：当前线程释放锁，并进入休眠状态（不占用 CPU）。</li>
-<li>  <strong>唤醒</strong>：当收到通知或系统虚假唤醒时，线程解除阻塞。</li>
-<li>  <strong>重获锁</strong>：线程重新获取互斥锁。</li>
-<li>  <strong>检查条件</strong>：如果有 <code>predicate</code>（一个返回 bool 的函数或 lambda），它会检查条件是否满足。如果不满足，再次挂起。</li>
+<li><strong>生产者 (Producer)</strong>: 你的 App（或者说你的 OpenGL 线程）。<ul>
+<li>  当你调用 <code>eglSwapBuffers</code> 时，你产生了一帧数据。</li>
 </ul>
 </li>
-<li>  <strong><code>notify_one()</code><strong>：唤醒</strong>一个</strong>正在等待该条件变量的线程。</li>
-<li>  <strong><code>notify_all()</code><strong>：唤醒</strong>所有</strong>正在等待该条件变量的线程。</li>
+<li>  <strong>缓冲队列 (BufferQueue)</strong>: 连接 App 和 SurfaceFlinger 的管道。</li>
+<li><strong>消费者 (Consumer)</strong>: SurfaceFlinger。<ul>
+<li>  它从队列里取出你画好的 Buffer，拿去合成。</li>
 </ul>
-<hr>
-<h3 id="3-为什么需要-std-unique-lock？"><a href="#3-为什么需要-std-unique-lock？" class="headerlink" title="3. 为什么需要 std::unique_lock？"></a>3. 为什么需要 <code>std::unique_lock</code>？</h3><p><code>std::lock_guard</code> 是 RAII 风格的锁，一旦创建就锁住，直到销毁才释放。<br>而条件变量在调用 <code>wait()</code> 时，<strong>必须由库内部先解锁</strong>（让其他线程能获取锁并修改共享数据），然后在<strong>唤醒时重新加锁</strong>。<code>std::unique_lock</code> 提供了这种灵活的 <code>lock()</code> 和 <code>unlock()</code> 能力，而 <code>lock_guard</code> 不行。</p>
-<hr>
-<h3 id="4-关键陷阱：虚假唤醒-Spurious-Wakeup"><a href="#4-关键陷阱：虚假唤醒-Spurious-Wakeup" class="headerlink" title="4. 关键陷阱：虚假唤醒 (Spurious Wakeup)"></a>4. 关键陷阱：虚假唤醒 (Spurious Wakeup)</h3><p>这是一个面试常考点。线程在没有收到 <code>notify</code> 的情况下，也可能被操作系统唤醒。这被称为“虚假唤醒”。</p>
-<p><strong>错误写法（使用 <code>if</code>）：</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (queue.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">    cv.<span class="built_in">wait</span>(lock); <span class="comment">// 如果发生虚假唤醒，线程醒来往下执行，但队列其实还是空的 -&gt; 崩溃</span></span><br><span class="line">&#125;</span><br><span class="line">data = queue.<span class="built_in">front</span>();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[你的 App (OpenGL)]  --&gt;  [BufferQueue]  --&gt;  [SurfaceFlinger]  --&gt;  [屏幕 (Display)]</span><br><span class="line">(eglSwapBuffers)          (入队)              (合成 &amp; 输送)</span><br></pre></td></tr></table></figure>
 
-<p><strong>正确写法（使用 <code>while</code>）：</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (queue.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">    cv.<span class="built_in">wait</span>(lock); <span class="comment">// 醒来后再次检查条件，如果还是空的，继续睡</span></span><br><span class="line">&#125;</span><br><span class="line">data = queue.<span class="built_in">front</span>();</span><br></pre></td></tr></table></figure>
-
-<p><strong>C++11 简化写法（推荐）：</strong><br><code>wait</code> 函数支持第二个参数（谓词），自动帮我们处理 <code>while</code> 循环：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 意思是：直到 lambda 返回 true 时，才停止等待</span></span><br><span class="line">cv.<span class="built_in">wait</span>(lock, []&#123; <span class="keyword">return</span> !queue.<span class="built_in">empty</span>(); &#125;);</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="5-应用场景"><a href="#5-应用场景" class="headerlink" title="5. 应用场景"></a>5. 应用场景</h3><ol>
-<li> <strong>生产者-消费者模型（Producer-Consumer）</strong>：最经典场景。生产者往队列塞数据，通知消费者；消费者取数据，如果队列空则等待。</li>
-<li> <strong>线程池（Thread Pool）</strong>：工作线程在没有任务时挂起，主线程添加任务后通知工作线程“来活了”。</li>
-<li> <strong>读写锁的实现</strong>或<strong>屏障（Barrier）</strong>：等待所有线程到达某个同步点。</li>
+<h3 id="3-SurfaceFlinger-的三大核心机制"><a href="#3-SurfaceFlinger-的三大核心机制" class="headerlink" title="3. SurfaceFlinger 的三大核心机制"></a>3. SurfaceFlinger 的三大核心机制</h3><h4 id="A-VSYNC-垂直同步信号"><a href="#A-VSYNC-垂直同步信号" class="headerlink" title="A. VSYNC (垂直同步信号)"></a>A. VSYNC (垂直同步信号)</h4><p>SurfaceFlinger 不是随叫随到的，它是跟着心跳走的。这个心跳就是 <strong>VSYNC</strong>。</p>
+<ul>
+<li>  屏幕通常以 60Hz（或 90/120Hz）刷新。</li>
+<li>  每隔 16.6ms，硬件会发出一个 VSYNC 信号。</li>
+<li>  SurfaceFlinger 收到信号后，才会醒过来工作：“嘿，各个 App 们，把你们最新的 Buffer 给我，我要开始合成了！”</li>
+<li>  <strong>Choreographer</strong>: App 端接收 VSYNC 的组件。它告诉你的 App：“快点画，下一帧合成马上要开始了”。</li>
+</ul>
+<h4 id="B-Layer-图层"><a href="#B-Layer-图层" class="headerlink" title="B. Layer (图层)"></a>B. Layer (图层)</h4><p>在 SurfaceFlinger 内部，每一个应用窗口对应一个 <strong>Layer</strong>。</p>
+<ul>
+<li>  你的 <code>SurfaceView</code> 是一个 Layer。</li>
+<li>  <code>TextView</code>、<code>Button</code> 所在的 UI 窗口也是一个 Layer。</li>
+<li>  状态栏是一个 Layer。</li>
+<li>  SurfaceFlinger 持有这些 Layer 的列表，并根据 Z-order（谁在上面谁在下面）来决定遮挡关系。</li>
+</ul>
+<h4 id="C-HWC-Hardware-Composer-——-性能优化的关键"><a href="#C-HWC-Hardware-Composer-——-性能优化的关键" class="headerlink" title="C. HWC (Hardware Composer) —— 性能优化的关键"></a>C. HWC (Hardware Composer) —— 性能优化的关键</h4><p>这是 Android 图形流畅的关键。<br>合成图层有两种方式：</p>
+<ol>
+<li> <strong>GLES 合成 (Client Composition)</strong>: SurfaceFlinger 使用 GPU (OpenGL) 把各个图层画到一张大图上。这很费电，也占用 GPU 资源。</li>
+<li> <strong>HWC 合成 (Device Composition)</strong>: 现代手机的处理芯片（SoC）里有一个专门的 2D 硬件合成单元（Display Subsystem）。它能非常高效地把几个 Buffer 叠加在一起，<strong>完全不需要 GPU 参与</strong>。</li>
 </ol>
-<hr>
-<h3 id="6-代码示例：生产者-消费者模型"><a href="#6-代码示例：生产者-消费者模型" class="headerlink" title="6. 代码示例：生产者-消费者模型"></a>6. 代码示例：生产者-消费者模型</h3><p>这个例子展示了一个生产者线程生产数据，一个消费者线程处理数据。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;condition_variable&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 共享资源</span></span><br><span class="line">std::queue&lt;<span class="type">int</span>&gt; dataQueue;</span><br><span class="line">std::mutex mtx;</span><br><span class="line">std::condition_variable cv;</span><br><span class="line"><span class="type">bool</span> finished = <span class="literal">false</span>; <span class="comment">// 标记生产是否结束</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 生产者线程函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">producer</span><span class="params">(<span class="type">int</span> count)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= count; ++i) &#123;</span><br><span class="line">        std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">milliseconds</span>(<span class="number">100</span>)); <span class="comment">// 模拟生产耗时</span></span><br><span class="line">        </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 加锁保护共享队列</span></span><br><span class="line">            <span class="function">std::unique_lock&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(mtx)</span></span>;</span><br><span class="line">            dataQueue.<span class="built_in">push</span>(i);</span><br><span class="line">            std::cout &lt;&lt; <span class="string">&quot;[Producer] Produced: &quot;</span> &lt;&lt; i &lt;&lt; std::endl;</span><br><span class="line">        &#125; <span class="comment">// 离开作用域，自动解锁</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 通知一个等待的消费者（先解锁再通知通常效率更高，避免消费者醒来立刻撞上锁）</span></span><br><span class="line">        cv.<span class="built_in">notify_one</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 标记生产结束</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function">std::unique_lock&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(mtx)</span></span>;</span><br><span class="line">        finished = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cv.<span class="built_in">notify_all</span>(); <span class="comment">// 通知所有消费者（如果有多给消费者）该下班了</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 消费者线程函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">consumer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="function">std::unique_lock&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(mtx)</span></span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 核心逻辑：等待数据 OR 结束信号</span></span><br><span class="line">        <span class="comment">// 使用 lambda 表达式作为谓词，防止虚假唤醒</span></span><br><span class="line">        <span class="comment">// 含义：当“队列不为空”或者“生产已结束”时，停止等待，继续往下执行</span></span><br><span class="line">        cv.<span class="built_in">wait</span>(lock, []&#123; <span class="keyword">return</span> !dataQueue.<span class="built_in">empty</span>() || finished; &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果队列有数据，取出处理</span></span><br><span class="line">        <span class="keyword">while</span> (!dataQueue.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">            <span class="type">int</span> val = dataQueue.<span class="built_in">front</span>();</span><br><span class="line">            dataQueue.<span class="built_in">pop</span>();</span><br><span class="line">            std::cout &lt;&lt; <span class="string">&quot;[Consumer] Processed: &quot;</span> &lt;&lt; val &lt;&lt; std::endl;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果队列空了且生产结束，退出循环</span></span><br><span class="line">        <span class="keyword">if</span> (finished) &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;[Consumer] Done.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::thread <span class="title">t1</span><span class="params">(producer, <span class="number">10</span>)</span></span>; <span class="comment">// 生产10个数据</span></span><br><span class="line">    <span class="function">std::thread <span class="title">t2</span><span class="params">(consumer)</span></span>;</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    t2.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="代码解析："><a href="#代码解析：" class="headerlink" title="代码解析："></a>代码解析：</h4><ol>
-<li>**Consumer 的 <code>cv.wait</code>**：<ul>
-<li>  它首先持有了 <code>mtx</code>。</li>
-<li>  然后检查 lambda <code>!dataQueue.empty() || finished</code>。</li>
-<li>  如果为 <code>false</code>（没数据且没结束）：它<strong>释放锁</strong> <code>mtx</code> 并进入休眠。</li>
-<li>  如果为 <code>true</code>：它继续持有锁往下执行。</li>
+<p><strong>工作流程</strong>：<br>SurfaceFlinger 会问 HWC：“这几个图层你能处理吗？”</p>
+<ul>
+<li>  **HWC 说能 (Overlay)**：SF 直接把 Buffer 句柄丢给 HWC，SF 自己这就休息了。（最省电，最快）</li>
+<li>  <strong>HWC 说不能</strong>（比如图层做了复杂的 3D 变换，或者图层超过了硬件支持数量）：SF 就唤醒 GPU，用 OpenGL 把这些图层画成一张图，再交给 HWC。</li>
+</ul>
+<h3 id="4-结合你的-Demo：数据是如何流转的？"><a href="#4-结合你的-Demo：数据是如何流转的？" class="headerlink" title="4. 结合你的 Demo：数据是如何流转的？"></a>4. 结合你的 Demo：数据是如何流转的？</h3><p>让我们回到你写的 OpenGL Demo，看看 <code>swapBuffers</code> 之后发生了什么：</p>
+<ol>
+<li><p><strong>应用层 (Render Thread)</strong>:</p>
+<ul>
+<li>  你调用 <code>eglSwapBuffers()</code>。</li>
+<li>  EGL 驱动将当前显存中的 FrameBuffer 放入 <strong>BufferQueue</strong>。</li>
+<li>  BufferQueue 通知 SurfaceFlinger：“有新货了”。</li>
 </ul>
 </li>
-<li>**Producer 的 <code>cv.notify_one</code>**：<ul>
-<li>  生产者放入数据后调用 <code>notify_one</code>。</li>
-<li>  操作系统唤醒 Consumer 线程。</li>
-<li>  Consumer 醒来后，尝试<strong>重新获取锁</strong> <code>mtx</code>。</li>
-<li>  拿到锁后，再次执行 lambda 检查，发现队列不为空，于是往下执行取数据逻辑。</li>
+<li><p><strong>系统层 (SurfaceFlinger)</strong>:</p>
+<ul>
+<li>  等待下一个 VSYNC 信号到来。</li>
+<li>  信号一来，SurfaceFlinger 锁定当前所有 Layer 的状态。</li>
+<li>  它从你的 BufferQueue 中取出这个 Buffer (Acquire Buffer)。</li>
+</ul>
+</li>
+<li><p><strong>合成决策</strong>:</p>
+<ul>
+<li>  SF 看着你的 Surface 和上面的状态栏。</li>
+<li>  它告诉 HWC：“把 App 的 Buffer 放在底层，状态栏的 Buffer 盖在上面”。</li>
+</ul>
+</li>
+<li><p><strong>显示</strong>:</p>
+<ul>
+<li>  HWC 读取内存中的数据，合成电信号，发送给显示屏（LCD/OLED）。</li>
+<li>  Buffer 被显示后，SF 会释放它，把它还给 BufferQueue。</li>
+</ul>
+</li>
+<li><p><strong>回收</strong>:</p>
+<ul>
+<li>  你的 App 下次 <code>eglSwapBuffers</code> 时，或者是 <code>dequeueBuffer</code> 时，就能复用这块已经显示过的内存（这就是<strong>双缓冲/三缓冲</strong>的循环）。</li>
 </ul>
 </li>
 </ol>
-<h3 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h3><ul>
-<li>  <strong><code>std::condition_variable</code></strong> 用于线程因等待某个条件而挂起。</li>
-<li>  必须配合 <strong><code>std::unique_lock&lt;std::mutex&gt;</code></strong> 使用。</li>
-<li>  使用 <strong><code>wait</code></strong> 时必须防范<strong>虚假唤醒</strong>（建议使用带谓词的 <code>wait</code> 版本）。</li>
-<li>  <strong><code>notify_one</code></strong> 唤醒一个，**<code>notify_all</code>** 唤醒所有。</li>
-<li>  它是构建复杂并发模式（如线程池、任务队列）的基石。</li>
+<h3 id="5-为什么会有“撕裂-Tearing-”和“卡顿-Jank-”？"><a href="#5-为什么会有“撕裂-Tearing-”和“卡顿-Jank-”？" class="headerlink" title="5. 为什么会有“撕裂 (Tearing)”和“卡顿 (Jank)”？"></a>5. 为什么会有“撕裂 (Tearing)”和“卡顿 (Jank)”？</h3><ul>
+<li>  <strong>撕裂 (Tearing)</strong>: 如果没有 VSYNC，SurfaceFlinger 在屏幕扫描到一半时突然换了一张新图，屏幕上半部分是旧帧，下半部分是新帧。Android 4.1 之后通过 Project Butter 强制开启 VSYNC 解决了这个问题。</li>
+<li><strong>卡顿 (Jank)</strong>:<ul>
+<li>  <strong>掉帧</strong>: 你的 <code>RenderThread</code> 绘制太慢，超过了 16.6ms。</li>
+<li>  VSYNC 到了，SF 问你要 Buffer，结果 BufferQueue 是空的（你还没画完）。</li>
+<li>  SF 只能拿上一帧的画面继续显示（画面静止不动）。</li>
+<li>  用户感觉到“卡了一下”。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-开发者视角的-SurfaceFlinger"><a href="#6-开发者视角的-SurfaceFlinger" class="headerlink" title="6. 开发者视角的 SurfaceFlinger"></a>6. 开发者视角的 SurfaceFlinger</h3><p>作为开发者，你通常接触不到 SF 的代码（它是 C++ 写的 Native 服务），但你的几个操作直接影响它：</p>
+<ol>
+<li><p><strong>SurfaceView vs TextureView</strong>:</p>
+<ul>
+<li>  <strong>SurfaceView</strong>: 拥有独立的 Surface。SurfaceFlinger 直接通过 HWC 合成它。<strong>性能最高，但无法做 View 动画（平移、缩放）</strong>，因为它不在 View 树里，是一个独立的图层挖了个洞。</li>
+<li>  <strong>TextureView</strong>: 没有独立的 Surface。它劫持了 OpenGL 的渲染结果，变成一个普通的 OpenGL 纹理，交给 App 的 UI 线程去绘制。<strong>性能稍差，但可以像普通 View 一样做动画</strong>。</li>
+</ul>
+</li>
+<li><p><strong><code>surfaceDestroyed</code> 的真相</strong>:</p>
+<ul>
+<li>  当这个回调触发时，意味着 SurfaceFlinger 里的这个 Layer 被移除了。</li>
+<li>  BufferQueue 断开了。</li>
+<li>  如果你还在往里 <code>queueBuffer</code> (swapBuffers)，就会报错或丢失。</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>  <strong>SurfaceFlinger</strong> 是 Android 的画师，负责把所有 App 的画稿拼在一起。</li>
+<li>  <strong>BufferQueue</strong> 是传输画稿的传送带。</li>
+<li>  <strong>HWC</strong> 是画师的强力助手（硬件加速），能不用 GPU 就不拥 GPU。</li>
+<li>  你在 Demo 中做的 <code>eglSwapBuffers</code>，本质上就是向 SurfaceFlinger 提交作业。</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/11/30/C11%E5%BC%95%E5%85%A5%E7%9A%84stdconditionvariable%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%94%A8%E4%BA%8E%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8C%E9%80%9A%E4%BF%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%9C%BA%E5%88%B6/" data-id="cmildeqbe0000grco267y7bt0" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/" data-id="cmildt6yk0003b2cohu61dce1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -190,19 +229,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2025/11/30/%E5%9C%A8C%E4%B8%AD%E4%BF%A1%E5%8F%B7%E9%87%8FSemaphore%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E8%AE%A1%E6%95%B0%E5%99%A8%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          在 C++ 中，条件变量和信号量对比
-        
-      </div>
-    </a>
   
-  
-    <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Java中的布尔类型</div>
+      <div class="article-nav-title">Android Surface 延迟释放策略</div>
     </a>
   
 </nav>
@@ -260,23 +290,23 @@
       <ul>
         
           <li>
-            <a href="/2025/11/30/%E4%BD%A0%E7%9A%84%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E9%9D%9E%E5%B8%B8%E6%A3%92/">Android Surface 延迟释放策略</a>
+            <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/">深入理解Android中的SurfaceFlinger</a>
           </li>
         
           <li>
-            <a href="/2025/11/30/%E5%9C%A8C%E4%B8%AD%E4%BF%A1%E5%8F%B7%E9%87%8FSemaphore%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E8%AE%A1%E6%95%B0%E5%99%A8%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/">在 C++ 中，条件变量和信号量对比</a>
+            <a href="/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/">Android Surface 延迟释放策略</a>
           </li>
         
           <li>
-            <a href="/2025/11/30/C11%E5%BC%95%E5%85%A5%E7%9A%84stdconditionvariable%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%94%A8%E4%BA%8E%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8C%E9%80%9A%E4%BF%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%9C%BA%E5%88%B6/">std::condition_variable使用介绍</a>
+            <a href="/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/">在 C++ 中，条件变量和信号量对比</a>
+          </li>
+        
+          <li>
+            <a href="/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/">std::condition_variable使用介绍</a>
           </li>
         
           <li>
             <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/">Java中的布尔类型</a>
-          </li>
-        
-          <li>
-            <a href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/">为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？</a>
           </li>
         
       </ul>

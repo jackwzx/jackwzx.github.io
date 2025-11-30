@@ -6,7 +6,7 @@
   <link href="https://jackwzx.github.io/atom.xml" rel="self"/>
   
   <link href="https://jackwzx.github.io/"/>
-  <updated>2025-11-12T09:32:30.407Z</updated>
+  <updated>2025-11-30T06:40:06.902Z</updated>
   <id>https://jackwzx.github.io/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android Surface 延迟释放策略</title>
+    <link href="https://jackwzx.github.io/2025/11/30/%E4%BD%A0%E7%9A%84%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E9%9D%9E%E5%B8%B8%E6%A3%92/"/>
+    <id>https://jackwzx.github.io/2025/11/30/%E4%BD%A0%E7%9A%84%E8%BF%99%E4%B8%AA%E6%80%9D%E8%B7%AF%E9%9D%9E%E5%B8%B8%E6%A3%92/</id>
+    <published>2025-11-30T06:39:27.000Z</published>
+    <updated>2025-11-30T06:40:06.902Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;你的这个思路非常棒！这就是所谓的 &lt;strong&gt;“延迟销毁 (Lazy/Deferred Destruction)”&lt;/strong&gt; 或者 &lt;strong&gt;“Surface 缓存”&lt;/strong&gt; 策略。&lt;/p&gt;
+&lt;p&gt;这在很多高性能渲染引擎（如游戏、地图SDK）中是常见的做法。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>在 C++ 中，条件变量和信号量对比</title>
+    <link href="https://jackwzx.github.io/2025/11/30/%E5%9C%A8C%E4%B8%AD%E4%BF%A1%E5%8F%B7%E9%87%8FSemaphore%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E8%AE%A1%E6%95%B0%E5%99%A8%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/"/>
+    <id>https://jackwzx.github.io/2025/11/30/%E5%9C%A8C%E4%B8%AD%E4%BF%A1%E5%8F%B7%E9%87%8FSemaphore%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E7%A7%8D%E5%9F%BA%E4%BA%8E%E8%AE%A1%E6%95%B0%E5%99%A8%E7%9A%84%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6/</id>
+    <published>2025-11-30T06:03:07.000Z</published>
+    <updated>2025-11-30T06:04:04.164Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在 C++ 中，&lt;strong&gt;信号量（Semaphore）&lt;/strong&gt; 提供了一种基于“计数器”的同步机制。&lt;/p&gt;
+&lt;p&gt;需要注意的是，标准的信号量 &lt;code&gt;std::counting_semaphore&lt;/code&gt; 和 &lt;code&gt;std::binary_semaphore&lt;/code&gt; 是在 &lt;strong&gt;C++20&lt;/strong&gt; 才正式引入的。如果你严格限制在 &lt;strong&gt;C++11&lt;/strong&gt; 环境，通常需要自己封装 POSIX 信号量（&lt;code&gt;sem_t&lt;/code&gt;）或 Windows 信号量，或者使用 Boost 库。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>std::condition_variable使用介绍</title>
+    <link href="https://jackwzx.github.io/2025/11/30/C11%E5%BC%95%E5%85%A5%E7%9A%84stdconditionvariable%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%94%A8%E4%BA%8E%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8C%E9%80%9A%E4%BF%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%9C%BA%E5%88%B6/"/>
+    <id>https://jackwzx.github.io/2025/11/30/C11%E5%BC%95%E5%85%A5%E7%9A%84stdconditionvariable%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E6%98%AF%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%94%A8%E4%BA%8E%E7%BA%BF%E7%A8%8B%E9%97%B4%E5%90%8C%E6%AD%A5%E5%92%8C%E9%80%9A%E4%BF%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%9C%BA%E5%88%B6/</id>
+    <published>2025-11-30T05:54:27.000Z</published>
+    <updated>2025-11-30T05:55:23.342Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;C++11 引入的 &lt;code&gt;std::condition_variable&lt;/code&gt;（条件变量）是多线程编程中用于&lt;strong&gt;线程间同步&lt;/strong&gt;和&lt;strong&gt;通信&lt;/strong&gt;的重要机制。它允许一个线程挂起（阻塞），直到另一个线程通知它某个特定的条件已经满足。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Java中的布尔类型</title>
@@ -402,62 +449,6 @@
     <category term="SSAO" scheme="https://jackwzx.github.io/tags/SSAO/"/>
     
     <category term="移动端优化" scheme="https://jackwzx.github.io/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ARM-64架构中寄存器</title>
-    <link href="https://jackwzx.github.io/2024/12/19/%E5%AF%84%E5%AD%98%E5%99%A8%E4%BB%8B%E7%BB%8D/"/>
-    <id>https://jackwzx.github.io/2024/12/19/%E5%AF%84%E5%AD%98%E5%99%A8%E4%BB%8B%E7%BB%8D/</id>
-    <published>2024-12-19T02:00:00.000Z</published>
-    <updated>2025-11-27T08:17:20.525Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;让我详细解释ARM-64架构中这些寄存器的用途：&lt;/p&gt;
-&lt;h2 id=&quot;核心寄存器&quot;&gt;&lt;a href=&quot;#核心寄存器&quot; class=&quot;headerlink&quot; title=&quot;核心寄存器&quot;&gt;&lt;/a&gt;核心寄存器&lt;/h2&gt;</summary>
-    
-    
-    
-    <category term="技术分析" scheme="https://jackwzx.github.io/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>命令行通配符</title>
-    <link href="https://jackwzx.github.io/2024/11/04/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%9A%E9%85%8D%E7%AC%A6/"/>
-    <id>https://jackwzx.github.io/2024/11/04/%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%9A%E9%85%8D%E7%AC%A6/</id>
-    <published>2024-11-04T09:14:07.000Z</published>
-    <updated>2025-06-07T09:16:19.436Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;这是因为-shell-中的通配符（-）展开行为不同：&quot;&gt;&lt;a href=&quot;#这是因为-shell-中的通配符（-）展开行为不同：&quot; class=&quot;headerlink&quot; title=&quot;这是因为 shell 中的通配符（*）展开行为不同：&quot;&gt;&lt;/a&gt;这是因为 shell 中的通配符（&lt;code&gt;*&lt;/code&gt;）展开行为不同：&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;unzip *.zip&lt;/code&gt;：&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;shell 会先展开 &lt;code&gt;*.zip&lt;/code&gt;，如果当前目录有多个 zip 文件&lt;/li&gt;
-&lt;li&gt;命令会变成 &lt;code&gt;unzip file1.zip file2.zip file3.zip&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;这可能导致 unzip 命令收到多个参数而报错&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>正则与通配符区别</title>
-    <link href="https://jackwzx.github.io/2024/10/11/%E6%AD%A3%E5%88%99%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%BA%E5%88%AB/"/>
-    <id>https://jackwzx.github.io/2024/10/11/%E6%AD%A3%E5%88%99%E4%B8%8E%E9%80%9A%E9%85%8D%E7%AC%A6%E5%8C%BA%E5%88%AB/</id>
-    <published>2024-10-11T11:11:45.000Z</published>
-    <updated>2025-02-20T13:07:48.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;正则表达式（Regular Expressions）和通配符（Wildcards）都是用于模式匹配的工具，但它们在功能、语法和应用场景上有显著的区别。以下是它们之间的主要区别：&lt;/p&gt;
-&lt;h3 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1. 定义&quot;&gt;&lt;/a&gt;1. 定义&lt;/h3&gt;</summary>
-    
-    
-    
     
   </entry>
   

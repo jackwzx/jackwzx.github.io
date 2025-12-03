@@ -81,6 +81,172 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-traits设计和用法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/" class="article-date">
+  <time datetime="2024-09-29T09:25:47.000Z" itemprop="datePublished">2024-09-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/">traits设计和用法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 C++ 中，<strong>Traits</strong>（特性）是一种设计模式，通常用于提供类型信息或行为的模板类。Traits 允许在编译时获取类型的特性，从而实现更灵活和可扩展的代码。Traits 模式广泛应用于标准库和现代 C++ 编程中，尤其是在模板编程和泛型编程中。</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/" data-id="cmbt3hg8j00291xcodiurcr97" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-shell和子shell环境变量" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="article-date">
+  <time datetime="2024-09-29T06:12:02.000Z" itemprop="datePublished">2024-09-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">shell和子shell环境变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Shell 脚本中，命令替换（command substitution）是指将命令的输出作为字符串插入到另一个命令中。命令替换通常使用反引号（<code>`command`</code>）或 <code>$()</code> 语法来实现。命令替换会在一个子 Shell 中执行指定的命令，这意味着在子 Shell 中定义的变量不会影响父 Shell 中的变量。</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="cmbt3hg8j001z1xco363vef7e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-分支预测" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/" class="article-date">
+  <time datetime="2024-09-27T01:25:37.000Z" itemprop="datePublished">2024-09-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/">分支预测</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>宏定义解释<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> likely(x) __builtin_expect(!!(x), 1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> unlikely(x) __builtin_expect(!!(x), 0)</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+        
+          <p class="article-more-link">
+            <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/" data-id="cmbt3hg8k002q1xcohzeo6kyq" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-c-模版函数delete防止隐士类型转换-md" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/" class="article-date">
+  <time datetime="2024-09-26T06:29:27.000Z" itemprop="datePublished">2024-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/">c++模版函数delete防止隐士类型转换.md</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文展示如何使用C++模板函数的<code>delete</code>关键字来防止不必要的隐式类型转换。</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/" data-id="cmbt3hg8f001g1xco5cif3fzs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-AndoirdEGLContext销毁管理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/" class="article-date">
@@ -331,182 +497,6 @@
 
 
   
-    <article id="post-使用-asan-unpoison-memory-region屏蔽某处内存检查" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/" class="article-date">
-  <time datetime="2024-07-22T00:45:16.000Z" itemprop="datePublished">2024-07-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/">使用__asan_unpoison_memory_region屏蔽某处内存检查</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><code>__asan_unpoison_memory_region</code> 是 AddressSanitizer (ASan) 库中的一个函数。ASan 是一个用于检测内存错误的工具，主要用于 C 和 C++ 程序开发者。<code>__asan_unpoison_memory_region</code> 的作用是标记一段内存区域为“未污染”状态，这意味着这段内存可以被访问且不会触发 ASan 的错误报告。</p>
-        
-          <p class="article-more-link">
-            <a href="/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2024/07/22/%E4%BD%BF%E7%94%A8-asan-unpoison-memory-region%E5%B1%8F%E8%94%BD%E6%9F%90%E5%A4%84%E5%86%85%E5%AD%98%E6%A3%80%E6%9F%A5/" data-id="cmbt3hg8k002o1xco76q0exyf" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-UTF编码内存角度比较-md" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" class="article-date">
-  <time datetime="2024-07-11T07:36:56.000Z" itemprop="datePublished">2024-07-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/">UTF编码内存角度比较.md</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>UTF-8、UTF-16 和 UTF-32 是三种不同的 Unicode 编码方式，它们在表示字符时占用的字节数各不相同。具体如下：</p>
-<ol>
-<li><strong>UTF-8</strong>：<ul>
-<li>UTF-8 是一种可变长度的编码方式，每个字符占用 1 到 4 个字节。</li>
-<li>具体字节数取决于字符的 Unicode 码点：<ul>
-<li>U+0000 至 U+007F（基本拉丁字母）占 1 个字节。</li>
-<li>U+0080 至 U+07FF 占 2 个字节。</li>
-<li>U+0800 至 U+FFFF 占 3 个字节。</li>
-<li>U+10000 至 U+10FFFF 占 4 个字节。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-        
-          <p class="article-more-link">
-            <a href="/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2024/07/11/UTF%E7%BC%96%E7%A0%81%E5%86%85%E5%AD%98%E8%A7%92%E5%BA%A6%E6%AF%94%E8%BE%83-md/" data-id="cmbt3hg8f001a1xco7605glpg" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Android动态库加载-dlopen与System.loadLibrary对比" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/" class="article-date">
-  <time datetime="2024-06-12T15:00:00.000Z" itemprop="datePublished">2024-06-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/">Android动态库加载-dlopen与System.loadLibrary对比</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在Android开发中，我们经常需要加载本地动态库（.so文件）来实现一些底层功能。Android提供了两种主要的动态库加载方式：<code>dlopen</code>和<code>System.loadLibrary</code>。本文将详细对比这两种方式的区别，并分析<code>System.loadLibrary</code>可能失败的原因。</p>
-        
-          <p class="article-more-link">
-            <a href="/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/" data-id="cmc9xgo8p00005tco0slledk0" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-SDF实现CornerRadius" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" class="article-date">
-  <time datetime="2023-12-28T10:45:16.000Z" itemprop="datePublished">2023-12-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/">SDF实现CornerRadius</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文将介绍如何使用SDF（Signed Distance Field）实现圆角效果。</p>
-<!-- 内容待补充 -->
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" data-id="cmbt3hg8f00171xco1w9ybc1q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -551,7 +541,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -564,23 +554,23 @@
       <ul>
         
           <li>
+            <a href="/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/">关于preA精度损失分析</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/03/SRGB%20%E5%92%8Cgamma%E6%A0%A1%E6%AD%A3/">SRGB 和gamma校正</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/03/GLSurfaceView%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">GLSurfaceView源码分析</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/">针对 RGBA8888（32位）和 RGB565（16位）这两种格式 分析</a>
+          </li>
+        
+          <li>
             <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/">深入理解Android中的SurfaceFlinger</a>
-          </li>
-        
-          <li>
-            <a href="/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/">Android Surface 延迟释放策略</a>
-          </li>
-        
-          <li>
-            <a href="/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/">在 C++ 中，条件变量和信号量对比</a>
-          </li>
-        
-          <li>
-            <a href="/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/">std::condition_variable使用介绍</a>
-          </li>
-        
-          <li>
-            <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/">Java中的布尔类型</a>
           </li>
         
       </ul>

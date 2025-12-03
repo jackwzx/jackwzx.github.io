@@ -6,7 +6,7 @@
   <link href="https://jackwzx.github.io/atom.xml" rel="self"/>
   
   <link href="https://jackwzx.github.io/"/>
-  <updated>2025-11-30T07:09:41.701Z</updated>
+  <updated>2025-12-03T13:17:00.794Z</updated>
   <id>https://jackwzx.github.io/</id>
   
   <author>
@@ -15,6 +15,68 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于preA精度损失分析</title>
+    <link href="https://jackwzx.github.io/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/"/>
+    <id>https://jackwzx.github.io/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/</id>
+    <published>2025-12-03T13:13:23.000Z</published>
+    <updated>2025-12-03T13:17:00.794Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这是一份关于 &lt;strong&gt;RGBA8888&lt;/strong&gt; 格式下，&lt;strong&gt;Pre-multiplied Alpha (预乘 Alpha, 简称 PreA)&lt;/strong&gt; 与 &lt;strong&gt;Straight Alpha (非预乘 Alpha/直通 Alpha, 简称 Non-PreA)&lt;/strong&gt; 在精度损失和不同颜色数据范围内表现的深度分析。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SRGB 和gamma校正</title>
+    <link href="https://jackwzx.github.io/2025/12/03/SRGB%20%E5%92%8Cgamma%E6%A0%A1%E6%AD%A3/"/>
+    <id>https://jackwzx.github.io/2025/12/03/SRGB%20%E5%92%8Cgamma%E6%A0%A1%E6%AD%A3/</id>
+    <published>2025-12-03T08:47:21.000Z</published>
+    <updated>2025-12-03T08:47:47.798Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;为了让你直观地感受到 &lt;strong&gt;Gamma 校正（Gamma Encoding）&lt;/strong&gt; 的威力，我们来做一次具体的数值对比。&lt;/p&gt;
+&lt;p&gt;我们假设使用的标准 Gamma 值为 &lt;strong&gt;2.2&lt;/strong&gt;。&lt;br&gt;公式为：&lt;br&gt;$$ \text{Gamma值} = \text{线性值}^{(1 / 2.2)} \approx \text{线性值}^{0.4545} $$&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>GLSurfaceView源码分析</title>
+    <link href="https://jackwzx.github.io/2025/12/03/GLSurfaceView%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    <id>https://jackwzx.github.io/2025/12/03/GLSurfaceView%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</id>
+    <published>2025-12-03T04:03:03.000Z</published>
+    <updated>2025-12-03T04:04:29.858Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;基于 Android Open Source Project (AOSP) 的 &lt;code&gt;GLSurfaceView.java&lt;/code&gt; 源码，我为你深入梳理了各个核心事件的内部实现细节。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>针对 RGBA8888（32位）和 RGB565（16位）这两种格式 分析</title>
+    <link href="https://jackwzx.github.io/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/"/>
+    <id>https://jackwzx.github.io/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/</id>
+    <published>2025-12-02T08:59:08.000Z</published>
+    <updated>2025-12-02T09:00:16.791Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;针对 &lt;strong&gt;RGBA8888&lt;/strong&gt;（32位）和 &lt;strong&gt;RGB565&lt;/strong&gt;（16位）这两种格式，在&lt;strong&gt;蓝色（Blue）&lt;/strong&gt;显示的差异上，核心在于&lt;strong&gt;色彩精度（Color Depth）&lt;/strong&gt;的不同。&lt;/p&gt;
+&lt;p&gt;简单总结：&lt;strong&gt;RGB565 下的蓝色会出现明显的“色阶（Banding）”现象，渐变不平滑，且色彩还原度不如 RGBA8888。&lt;/strong&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>深入理解Android中的SurfaceFlinger</title>
@@ -364,84 +426,6 @@
     <category term="书单" scheme="https://jackwzx.github.io/tags/%E4%B9%A6%E5%8D%95/"/>
     
     <category term="儿童教育" scheme="https://jackwzx.github.io/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何让孩子戒掉手机爱上阅读：实用策略指南</title>
-    <link href="https://jackwzx.github.io/2025/06/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%AD%A9%E5%AD%90%E6%88%92%E6%8E%89%E6%89%8B%E6%9C%BA%E7%88%B1%E4%B8%8A%E9%98%85%E8%AF%BB-%E5%AE%9E%E7%94%A8%E7%AD%96%E7%95%A5%E6%8C%87%E5%8D%97/"/>
-    <id>https://jackwzx.github.io/2025/06/07/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%AD%A9%E5%AD%90%E6%88%92%E6%8E%89%E6%89%8B%E6%9C%BA%E7%88%B1%E4%B8%8A%E9%98%85%E8%AF%BB-%E5%AE%9E%E7%94%A8%E7%AD%96%E7%95%A5%E6%8C%87%E5%8D%97/</id>
-    <published>2025-06-07T10:00:00.000Z</published>
-    <updated>2025-06-07T09:40:37.530Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在数字化时代，如何引导孩子从手机屏幕转向书本页面，是每个家长都关心的话题。本文将分享一些经过实践验证的策略，帮助您的孩子逐步减少对手机的依赖，培养良好的阅读习惯。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="家庭教育" scheme="https://jackwzx.github.io/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/"/>
-    
-    
-    <category term="教育" scheme="https://jackwzx.github.io/tags/%E6%95%99%E8%82%B2/"/>
-    
-    <category term="亲子" scheme="https://jackwzx.github.io/tags/%E4%BA%B2%E5%AD%90/"/>
-    
-    <category term="阅读" scheme="https://jackwzx.github.io/tags/%E9%98%85%E8%AF%BB/"/>
-    
-    <category term="手机成瘾" scheme="https://jackwzx.github.io/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>type script</title>
-    <link href="https://jackwzx.github.io/2025/03/15/type-script/"/>
-    <id>https://jackwzx.github.io/2025/03/15/type-script/</id>
-    <published>2025-03-15T15:23:39.000Z</published>
-    <updated>2025-03-15T15:26:08.876Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;TypeScript 是一种由 &lt;strong&gt;Microsoft&lt;/strong&gt; 开发的开源编程语言，它是 &lt;strong&gt;JavaScript 的超集&lt;/strong&gt;，为 JavaScript 添加了可选的静态类型系统和现代语言特性。TypeScript 的目标是提高 JavaScript 代码的可维护性、可读性和开发效率，同时保持与 JavaScript 的完全兼容。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>what is mpx</title>
-    <link href="https://jackwzx.github.io/2025/03/15/what-is-mpx/"/>
-    <id>https://jackwzx.github.io/2025/03/15/what-is-mpx/</id>
-    <published>2025-03-15T15:04:48.000Z</published>
-    <updated>2025-03-15T15:09:28.145Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;MPX 是一个 &lt;strong&gt;面向小程序开发的前端框架&lt;/strong&gt;，由滴滴出行团队开源，专为提升小程序开发效率和性能而设计。它基于 Vue.js 的语法和特性，同时针对小程序的特点进行了深度优化和扩展。以下是 MPX 的核心特性和详细介绍：&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>高性能std::string实现分析</title>
-    <link href="https://jackwzx.github.io/2025/01/27/high-performance-string-implementation/"/>
-    <id>https://jackwzx.github.io/2025/01/27/high-performance-string-implementation/</id>
-    <published>2025-01-27T02:00:00.000Z</published>
-    <updated>2025-06-15T03:42:06.156Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;高性能std-string实现分析&quot;&gt;&lt;a href=&quot;#高性能std-string实现分析&quot; class=&quot;headerlink&quot; title=&quot;高性能std::string实现分析&quot;&gt;&lt;/a&gt;高性能std::string实现分析&lt;/h1&gt;&lt;h2 id=&quot;1-字符串存储策略&quot;&gt;&lt;a href=&quot;#1-字符串存储策略&quot; class=&quot;headerlink&quot; title=&quot;1. 字符串存储策略&quot;&gt;&lt;/a&gt;1. 字符串存储策略&lt;/h2&gt;</summary>
-    
-    
-    
-    <category term="编程技术" scheme="https://jackwzx.github.io/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="C++" scheme="https://jackwzx.github.io/tags/C/"/>
-    
-    <category term="字符串" scheme="https://jackwzx.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    
-    <category term="性能优化" scheme="https://jackwzx.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   

@@ -81,6 +81,48 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mediump（中精度）和 highp（高精度）对比分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" class="article-date">
+  <time datetime="2025-12-03T13:27:36.000Z" itemprop="datePublished">2025-12-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/">mediump（中精度）和 highp（高精度）对比分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在移动端渲染开发中（OpenGL ES / Vulkan / Metal），<code>mediump</code>（中精度）和 <code>highp</code>（高精度）的选择对性能和画质影响巨大。</p>
+<p>对于 <strong>UV 坐标（纹理坐标）</strong> 而言，精度的选择直接决定了<strong>纹理采样的准确性</strong>。如果精度不足，会导致画面出现<strong>抖动、锯齿、马赛克或拉伸</strong>。</p>
+        
+          <p class="article-more-link">
+            <a href="/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" data-id="cmiq1m1ct0000pscodhdf3rgh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-关于preA精度损失分析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/" class="article-date">
@@ -464,53 +506,6 @@
 
 
   
-    <article id="post-为什么ASan需要-fsanitize=address编译选项，而不仅仅是替换动态库" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/" class="article-date">
-  <time datetime="2025-08-05T06:00:00.000Z" itemprop="datePublished">2025-08-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>►<a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/">为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？"><a href="#为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？" class="headerlink" title="为什么 ASan 需要 -fsanitize=address 编译选项，而不仅仅是替换动态库？"></a><strong>为什么 ASan 需要 <code>-fsanitize=address</code> 编译选项，而不仅仅是替换动态库？</strong></h3>
-        
-          <p class="article-more-link">
-            <a href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/" data-id="cmdyhtcnl0000nofy660m021x" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">3D图形学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -568,6 +563,10 @@
       <ul>
         
           <li>
+            <a href="/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/">mediump（中精度）和 highp（高精度）对比分析</a>
+          </li>
+        
+          <li>
             <a href="/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/">关于preA精度损失分析</a>
           </li>
         
@@ -581,10 +580,6 @@
         
           <li>
             <a href="/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/">针对 RGBA8888（32位）和 RGB565（16位）这两种格式 分析</a>
-          </li>
-        
-          <li>
-            <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/">深入理解Android中的SurfaceFlinger</a>
           </li>
         
       </ul>

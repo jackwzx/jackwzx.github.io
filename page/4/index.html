@@ -81,6 +81,48 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-texelFetch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/10/06/texelFetch/" class="article-date">
+  <time datetime="2024-10-06T10:16:59.000Z" itemprop="datePublished">2024-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/10/06/texelFetch/">texelFetch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><code>texelFetch</code> 是一个在着色器编程中用于从纹理中获取特定纹素（texel）的函数。与常规的纹理采样不同，<code>texelFetch</code> 使用整数纹理坐标来直接访问纹理数据，不进行过滤或插值。</p>
+<p>在 OpenGL 的 GLSL（OpenGL Shading Language）中，<code>texelFetch</code> 的用法如下：</p>
+        
+          <p class="article-more-link">
+            <a href="/2024/10/06/texelFetch/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/10/06/texelFetch/" data-id="cmbt3hg8k002c1xco3mmd51aa" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-traits设计和用法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/" class="article-date">
@@ -456,47 +498,6 @@
 
 
   
-    <article id="post-pthread-create设置栈size" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/" class="article-date">
-  <time datetime="2024-07-28T02:44:09.000Z" itemprop="datePublished">2024-07-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/">pthread_create设置栈size</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文演示如何在使用 <code>pthread_create</code> 创建线程时设置自定义的栈大小。通过 <code>pthread_attr_setstacksize</code> 函数可以控制线程的栈空间大小，这在需要大量栈空间或者优化内存使用时非常有用。</p>
-        
-          <p class="article-more-link">
-            <a href="/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2024/07/28/pthread-create%E8%AE%BE%E7%BD%AE%E6%A0%88size/" data-id="cmbt3hg8i001x1xco9vr4f7om" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -554,6 +555,10 @@
       <ul>
         
           <li>
+            <a href="/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/">mediump（中精度）和 highp（高精度）对比分析</a>
+          </li>
+        
+          <li>
             <a href="/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/">关于preA精度损失分析</a>
           </li>
         
@@ -567,10 +572,6 @@
         
           <li>
             <a href="/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/">针对 RGBA8888（32位）和 RGB565（16位）这两种格式 分析</a>
-          </li>
-        
-          <li>
-            <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/">深入理解Android中的SurfaceFlinger</a>
           </li>
         
       </ul>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-888YX9GKW2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-888YX9GKW2');
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1587619220496591"
+     crossorigin="anonymous"></script>
+<!-- End Google AdSense -->
+ 
+  
+  <title>移动端模板测试与Eary-z分析 | Xujing的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在移动端（特别是基于 TBDR 架构的 GPU，如 Adreno, Mali, Apple GPU）使用模版缓存（Stencil Buffer）时，导致 Early-Z 失效并引起 Fragment Shader（片元着色器）占用率上升，主要原因是 GPU 无法在着色器执行前确定深度和模版测试的最终结果，从而被迫回退到 Late-Z（后期深度测试）模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端模板测试与Eary-z分析">
+<meta property="og:url" content="https://jackwzx.github.io/2025/12/09/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%83%A8%E5%85%89%E6%BA%90%E5%BB%B6%E8%BF%9F%E6%B8%B2%E6%9F%93%E5%92%8C%E9%98%B4%E5%BD%B1%E8%AE%A1%E7%AE%97%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AAFramebuffer%20%E4%BC%9A%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD%E5%90%97/index.html">
+<meta property="og:site_name" content="Xujing的博客">
+<meta property="og:description" content="在移动端（特别是基于 TBDR 架构的 GPU，如 Adreno, Mali, Apple GPU）使用模版缓存（Stencil Buffer）时，导致 Early-Z 失效并引起 Fragment Shader（片元着色器）占用率上升，主要原因是 GPU 无法在着色器执行前确定深度和模版测试的最终结果，从而被迫回退到 Late-Z（后期深度测试）模式。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-09T12:45:31.000Z">
+<meta property="article:modified_time" content="2025-12-09T12:45:59.004Z">
+<meta property="article:author" content="Xujing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Xujing的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xujing的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap" style="display: none;">
+        <!-- 已由本地搜索替代 -->
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-移动端部光源延迟渲染和阴影计算共用同一个Framebuffer 会提升性能吗" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/12/09/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%83%A8%E5%85%89%E6%BA%90%E5%BB%B6%E8%BF%9F%E6%B8%B2%E6%9F%93%E5%92%8C%E9%98%B4%E5%BD%B1%E8%AE%A1%E7%AE%97%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AAFramebuffer%20%E4%BC%9A%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD%E5%90%97/" class="article-date">
+  <time datetime="2025-12-09T12:45:31.000Z" itemprop="datePublished">2025-12-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      移动端模板测试与Eary-z分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在移动端（特别是基于 TBDR 架构的 GPU，如 Adreno, Mali, Apple GPU）使用模版缓存（Stencil Buffer）时，导致 Early-Z 失效并引起 Fragment Shader（片元着色器）占用率上升，主要原因是 <strong>GPU 无法在着色器执行前确定深度和模版测试的最终结果，从而被迫回退到 Late-Z（后期深度测试）模式。</strong></p>
+<span id="more"></span>
+
+<p>以下是底层的技术原因分析以及解决方案：</p>
+<h3 id="1-核心原因：数据依赖与管线顺序-Data-Dependency-amp-Pipeline-Order"><a href="#1-核心原因：数据依赖与管线顺序-Data-Dependency-amp-Pipeline-Order" class="headerlink" title="1. 核心原因：数据依赖与管线顺序 (Data Dependency &amp; Pipeline Order)"></a>1. 核心原因：数据依赖与管线顺序 (Data Dependency &amp; Pipeline Order)</h3><h4 id="标准管线-vs-硬件优化"><a href="#标准管线-vs-硬件优化" class="headerlink" title="标准管线 vs. 硬件优化"></a>标准管线 vs. 硬件优化</h4><ul>
+<li>  <strong>逻辑上的 OpenGL 管线：</strong> 顶点着色器 -&gt; 光栅化 -&gt; 片元着色器 -&gt; <strong>模版测试</strong> -&gt; <strong>深度测试</strong> -&gt; 混合。</li>
+<li>  <strong>Early-Z 优化：</strong> 为了性能，GPU 尝试将 <strong>深度测试</strong> 提前到 片元着色器 <strong>之前</strong>。如果 Early-Z 失败，直接丢弃该像素，不运行昂贵的片元着色器。</li>
+</ul>
+<h4 id="Stencil-的破坏力"><a href="#Stencil-的破坏力" class="headerlink" title="Stencil 的破坏力"></a>Stencil 的破坏力</h4><p>当你启用了模版测试，尤其是当你 <strong>写入模版值</strong>（例如 <code>glStencilOp</code> 设置为 <code>GL_REPLACE</code> 或 <code>GL_INCR</code> 等非 <code>GL_KEEP</code> 操作）时，会发生以下冲突：</p>
+<ol>
+<li> <strong>模版写入导致的不确定性：</strong> 如果你的绘制调用会修改模版缓冲区，硬件会认为当前的深度/模版状态是“易变的”。为了保证渲染结果的逻辑正确性（即符合 OpenGL 标准管线顺序），GPU 可能会保守地禁用 Early-Z。</li>
+<li><strong>复合测试依赖：</strong> 深度测试和模版测试在硬件层面通常是绑定在一起的一个单元（Depth/Stencil Unit）。<ul>
+<li>  如果 <strong>深度测试依赖于模版测试的结果</strong>（比如模版测试挂了，深度就不应该写入），而模版值又是在 Late Stage 确定的，那么深度测试也必须推迟到 Fragment Shader 之后（Late-Z）。</li>
+<li>  一旦回退到 Late-Z，所有的片元着色器都会被执行，计算出的颜色最后才会被扔掉，导致 Fragment 占用率飙升。</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-移动端-TBDR-架构的特殊性"><a href="#2-移动端-TBDR-架构的特殊性" class="headerlink" title="2. 移动端 TBDR 架构的特殊性"></a>2. 移动端 TBDR 架构的特殊性</h3><p>移动端 GPU（Tile-Based Deferred Rendering）非常依赖 Early-Z 来减少 Overdraw（过度绘制）。</p>
+<ul>
+<li>  <strong>Tile Memory 限制：</strong> 深度和模版数据都存储在片上高速缓存（On-chip Memory）中。</li>
+<li><strong>Early-Z/Stencil 单元：</strong> 现代移动 GPU 实际上有专门的 “Early-Z/Stencil” 单元。<ul>
+<li>  <strong>情况 A（纯读取）：</strong> 如果你只是 <strong>读取</strong> 模版（<code>glStencilMask(0x00)</code> 或 <code>glStencilOp(GL_KEEP, ...)</code>），大多数现代 GPU（如 Mali-G7x 系列, Adreno 6xx+）通常 <strong>可以</strong> 保持 Early-Z 开启。</li>
+<li>  <strong>情况 B（写入/修改）：</strong> 如果你在 Draw Call 中 <strong>写入</strong> 模版，硬件往往无法预测后续像素对该模版的依赖关系，为了安全起见，它会关闭 Early-Z。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-重复绘制-Mesh-的场景分析"><a href="#3-重复绘制-Mesh-的场景分析" class="headerlink" title="3. 重复绘制 Mesh 的场景分析"></a>3. 重复绘制 Mesh 的场景分析</h3><p>你提到的“重复绘制 Mesh”通常是这种 Shader Effect 流程（例如描边、遮罩、透视效果）：</p>
+<ol>
+<li> <strong>Pass 1:</strong> 绘制 Mesh，<strong>写入 Stencil</strong>（标记区域），关闭 Color Write。</li>
+<li> <strong>Pass 2:</strong> 再次绘制 Mesh，<strong>读取 Stencil</strong>，进行着色。</li>
+</ol>
+<p><strong>为什么 Pass 2 也无法被 Early-Z 优化？</strong></p>
+<ul>
+<li>  如果 Pass 1 和 Pass 2 在同一个 Render Pass 中（中间没有 <code>glFlush</code> 或显式的依赖屏障），并且 Pass 1 写入了 Stencil，GPU 的光栅化队列可能会因为状态切换或数据竞争风险，使得 Pass 2 也无法利用之前的 Z-Buffer 进行剔除，或者 Pass 2 本身因为开启了复杂的 Stencil Test 导致硬件决定采用 Late-Z。</li>
+<li>  更常见的情况是：<strong>Pass 2 的深度比较函数设置问题</strong>。如果 Pass 2 的深度设置为 <code>GL_LEQUAL</code> 或 <code>GL_EQUAL</code>，且 Pass 1 已经写入了深度，理论上 Early-Z 应该生效。但如果 Pass 2 为了根据 Stencil 剔除像素而开启了 <code>discard</code> 或者是 Alpha Test，这会 100% 强制关闭 Early-Z。</li>
+</ul>
+<h3 id="4-解决方案与优化建议"><a href="#4-解决方案与优化建议" class="headerlink" title="4. 解决方案与优化建议"></a>4. 解决方案与优化建议</h3><p>要解决这个问题，重新获得 Early-Z 的性能收益，可以尝试以下方案：</p>
+<h4 id="方案一：分离“写”与“读”（最推荐）"><a href="#方案一：分离“写”与“读”（最推荐）" class="headerlink" title="方案一：分离“写”与“读”（最推荐）"></a>方案一：分离“写”与“读”（最推荐）</h4><p>将模版写入和复杂的着色计算彻底分开，并确保状态明确。</p>
+<ol>
+<li><p><strong>Stencil Pre-pass (极简 Shader):</strong></p>
+<ul>
+<li>  只开启 Stencil Write。</li>
+<li>  关闭 Color Write (<code>glColorMask(false,...)</code>)。</li>
+<li>  关闭 Depth Write (如果不需要更新深度)。</li>
+<li>  <strong>Shader 极其简单</strong>（甚至可以使用空 Fragment Shader），这样即使发生了 Late-Z，开销也极低。</li>
+</ul>
+</li>
+<li><p><strong>Color Pass (复杂 Shader):</strong></p>
+<ul>
+<li>  开启 Stencil Test (<strong>只读模式</strong>: <code>glStencilMask(0x00)</code>，<code>glStencilOp(GL_KEEP...)</code>)。</li>
+<li>  <strong>重要：</strong> 因为是只读 Stencil，现代 GPU 大概率会重新启用 Early-Z/Early-Stencil 剔除。</li>
+<li>  执行复杂的 Fragment Shader。</li>
+</ul>
+</li>
+</ol>
+<h4 id="方案二：利用-Depth-Pre-pass"><a href="#方案二：利用-Depth-Pre-pass" class="headerlink" title="方案二：利用 Depth Pre-pass"></a>方案二：利用 Depth Pre-pass</h4><p>如果你是因为 Overdraw 严重才关注 Early-Z，可以使用标准的 Depth Pre-pass 技术：</p>
+<ol>
+<li> 先绘制所有不透明物体的深度（关闭颜色写入）。</li>
+<li> 再绘制不透明物体（开启颜色写入，深度测试设为 <code>GL_LEQUAL</code> 或 <code>GL_EQUAL</code>）。</li>
+<li> 在此流程中插入模版逻辑时，尽量遵循“方案一”的只读原则。</li>
+</ol>
+<h4 id="方案三：检查-Shader-代码中的陷阱"><a href="#方案三：检查-Shader-代码中的陷阱" class="headerlink" title="方案三：检查 Shader 代码中的陷阱"></a>方案三：检查 Shader 代码中的陷阱</h4><p>检查你的 Fragment Shader 中是否有以下操作，它们会直接杀死 Early-Z，无论模版设置如何：</p>
+<ul>
+<li>  <code>discard</code> (GLSL) / <code>clip</code> (HLSL)</li>
+<li>  写入 <code>gl_FragDepth</code></li>
+<li>  开启 Alpha to Coverage</li>
+</ul>
+<p>如果 Shader 包含 <code>discard</code>，GPU 无法预知深度（因为深度可能会被扔掉），必须运行 Shader。<br><strong>优化技巧：</strong> 如果必须用 <code>discard</code>，尝试使用 <strong>Alpha Testing</strong>（在某些硬件上有固定功能优化）或尽量减少 <code>discard</code> 的使用范围。</p>
+<h4 id="方案四：调整绘制顺序"><a href="#方案四：调整绘制顺序" class="headerlink" title="方案四：调整绘制顺序"></a>方案四：调整绘制顺序</h4><p>确保你的物体是 <strong>从前向后 (Front-to-Back)</strong> 绘制的。虽然这听起来是老生常谈，但在结合 Stencil 时尤为重要。让最靠近摄像机的物体先写入 Z-Buffer，后续被遮挡的物体（即使有 Stencil 逻辑）也能在 Z-Test 阶段（如果是只读 Stencil）被快速剔除。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>重复绘制 Mesh 导致 Fragment 占用率高的核心原因是 <strong>Stencil Write 操作迫使 GPU 关闭了 Early-Z 优化</strong>。</p>
+<p><strong>最佳实践：</strong><br>将操作拆分为两个 Pass。第一个 Pass <strong>只写 Stencil（和深度）</strong>，使用最廉价的 Shader；第二个 Pass <strong>只读 Stencil</strong> 并进行着色。只要在着色 Pass 中不修改 Stencil 且不使用 <code>discard</code>，Early-Stencil/Early-Z 通常就能正常工作，大幅降低 Fragment Shader 的执行次数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/12/09/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%83%A8%E5%85%89%E6%BA%90%E5%BB%B6%E8%BF%9F%E6%B8%B2%E6%9F%93%E5%92%8C%E9%98%B4%E5%BD%B1%E8%AE%A1%E7%AE%97%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AAFramebuffer%20%E4%BC%9A%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD%E5%90%97/" data-id="cmiykwl300004alcogg408p29" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/12/09/%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E4%B8%93%E4%B8%9A%E4%B8%94%E5%88%87%E4%B8%AD%E8%A6%81%E5%AE%B3%E7%9A%84%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          移动端部光源延迟渲染和阴影计算共用同一个Framebuffer 会提升性能吗
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/12/08/%E9%AB%98%E9%80%9A%E9%AA%81%E9%BE%99%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%99%A8%E6%8C%87%E6%A0%87%E8%A7%A3%E8%AF%BB/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">高通骁龙性能分析器指标解读</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E7%BC%96%E7%A8%8B/">C++编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93/">图形渲染</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/">家庭教育</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/">技术分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/">C++</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">3D图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GLSL/" rel="tag">GLSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSAO/" rel="tag">SSAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shader/" rel="tag">Shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%A6%E5%8D%95/" rel="tag">书单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%B2%E5%AD%90/" rel="tag">亲子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" rel="tag">儿童教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" rel="tag">原子操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" rel="tag">图形编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" rel="tag">宏定义</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag">并发编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" rel="tag">手机成瘾</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" rel="tag">接口适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" rel="tag">插值算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%92%AD%E5%AE%A2/" rel="tag">播客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E8%82%B2/" rel="tag">教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" rel="tag">构造函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" rel="tag">移动端优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" rel="tag">编程陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" rel="tag">预处理器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" rel="tag">颜色空间</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 12px;">3D图形学</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 16px;">C++</a> <a href="/tags/C-11/" style="font-size: 18px;">C++11</a> <a href="/tags/GLSL/" style="font-size: 10px;">GLSL</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/OpenGL/" style="font-size: 12px;">OpenGL</a> <a href="/tags/SSAO/" style="font-size: 10px;">SSAO</a> <a href="/tags/Shader/" style="font-size: 10px;">Shader</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 18px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E4%B9%A6%E5%8D%95/" style="font-size: 10px;">书单</a> <a href="/tags/%E4%BA%B2%E5%AD%90/" style="font-size: 12px;">亲子</a> <a href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" style="font-size: 10px;">儿童教育</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 10px;">动态库</a> <a href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" style="font-size: 10px;">原子操作</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">图形学</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">图形编程</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 10px;">多线程</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" style="font-size: 10px;">宏定义</a> <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">并发编程</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" style="font-size: 10px;">手机成瘾</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" style="font-size: 10px;">接口适配</a> <a href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" style="font-size: 10px;">插值算法</a> <a href="/tags/%E6%92%AD%E5%AE%A2/" style="font-size: 10px;">播客</a> <a href="/tags/%E6%95%99%E8%82%B2/" style="font-size: 10px;">教育</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 12px;">数学</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" style="font-size: 10px;">构造函数</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" style="font-size: 10px;">移动端优化</a> <a href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 10px;">类型转换</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 12px;">线性代数</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" style="font-size: 10px;">编程陷阱</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 14px;">计算机图形学</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 12px;">阅读</a> <a href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" style="font-size: 10px;">预处理器</a> <a href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" style="font-size: 10px;">颜色空间</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/12/09/%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E4%B8%93%E4%B8%9A%E4%B8%94%E5%88%87%E4%B8%AD%E8%A6%81%E5%AE%B3%E7%9A%84%E9%97%AE%E9%A2%98/">移动端部光源延迟渲染和阴影计算共用同一个Framebuffer 会提升性能吗</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/09/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%83%A8%E5%85%89%E6%BA%90%E5%BB%B6%E8%BF%9F%E6%B8%B2%E6%9F%93%E5%92%8C%E9%98%B4%E5%BD%B1%E8%AE%A1%E7%AE%97%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AAFramebuffer%20%E4%BC%9A%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD%E5%90%97/">移动端模板测试与Eary-z分析</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/08/%E9%AB%98%E9%80%9A%E9%AA%81%E9%BE%99%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%99%A8%E6%8C%87%E6%A0%87%E8%A7%A3%E8%AF%BB/">高通骁龙性能分析器指标解读</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/07/Transform%20Feedback%E8%AE%A1%E7%AE%97%E8%92%99%E7%9A%AE%E6%8A%80%E6%9C%AF/">Transform Feedback计算蒙皮技术</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/07/invalidDepth%20FrameBuffer%E4%B9%8B%E5%90%8E%E6%8F%90%E4%BA%A4%E5%90%8C%E4%B8%80%E4%B8%AAframebuffer%20draw%20%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/">invalidDepth FrameBuffer之后提交同一个framebuffer draw 性能问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2025 Xujing<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+  <div class="local-search-popup">
+  <div class="local-search-box">
+    <div class="local-search-input-wrapper">
+      <input id="local-search-input" type="text" placeholder="搜索..." />
+    </div>
+    <span class="search-close-button">×</span>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<script>
+// 搜索功能实现
+window.addEventListener('DOMContentLoaded', function() {
+  var isXml = true;
+  var searchPath = "search.xml";
+  if (searchPath.length === 0) {
+    searchPath = "search.xml";
+  } else if (/json$/i.test(searchPath)) {
+    isXml = false;
+  }
+  var path = "/" + searchPath;
+  var input = document.getElementById("local-search-input");
+  var resultContent = document.getElementById("local-search-result");
+  var searchData = [];
+
+  // 加载搜索索引
+  loadSearchData();
+
+  function loadSearchData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', path, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          if (isXml) {
+            var xmlDoc = new DOMParser().parseFromString(xhr.responseText, "text/xml");
+            var entries = xmlDoc.getElementsByTagName("entry");
+            searchData = Array.from(entries).map(function(entry) {
+              return {
+                title: entry.getElementsByTagName("title")[0].textContent,
+                content: entry.getElementsByTagName("content")[0].textContent,
+                url: entry.getElementsByTagName("url")[0].textContent
+              };
+            });
+          } else {
+            searchData = JSON.parse(xhr.responseText);
+          }
+          
+          // 添加搜索事件监听
+          input.addEventListener('input', search);
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  function search() {
+    var searchText = input.value.trim().toLowerCase();
+    var keywords = searchText.split(/[\s\-]+/);
+    resultContent.innerHTML = "";
+    
+    if (searchText.length > 0) {
+      // 执行搜索
+      searchData.forEach(function(data) {
+        var isMatch = true;
+        var dataTitle = data.title.trim().toLowerCase();
+        var dataContent = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+        var dataUrl = data.url;
+        var indexTitle = -1;
+        var indexContent = -1;
+        var firstOccur = -1;
+        
+        // 只匹配非空关键字
+        if (keywords.length > 0) {
+          keywords.forEach(function(keyword, i) {
+            indexTitle = dataTitle.indexOf(keyword);
+            indexContent = dataContent.indexOf(keyword);
+            if (indexTitle < 0 && indexContent < 0) {
+              isMatch = false;
+            } else {
+              if (indexContent < 0) {
+                indexContent = 0;
+              }
+              if (i == 0) {
+                firstOccur = indexContent;
+              }
+            }
+          });
+        }
+        
+        // 显示搜索结果
+        if (isMatch) {
+          var resultItem = document.createElement("div");
+          resultItem.className = "search-result-item";
+          
+          // 标题
+          var resultTitle = document.createElement("div");
+          resultTitle.className = "search-result-title";
+          var resultLink = document.createElement("a");
+          resultLink.href = dataUrl;
+          resultLink.textContent = data.title;
+          resultTitle.appendChild(resultLink);
+          resultItem.appendChild(resultTitle);
+          
+          // 内容
+          if (firstOccur >= 0) {
+            // 截取内容
+            var content = dataContent;
+            var start = Math.max(0, firstOccur - 20);
+            var end = Math.min(content.length, firstOccur + 80);
+            if (start > 0) {
+              content = '...' + content.substring(start, end) + '...';
+            } else {
+              content = content.substring(start, end) + '...';
+            }
+            
+            // 高亮关键字
+            keywords.forEach(function(keyword) {
+              var regS = new RegExp(keyword, "gi");
+              content = content.replace(regS, '<strong class="search-keyword">' + keyword + '</strong>');
+            });
+            
+            var resultContentDiv = document.createElement("div");
+            resultContentDiv.className = "search-result-content";
+            resultContentDiv.innerHTML = content;
+            resultItem.appendChild(resultContentDiv);
+          }
+          
+          resultContent.appendChild(resultItem);
+        }
+      });
+    }
+  }
+
+  // 搜索框弹出与关闭
+  var searchBtn = document.getElementById("nav-search-btn");
+  var searchPopup = document.querySelector(".local-search-popup");
+  var closeBtn = document.querySelector(".search-close-button");
+  
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      searchPopup.style.display = "block";
+      input.focus();
+    });
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      searchPopup.style.display = "none";
+    });
+  }
+  
+  document.addEventListener('keyup', function(e) {
+    if (e.key === "Escape") {
+      searchPopup.style.display = "none";
+    }
+  });
+});
+</script> 
+</body>
+</html>

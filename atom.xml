@@ -6,7 +6,7 @@
   <link href="https://jackwzx.github.io/atom.xml" rel="self"/>
   
   <link href="https://jackwzx.github.io/"/>
-  <updated>2025-12-09T12:50:34.067Z</updated>
+  <updated>2025-12-28T06:34:42.526Z</updated>
   <id>https://jackwzx.github.io/</id>
   
   <author>
@@ -15,6 +15,227 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git 浅克隆之后如何切换分支</title>
+    <link href="https://jackwzx.github.io/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/"/>
+    <id>https://jackwzx.github.io/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/</id>
+    <published>2025-12-26T12:05:03.000Z</published>
+    <updated>2025-12-28T06:34:42.526Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;当你使用 &lt;code&gt;git clone --depth 1&lt;/code&gt; 进行浅克隆时，Git 默认只会追踪远程的&lt;strong&gt;默认分支&lt;/strong&gt;（通常是 &lt;code&gt;main&lt;/code&gt; 或 &lt;code&gt;master&lt;/code&gt;），并且不会获取其他分支的信息。&lt;/p&gt;
+&lt;p&gt;要切换到其他远程分支，可以根据你的需求选择以下几种方法：&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ARM64函数调用栈寄存器分配</title>
+    <link href="https://jackwzx.github.io/2025/12/26/ARM64%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/"/>
+    <id>https://jackwzx.github.io/2025/12/26/ARM64%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/</id>
+    <published>2025-12-26T01:01:29.000Z</published>
+    <updated>2025-12-28T06:35:22.109Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在 ARM64（AArch64）架构下，理解函数调用栈、寄存器分配以及参数传递是底层开发和调试的核心。ARM64 的函数调用遵循 &lt;strong&gt;AAPCS64&lt;/strong&gt;（Procedure Call Standard for the ARM 64-bit Architecture）。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>c++函数返回值存在了哪里</title>
+    <link href="https://jackwzx.github.io/2025/12/23/c++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E5%AD%98%E5%9C%A8%E4%BA%86%E5%93%AA%E9%87%8C/"/>
+    <id>https://jackwzx.github.io/2025/12/23/c++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E5%AD%98%E5%9C%A8%E4%BA%86%E5%93%AA%E9%87%8C/</id>
+    <published>2025-12-23T13:04:42.000Z</published>
+    <updated>2025-12-28T06:35:52.397Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这是一个非常深入且经典的问题。你的直觉很准：&lt;strong&gt;如果变量在函数内部的栈帧里，函数返回后栈帧销毁，引用必然指向一片非法内存。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;但这里的关键在于：&lt;strong&gt;返回的对象并不在“已经销毁”的那个函数栈帧里。&lt;/strong&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>std::vector&lt;T&gt; clear详解</title>
+    <link href="https://jackwzx.github.io/2025/12/21/std%20vector%20clear%20%E5%88%86%E6%9E%90/"/>
+    <id>https://jackwzx.github.io/2025/12/21/std%20vector%20clear%20%E5%88%86%E6%9E%90/</id>
+    <published>2025-12-21T10:09:26.000Z</published>
+    <updated>2025-12-21T10:09:52.981Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这是一个非常核心的问题。在 C++ 标准库中，&lt;code&gt;std::vector::clear()&lt;/code&gt; 的行为是非常明确的。为了让你彻底理解，我们从&lt;strong&gt;逻辑行为&lt;/strong&gt;、&lt;strong&gt;源码实现（以 GCC 的 libstdc++ 为例）&lt;/strong&gt;以及&lt;strong&gt;内存状态&lt;/strong&gt;三个维度来剖析。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AArch64寄存器</title>
+    <link href="https://jackwzx.github.io/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/"/>
+    <id>https://jackwzx.github.io/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/</id>
+    <published>2025-12-21T07:35:43.000Z</published>
+    <updated>2025-12-28T06:36:32.381Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;ARM64（AArch64）的函数调用规则主要遵循 &lt;strong&gt;AAPCS64&lt;/strong&gt; (Procedure Call Standard for the ARM 64-bit Architecture)。了解这些规则对于编写汇编代码、调试程序或进行性能优化至关重要。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>这是一个非常核心的 JNI 知识点。</title>
+    <link href="https://jackwzx.github.io/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/"/>
+    <id>https://jackwzx.github.io/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/</id>
+    <published>2025-12-17T03:36:01.000Z</published>
+    <updated>2025-12-17T03:36:01.535Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这是一个非常核心的 JNI 知识点。要理解为什么你的代码会崩，以及 &lt;code&gt;NewGlobalRef&lt;/code&gt; 到底做了什么，我们需要深入到底层机制。&lt;/p&gt;
+&lt;p&gt;我们把 JNI 的引用想象成 &lt;strong&gt;“指针”&lt;/strong&gt; 或 &lt;strong&gt;“句柄”&lt;/strong&gt;，它们指向 Java 堆内存中的真实对象。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>这是一个非常经典的 JNI 性能优化问题。</title>
+    <link href="https://jackwzx.github.io/2025/12/16/JNI%E8%B0%83%E7%94%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/"/>
+    <id>https://jackwzx.github.io/2025/12/16/JNI%E8%B0%83%E7%94%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/</id>
+    <published>2025-12-16T05:27:31.000Z</published>
+    <updated>2025-12-16T05:27:31.782Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这是一个非常经典的 JNI 性能优化问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;直接结论：&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;调用一次自定义 Java 函数（Scenario A）的性能绝对优于调用多次 Java API（Scenario B），即使 Scenario B 已经缓存了 &lt;code&gt;jclass&lt;/code&gt; 和 &lt;code&gt;jmethodID&lt;/code&gt;。&lt;/strong&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套**自定义对象系统**。</title>
+    <link href="https://jackwzx.github.io/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/"/>
+    <id>https://jackwzx.github.io/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/</id>
+    <published>2025-12-16T05:10:33.000Z</published>
+    <updated>2025-12-16T05:10:33.604Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套&lt;strong&gt;自定义对象系统&lt;/strong&gt;。C++ 标准本身缺乏运行时反射（Reflection）和自动内存管理（GC），因此 Epic Games 自己实现了一套名为 &lt;strong&gt;Unreal Object Handling&lt;/strong&gt; 的系统。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Objective-C 属性（`@property`）中的 `atomic` 和 `nonatomic` 关键字。</title>
+    <link href="https://jackwzx.github.io/2025/12/15/atomic%E5%92%8Cnonatomic%E5%85%B3%E9%94%AE%E5%AD%97/"/>
+    <id>https://jackwzx.github.io/2025/12/15/atomic%E5%92%8Cnonatomic%E5%85%B3%E9%94%AE%E5%AD%97/</id>
+    <published>2025-12-15T04:00:34.000Z</published>
+    <updated>2025-12-15T04:00:52.805Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这两个宏定义的区别完全对应 Objective-C 属性（&lt;code&gt;@property&lt;/code&gt;）中的 &lt;code&gt;atomic&lt;/code&gt; 和 &lt;code&gt;nonatomic&lt;/code&gt; 关键字。&lt;/p&gt;
+&lt;h3 id=&quot;1-核心区别表格&quot;&gt;&lt;a href=&quot;#1-核心区别表格&quot; class=&quot;headerlink&quot; title=&quot;1. 核心区别表格&quot;&gt;&lt;/a&gt;1. 核心区别表格&lt;/h3&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>面对INTP（内向、直觉、思维、感知）性格的孩子，家长最头疼的往往就是**“虽然聪明，但执行力极差”**。</title>
+    <link href="https://jackwzx.github.io/2025/12/14/INTP%E5%AD%A9%E5%AD%90%E5%86%99%E4%BD%9C%E4%B8%9A/"/>
+    <id>https://jackwzx.github.io/2025/12/14/INTP%E5%AD%A9%E5%AD%90%E5%86%99%E4%BD%9C%E4%B8%9A/</id>
+    <published>2025-12-14T09:43:28.000Z</published>
+    <updated>2025-12-14T09:43:28.456Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;面对INTP（内向、直觉、思维、感知）性格的孩子，家长最头疼的往往就是&lt;strong&gt;“虽然聪明，但执行力极差”&lt;/strong&gt;。他们通常被称为“逻辑学家”或“思想家”，大脑里在构建宏伟宇宙，现实中却连一支铅笔都懒得削。&lt;br&gt;针对INTP孩子“散漫、拖拉、低效”的作业辅导，核心逻辑不能是“监控和施压”，而应该是“外包执行力”与“智力博弈”。&lt;br&gt;以下是分维度的具体操作指南：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;理解底层逻辑：为什么他会这样？&lt;br&gt;首先，你要知道他不是笨，也不是故意气你。&lt;br&gt;• Ti (内向思考)： 他们追求的是“弄懂原理”。一旦他觉得这道题原理懂了，重复的抄写和练习对他来说就是纯粹的折磨，毫无意义。&lt;br&gt;• Ne (外向直觉)： 他们的思维是发散的。写着写着作业，看到橡皮上的花纹，可能联想到了分形几何，然后就发呆（其实脑子在飞速运转）了。&lt;/li&gt;
+&lt;/ol&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>着色器中非线性深度转换成线性深度</title>
+    <link href="https://jackwzx.github.io/2025/12/11/%E7%9D%80%E8%89%B2%E5%99%A8%E4%B8%AD%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%BD%AC%E6%8D%A2%E6%88%90%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6/"/>
+    <id>https://jackwzx.github.io/2025/12/11/%E7%9D%80%E8%89%B2%E5%99%A8%E4%B8%AD%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%BD%AC%E6%8D%A2%E6%88%90%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6/</id>
+    <published>2025-12-11T06:07:47.000Z</published>
+    <updated>2025-12-11T06:08:19.745Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在 OpenGL 中，深度缓冲（Depth Buffer）中存储的值（通常记为 $z_{buffer}$ 或 $d$）是非线性的。这意味着深度值 $0.5$ 并不代表物体位于 &lt;code&gt;near&lt;/code&gt; 和 &lt;code&gt;far&lt;/code&gt; 平面的正中间。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android机型性能分级方案</title>
+    <link href="https://jackwzx.github.io/2025/12/11/Android%E6%9C%BA%E5%9E%8B%E6%80%A7%E8%83%BD%E5%88%86%E7%BA%A7%E6%96%B9%E6%A1%88/"/>
+    <id>https://jackwzx.github.io/2025/12/11/Android%E6%9C%BA%E5%9E%8B%E6%80%A7%E8%83%BD%E5%88%86%E7%BA%A7%E6%96%B9%E6%A1%88/</id>
+    <published>2025-12-11T03:13:50.000Z</published>
+    <updated>2025-12-11T03:14:16.784Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在 Android 生态中，由于设备碎片化极其严重（成千上万种机型，涵盖高通、联发科、三星、紫光展锐等不同芯片），仅通过“机型白名单”是不现实的。&lt;/p&gt;
+&lt;p&gt;目前业界主流的方案通常采用 **“分级策略” (Tiering Strategy)**，结合 &lt;strong&gt;静态检测&lt;/strong&gt;（硬件规格）和 &lt;strong&gt;动态调整&lt;/strong&gt;（运行时监控）。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Depth24Stencil8介绍</title>
+    <link href="https://jackwzx.github.io/2025/12/10/Depth24Stencil8%E4%BB%8B%E7%BB%8D/"/>
+    <id>https://jackwzx.github.io/2025/12/10/Depth24Stencil8%E4%BB%8B%E7%BB%8D/</id>
+    <published>2025-12-10T04:49:16.000Z</published>
+    <updated>2025-12-10T04:49:34.662Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;直接回答你的问题：&lt;strong&gt;不是浮点型&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Depth24Stencil8&lt;/code&gt; (通常在 OpenGL 中对应 &lt;code&gt;GL_DEPTH24_STENCIL8&lt;/code&gt;，在 DirectX/Vulkan 中对应 &lt;code&gt;D24_UNORM_S8_UINT&lt;/code&gt;) 中的 &lt;strong&gt;Depth24&lt;/strong&gt; 部分，存储的是 **无符号归一化整型 (Unsigned Normalized Integer, UNORM)**。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Analyzing Format Trade-offs R11G11B10F</title>
+    <link href="https://jackwzx.github.io/2025/12/10/Analyzing%20Format%20Trade-offs%20R11G11B10F/"/>
+    <id>https://jackwzx.github.io/2025/12/10/Analyzing%20Format%20Trade-offs%20R11G11B10F/</id>
+    <published>2025-12-10T03:20:35.000Z</published>
+    <updated>2025-12-10T03:21:07.024Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Analyzing Format Trade-offs&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I’ve been drilling down on the nuances of &lt;code&gt;RGB8&lt;/code&gt; versus &lt;code&gt;R11G11B10F&lt;/code&gt;. My focus is on understanding the situations where the floating-point precision of &lt;code&gt;R11G11B10F&lt;/code&gt; justifies its increased memory footprint compared to the compact &lt;code&gt;RGB8&lt;/code&gt;. I’m starting to grasp the implications for HDR rendering and light accumulation scenarios where the extra range is crucial. Current thinking focuses on the actual trade-offs that have to be made with a limited memory budget.&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>移动端部光源延迟渲染和阴影计算共用同一个Framebuffer 会提升性能吗</title>
@@ -106,261 +327,6 @@
 &lt;li&gt;  &lt;strong&gt;单引号 (强引用)&lt;strong&gt;：&lt;/strong&gt;所见即所得&lt;/strong&gt;。单引号内的所有内容都会被当作普通字符，&lt;strong&gt;不进行&lt;/strong&gt;变量替换或命令执行。&lt;/li&gt;
 &lt;li&gt;  &lt;strong&gt;双引号 (弱引用)&lt;strong&gt;：&lt;/strong&gt;允许解析&lt;/strong&gt;。双引号内的内容大部分被当作普通字符，但会&lt;strong&gt;保留&lt;/strong&gt;变量 (&lt;code&gt;$&lt;/code&gt;)、命令替换 (&lt;code&gt;`&lt;/code&gt; 或 &lt;code&gt;$()&lt;/code&gt;) 和转义符 (&lt;code&gt;\&lt;/code&gt;) 的功能。&lt;/li&gt;
 &lt;/ul&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>存储浮点数</title>
-    <link href="https://jackwzx.github.io/2025/12/04/%E5%AD%98%E5%82%A8%E6%B5%AE%E7%82%B9%E6%95%B0/"/>
-    <id>https://jackwzx.github.io/2025/12/04/%E5%AD%98%E5%82%A8%E6%B5%AE%E7%82%B9%E6%95%B0/</id>
-    <published>2025-12-04T02:42:29.000Z</published>
-    <updated>2025-12-04T02:42:53.206Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;我们要彻底理解这个问题，需要深入到计算机底层是如何存储浮点数（Floating Point）的。这里涉及到一个核心概念：&lt;strong&gt;科学计数法（Scientific Notation）的二进制版本&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;我们把这个问题拆解成三个部分：&lt;strong&gt;结构解析&lt;/strong&gt;、&lt;strong&gt;为什么是 1024 个刻度&lt;/strong&gt;、&lt;strong&gt;为什么范围不同精度不同&lt;/strong&gt;。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>mediump（中精度）和 highp（高精度）对比分析</title>
-    <link href="https://jackwzx.github.io/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/"/>
-    <id>https://jackwzx.github.io/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/</id>
-    <published>2025-12-03T13:27:36.000Z</published>
-    <updated>2025-12-03T13:28:13.052Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在移动端渲染开发中（OpenGL ES / Vulkan / Metal），&lt;code&gt;mediump&lt;/code&gt;（中精度）和 &lt;code&gt;highp&lt;/code&gt;（高精度）的选择对性能和画质影响巨大。&lt;/p&gt;
-&lt;p&gt;对于 &lt;strong&gt;UV 坐标（纹理坐标）&lt;/strong&gt; 而言，精度的选择直接决定了&lt;strong&gt;纹理采样的准确性&lt;/strong&gt;。如果精度不足，会导致画面出现&lt;strong&gt;抖动、锯齿、马赛克或拉伸&lt;/strong&gt;。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>关于preA精度损失分析</title>
-    <link href="https://jackwzx.github.io/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/"/>
-    <id>https://jackwzx.github.io/2025/12/03/%E5%85%B3%E4%BA%8EpreA%E7%B2%BE%E5%BA%A6%E6%8D%9F%E5%A4%B1%E5%88%86%E6%9E%90/</id>
-    <published>2025-12-03T13:13:23.000Z</published>
-    <updated>2025-12-03T13:17:00.794Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这是一份关于 &lt;strong&gt;RGBA8888&lt;/strong&gt; 格式下，&lt;strong&gt;Pre-multiplied Alpha (预乘 Alpha, 简称 PreA)&lt;/strong&gt; 与 &lt;strong&gt;Straight Alpha (非预乘 Alpha/直通 Alpha, 简称 Non-PreA)&lt;/strong&gt; 在精度损失和不同颜色数据范围内表现的深度分析。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>SRGB 和gamma校正</title>
-    <link href="https://jackwzx.github.io/2025/12/03/SRGB%20%E5%92%8Cgamma%E6%A0%A1%E6%AD%A3/"/>
-    <id>https://jackwzx.github.io/2025/12/03/SRGB%20%E5%92%8Cgamma%E6%A0%A1%E6%AD%A3/</id>
-    <published>2025-12-03T08:47:21.000Z</published>
-    <updated>2025-12-03T08:47:47.798Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;为了让你直观地感受到 &lt;strong&gt;Gamma 校正（Gamma Encoding）&lt;/strong&gt; 的威力，我们来做一次具体的数值对比。&lt;/p&gt;
-&lt;p&gt;我们假设使用的标准 Gamma 值为 &lt;strong&gt;2.2&lt;/strong&gt;。&lt;br&gt;公式为：&lt;br&gt;$$ \text{Gamma值} = \text{线性值}^{(1 / 2.2)} \approx \text{线性值}^{0.4545} $$&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>GLSurfaceView源码分析</title>
-    <link href="https://jackwzx.github.io/2025/12/03/GLSurfaceView%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
-    <id>https://jackwzx.github.io/2025/12/03/GLSurfaceView%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</id>
-    <published>2025-12-03T04:03:03.000Z</published>
-    <updated>2025-12-03T04:04:29.858Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;基于 Android Open Source Project (AOSP) 的 &lt;code&gt;GLSurfaceView.java&lt;/code&gt; 源码，我为你深入梳理了各个核心事件的内部实现细节。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>针对 RGBA8888（32位）和 RGB565（16位）这两种格式 分析</title>
-    <link href="https://jackwzx.github.io/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/"/>
-    <id>https://jackwzx.github.io/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/</id>
-    <published>2025-12-02T08:59:08.000Z</published>
-    <updated>2025-12-02T09:00:16.791Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;针对 &lt;strong&gt;RGBA8888&lt;/strong&gt;（32位）和 &lt;strong&gt;RGB565&lt;/strong&gt;（16位）这两种格式，在&lt;strong&gt;蓝色（Blue）&lt;/strong&gt;显示的差异上，核心在于&lt;strong&gt;色彩精度（Color Depth）&lt;/strong&gt;的不同。&lt;/p&gt;
-&lt;p&gt;简单总结：&lt;strong&gt;RGB565 下的蓝色会出现明显的“色阶（Banding）”现象，渐变不平滑，且色彩还原度不如 RGBA8888。&lt;/strong&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解Android中的SurfaceFlinger</title>
-    <link href="https://jackwzx.github.io/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/"/>
-    <id>https://jackwzx.github.io/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/</id>
-    <published>2025-11-30T07:09:15.000Z</published>
-    <updated>2025-11-30T07:09:41.701Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这是一篇关于 Android 图形系统核心——&lt;strong&gt;SurfaceFlinger&lt;/strong&gt; 的深度解析。&lt;/p&gt;
-&lt;p&gt;既然你已经掌握了如何使用 &lt;code&gt;EGLContext&lt;/code&gt; 和独立线程进行渲染，那么理解 SurfaceFlinger 将帮助你打通从 &lt;code&gt;swapBuffers&lt;/code&gt; 到屏幕显示的“最后一公里”。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Android Surface 延迟释放策略</title>
-    <link href="https://jackwzx.github.io/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/"/>
-    <id>https://jackwzx.github.io/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/</id>
-    <published>2025-11-30T06:39:27.000Z</published>
-    <updated>2025-11-30T06:40:06.902Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;你的这个思路非常棒！这就是所谓的 &lt;strong&gt;“延迟销毁 (Lazy/Deferred Destruction)”&lt;/strong&gt; 或者 &lt;strong&gt;“Surface 缓存”&lt;/strong&gt; 策略。&lt;/p&gt;
-&lt;p&gt;这在很多高性能渲染引擎（如游戏、地图SDK）中是常见的做法。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>在 C++ 中，条件变量和信号量对比</title>
-    <link href="https://jackwzx.github.io/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/"/>
-    <id>https://jackwzx.github.io/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/</id>
-    <published>2025-11-30T06:03:07.000Z</published>
-    <updated>2025-11-30T06:04:04.164Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在 C++ 中，&lt;strong&gt;信号量（Semaphore）&lt;/strong&gt; 提供了一种基于“计数器”的同步机制。&lt;/p&gt;
-&lt;p&gt;需要注意的是，标准的信号量 &lt;code&gt;std::counting_semaphore&lt;/code&gt; 和 &lt;code&gt;std::binary_semaphore&lt;/code&gt; 是在 &lt;strong&gt;C++20&lt;/strong&gt; 才正式引入的。如果你严格限制在 &lt;strong&gt;C++11&lt;/strong&gt; 环境，通常需要自己封装 POSIX 信号量（&lt;code&gt;sem_t&lt;/code&gt;）或 Windows 信号量，或者使用 Boost 库。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>std::condition_variable使用介绍</title>
-    <link href="https://jackwzx.github.io/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/"/>
-    <id>https://jackwzx.github.io/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/</id>
-    <published>2025-11-30T05:54:27.000Z</published>
-    <updated>2025-11-30T05:55:23.342Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;C++11 引入的 &lt;code&gt;std::condition_variable&lt;/code&gt;（条件变量）是多线程编程中用于&lt;strong&gt;线程间同步&lt;/strong&gt;和&lt;strong&gt;通信&lt;/strong&gt;的重要机制。它允许一个线程挂起（阻塞），直到另一个线程通知它某个特定的条件已经满足。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Java中的布尔类型</title>
-    <link href="https://jackwzx.github.io/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/"/>
-    <id>https://jackwzx.github.io/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/</id>
-    <published>2025-11-11T16:00:00.000Z</published>
-    <updated>2025-11-12T09:32:30.407Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Java 中的 &lt;code&gt;boolean&lt;/code&gt; 与数值类型（&lt;code&gt;int&lt;/code&gt; 等）是不同的原始类型，语言层面既不允许隐式转换，也不允许显式强制转换。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不允许的示例&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;int i = true;&lt;/code&gt;、&lt;code&gt;boolean b = 1;&lt;/code&gt;、&lt;code&gt;b = (boolean) 1;&lt;/code&gt; 都会编译报错&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;if (1) &amp;#123;&amp;#125;&lt;/code&gt; 在 Java 中非法（不同于 C/C++），只能 &lt;code&gt;if (b)&lt;/code&gt; 或 &lt;code&gt;if (表达式为 boolean)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    
-    <category term="iOS" scheme="https://jackwzx.github.io/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为什么 ASan 需要 `-fsanitize=address` 编译选项，而不仅仅是替换动态库？</title>
-    <link href="https://jackwzx.github.io/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/"/>
-    <id>https://jackwzx.github.io/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/</id>
-    <published>2025-08-05T06:00:00.000Z</published>
-    <updated>2025-08-05T12:05:28.649Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？&quot;&gt;&lt;a href=&quot;#为什么-ASan-需要-fsanitize-address-编译选项，而不仅仅是替换动态库？&quot; class=&quot;headerlink&quot; title=&quot;为什么 ASan 需要 -fsanitize=address 编译选项，而不仅仅是替换动态库？&quot;&gt;&lt;/a&gt;&lt;strong&gt;为什么 ASan 需要 &lt;code&gt;-fsanitize=address&lt;/code&gt; 编译选项，而不仅仅是替换动态库？&lt;/strong&gt;&lt;/h3&gt;</summary>
-    
-    
-    
-    <category term="计算机图形学" scheme="https://jackwzx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
-    
-    <category term="数学基础" scheme="https://jackwzx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
-    
-    
-    <category term="计算机图形学" scheme="https://jackwzx.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
-    
-    <category term="线性代数" scheme="https://jackwzx.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
-    
-    <category term="3D图形学" scheme="https://jackwzx.github.io/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
-    
-    <category term="数学" scheme="https://jackwzx.github.io/tags/%E6%95%B0%E5%AD%A6/"/>
-    
-    <category term="OpenGL" scheme="https://jackwzx.github.io/tags/OpenGL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>3D图形学中的平面方程：从线性代数到Vector4f表示</title>
-    <link href="https://jackwzx.github.io/2025/06/30/3D%E5%B9%B3%E9%9D%A2%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B3%95%E5%90%91%E9%87%8F%E8%AF%A6%E8%A7%A3/"/>
-    <id>https://jackwzx.github.io/2025/06/30/3D%E5%B9%B3%E9%9D%A2%E6%96%B9%E7%A8%8B%E4%B8%8E%E6%B3%95%E5%90%91%E9%87%8F%E8%AF%A6%E8%A7%A3/</id>
-    <published>2025-06-30T06:00:00.000Z</published>
-    <updated>2025-06-30T08:14:54.010Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在3D图形学编程中，平面的数学表示是一个基础且重要的概念。无论是进行碰撞检测、视锥体裁剪，还是实现复杂的渲染算法，理解平面方程的数学原理都至关重要。本文将深入探讨3D空间中平面的各种表示方法，特别是点法式方程和Vector4f表示法，以及法向量朝向的重要性。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="计算机图形学" scheme="https://jackwzx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
-    
-    <category term="数学基础" scheme="https://jackwzx.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/"/>
-    
-    
-    <category term="计算机图形学" scheme="https://jackwzx.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
-    
-    <category term="线性代数" scheme="https://jackwzx.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
-    
-    <category term="3D图形学" scheme="https://jackwzx.github.io/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
-    
-    <category term="数学" scheme="https://jackwzx.github.io/tags/%E6%95%B0%E5%AD%A6/"/>
-    
-    <category term="OpenGL" scheme="https://jackwzx.github.io/tags/OpenGL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>c++迭代器</title>
-    <link href="https://jackwzx.github.io/2025/06/30/c++%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%86%E7%B1%BB/"/>
-    <id>https://jackwzx.github.io/2025/06/30/c++%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%86%E7%B1%BB/</id>
-    <published>2025-06-30T06:00:00.000Z</published>
-    <updated>2025-11-27T08:13:38.422Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;C++ 中有 &lt;strong&gt;5 种主要的迭代器类型&lt;/strong&gt;，它们形成一个&lt;strong&gt;层次结构&lt;/strong&gt;，每种都有不同的功能和限制。&lt;/p&gt;
-&lt;hr&gt;</summary>
     
     
     

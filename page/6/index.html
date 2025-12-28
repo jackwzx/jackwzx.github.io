@@ -81,10 +81,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Android动态库加载-dlopen与System.loadLibrary对比" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-std-nth-element实现" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/" class="article-date">
-  <time datetime="2024-06-12T15:00:00.000Z" itemprop="datePublished">2024-06-12</time>
+    <a href="/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2024-10-08T09:37:18.000Z" itemprop="datePublished">2024-10-08</time>
 </a>
     
   </div>
@@ -95,7 +95,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/">Android动态库加载-dlopen与System.loadLibrary对比</a>
+      <a class="article-title" href="/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/">std::nth_element实现</a>
     </h1>
   
 
@@ -103,20 +103,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在Android开发中，我们经常需要加载本地动态库（.so文件）来实现一些底层功能。Android提供了两种主要的动态库加载方式：<code>dlopen</code>和<code>System.loadLibrary</code>。本文将详细对比这两种方式的区别，并分析<code>System.loadLibrary</code>可能失败的原因。</p>
+        <p><code>std::nth_element</code> 是 C++ 标准库中的一个算法，用于在一个范围内重新排列元素，使得第 <code>n</code> 个元素位于其最终位置，并且该元素左侧的所有元素都小于或等于它，右侧的所有元素都大于或等于它。这个算法的时间复杂度为 O(n) 平均情况下，最坏情况下为 O(n^2)。</p>
         
           <p class="article-more-link">
-            <a href="/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/#more">阅读全文</a>
+            <a href="/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/#more">阅读全文</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2024/06/12/Android%E5%8A%A8%E6%80%81%E5%BA%93%E5%8A%A0%E8%BD%BD-dlopen%E4%B8%8ESystem.loadLibrary%E5%AF%B9%E6%AF%94/" data-id="cmc9xgo8p00005tco0slledk0" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/10/08/std-nth-element%E5%AE%9E%E7%8E%B0/" data-id="cmbt3hg8j00271xco1mtm89ee" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li></ul>
-
     </footer>
   </div>
   
@@ -124,10 +122,10 @@
 
 
   
-    <article id="post-SDF实现CornerRadius" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-texelFetch" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" class="article-date">
-  <time datetime="2023-12-28T10:45:16.000Z" itemprop="datePublished">2023-12-28</time>
+    <a href="/2024/10/06/texelFetch/" class="article-date">
+  <time datetime="2024-10-06T10:16:59.000Z" itemprop="datePublished">2024-10-06</time>
 </a>
     
   </div>
@@ -138,7 +136,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/">SDF实现CornerRadius</a>
+      <a class="article-title" href="/2024/10/06/texelFetch/">texelFetch</a>
     </h1>
   
 
@@ -146,92 +144,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>本文将介绍如何使用SDF（Signed Distance Field）实现圆角效果。</p>
-<!-- 内容待补充 -->
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/28/SDF%E5%AE%9E%E7%8E%B0CornerRadius/" data-id="cmbt3hg8f00171xco1w9ybc1q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-lamda-初始化捕获用法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" class="article-date">
-  <time datetime="2023-12-27T06:16:08.000Z" itemprop="datePublished">2023-12-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/">lamda 初始化捕获用法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文将介绍C++ Lambda表达式的初始化捕获用法。</p>
-<!-- 内容待补充 -->
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/27/lamda-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8D%95%E8%8E%B7%E7%94%A8%E6%B3%95/" data-id="cmbt3hg8g001s1xco5tcv4t6k" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-tag-dispatch" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/24/tag-dispatch/" class="article-date">
-  <time datetime="2023-12-24T06:44:19.000Z" itemprop="datePublished">2023-12-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/24/tag-dispatch/">tag dispatch</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="对于short类型来说，会优先匹配通用引用版本的重载，导致无法构造string"><a href="#对于short类型来说，会优先匹配通用引用版本的重载，导致无法构造string" class="headerlink" title="对于short类型来说，会优先匹配通用引用版本的重载，导致无法构造string"></a>对于short类型来说，会优先匹配通用引用版本的重载，导致无法构造string</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> TagDispatch &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(T&amp;&amp; params)</span> </span>&#123;</span><br><span class="line">    std::vector&lt;std::string&gt; temp;</span><br><span class="line">    temp.<span class="built_in">emplace_back</span>(std::forward&lt;T&gt;(params));</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;called fun(T&amp;&amp; params)&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a)</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;called fun(int a)&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fwd</span><span class="params">(T&amp;&amp; params)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">fun</span>(std::forward&lt;T&gt;(params));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">fwd</span>(<span class="string">&quot;abc&quot;</span>); <span class="comment">//suc</span></span><br><span class="line">    <span class="type">int</span> a = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">fwd</span>(a);     <span class="comment">//suc</span></span><br><span class="line">    </span><br><span class="line">    <span class="type">short</span> b = <span class="number">10</span>;</span><br><span class="line">    <span class="comment">//fwd(b);     //failed, 匹配到了通用引用函数</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">const</span> <span class="type">char</span> * argv[])</span> </span>&#123;    </span><br><span class="line">    TagDispatch::<span class="built_in">test</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p><code>texelFetch</code> 是一个在着色器编程中用于从纹理中获取特定纹素（texel）的函数。与常规的纹理采样不同，<code>texelFetch</code> 使用整数纹理坐标来直接访问纹理数据，不进行过滤或插值。</p>
+<p>在 OpenGL 的 GLSL（OpenGL Shading Language）中，<code>texelFetch</code> 的用法如下：</p>
         
           <p class="article-more-link">
-            <a href="/2023/12/24/tag-dispatch/#more">阅读全文</a>
+            <a href="/2024/10/06/texelFetch/#more">阅读全文</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/24/tag-dispatch/" data-id="cmbt3hg8j00241xcoe3e137mh" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/10/06/texelFetch/" data-id="cmbt3hg8k002c1xco3mmd51aa" class="article-share-link">Share</a>
       
       
     </footer>
@@ -241,10 +164,10 @@
 
 
   
-    <article id="post-smoothStep实现" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-traits设计和用法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/" class="article-date">
-  <time datetime="2023-12-22T11:51:30.000Z" itemprop="datePublished">2023-12-22</time>
+    <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/" class="article-date">
+  <time datetime="2024-09-29T09:25:47.000Z" itemprop="datePublished">2024-09-29</time>
 </a>
     
   </div>
@@ -255,7 +178,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/">smoothStep实现</a>
+      <a class="article-title" href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/">traits设计和用法</a>
     </h1>
   
 
@@ -263,54 +186,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>本文将介绍smoothStep函数的实现原理和应用。</p>
-<!-- 内容待补充 -->
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/22/smoothStep%E5%AE%9E%E7%8E%B0/" data-id="cmbt3hg8j00221xco9zxw27gu" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-模板规则推导" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/" class="article-date">
-  <time datetime="2023-12-21T05:56:09.000Z" itemprop="datePublished">2023-12-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/">模板规则推导</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="模板推导规则"><a href="#模板推导规则" class="headerlink" title="模板推导规则"></a>模板推导规则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByRefFun(T&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByUniRefFun(T&amp;&amp; val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">void passByValueFun(T val) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void fun3(int&amp; a) &#123; &#125;</span><br><span class="line">void fun3(int&amp;&amp; a) &#123; &#125;</span><br><span class="line"></span><br><span class="line">void test()</span><br><span class="line">&#123;</span><br><span class="line">    int a = 0;          //a int</span><br><span class="line">    const int b = a;    //b const int</span><br><span class="line">    const int&amp; c = a;   //c const int&amp;</span><br><span class="line">    </span><br><span class="line">    passByRefFun(a);    // int&amp;</span><br><span class="line">    passByRefFun(b);    // const int&amp;</span><br><span class="line">    passByRefFun(c);    // const int&amp;</span><br><span class="line">    //passByRefFun(27);   // 报错</span><br><span class="line">    </span><br><span class="line">    passByUniRefFun(a); // int&amp;</span><br><span class="line">    passByUniRefFun(b); // const int&amp;</span><br><span class="line">    passByUniRefFun(c); // const int&amp;</span><br><span class="line">    passByUniRefFun(27); // int&amp;&amp;</span><br><span class="line">    </span><br><span class="line">    passByValueFun(a);  // int</span><br><span class="line">    passByValueFun(b);  // int</span><br><span class="line">    passByValueFun(c);  // int</span><br><span class="line">    passByValueFun(27); // int</span><br><span class="line">    </span><br><span class="line">    &#123;</span><br><span class="line">        int&amp;&amp; a = 10;</span><br><span class="line">        fun3(a);            // called void fun3(int&amp; a)</span><br><span class="line">        fun3(std::move(a)); // called void fun3(int&amp;&amp; a)</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>在 C++ 中，<strong>Traits</strong>（特性）是一种设计模式，通常用于提供类型信息或行为的模板类。Traits 允许在编译时获取类型的特性，从而实现更灵活和可扩展的代码。Traits 模式广泛应用于标准库和现代 C++ 编程中，尤其是在模板编程和泛型编程中。</p>
         
           <p class="article-more-link">
-            <a href="/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/#more">阅读全文</a>
+            <a href="/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/#more">阅读全文</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2023/12/21/%E6%A8%A1%E6%9D%BF%E8%A7%84%E5%88%99%E6%8E%A8%E5%AF%BC/" data-id="cmbt3hg8l002s1xcoew3gd4ti" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/09/29/traits%E8%AE%BE%E8%AE%A1%E5%92%8C%E7%94%A8%E6%B3%95/" data-id="cmbt3hg8j00291xcodiurcr97" class="article-share-link">Share</a>
       
       
     </footer>
@@ -320,10 +205,10 @@
 
 
   
-    <article id="post-电子书目录" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-shell和子shell环境变量" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" class="article-date">
-  <time datetime="2022-12-25T15:36:30.000Z" itemprop="datePublished">2022-12-25</time>
+    <a href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="article-date">
+  <time datetime="2024-09-29T06:12:02.000Z" itemprop="datePublished">2024-09-29</time>
 </a>
     
   </div>
@@ -334,7 +219,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/">电子书目录</a>
+      <a class="article-title" href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">shell和子shell环境变量</a>
     </h1>
   
 
@@ -342,19 +227,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="渲染整理"><a href="#渲染整理" class="headerlink" title="渲染整理"></a>渲染整理</h2><h4 id="开放世界的场景管理"><a href="#开放世界的场景管理" class="headerlink" title="开放世界的场景管理"></a>开放世界的场景管理</h4><pre><code>1. 切成tile
-2. 数据分级LOD
-3. 根据天顶角，调整远平面，裁剪数据
-</code></pre>
+        <p>在 Shell 脚本中，命令替换（command substitution）是指将命令的输出作为字符串插入到另一个命令中。命令替换通常使用反引号（<code>`command`</code>）或 <code>$()</code> 语法来实现。命令替换会在一个子 Shell 中执行指定的命令，这意味着在子 Shell 中定义的变量不会影响父 Shell 中的变量。</p>
         
           <p class="article-more-link">
-            <a href="/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/#more">阅读全文</a>
+            <a href="/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/#more">阅读全文</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2022/12/25/%E7%94%B5%E5%AD%90%E4%B9%A6%E7%9B%AE%E5%BD%95/" data-id="cmbt3hg8l002y1xco488v0ps1" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/09/29/shell%E5%92%8C%E5%AD%90shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="cmbt3hg8j001z1xco363vef7e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -364,10 +246,10 @@
 
 
   
-    <article id="post-c-可变参数模板" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-分支预测" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" class="article-date">
-  <time datetime="2022-12-11T06:50:04.000Z" itemprop="datePublished">2022-12-11</time>
+    <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/" class="article-date">
+  <time datetime="2024-09-27T01:25:37.000Z" itemprop="datePublished">2024-09-27</time>
 </a>
     
   </div>
@@ -378,50 +260,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/">c++ 可变参数模板</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="可变模版参数-variadic-templates"><a href="#可变模版参数-variadic-templates" class="headerlink" title="可变模版参数(variadic templates)"></a>可变模版参数(variadic templates)</h3><p>可以对参数进行高度泛化，标识0到任意个数参数</p>
-        
-          <p class="article-more-link">
-            <a href="/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2022/12/11/c-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E6%A8%A1%E6%9D%BF/" data-id="cmbt3hg8f001f1xco36cqfgp1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-c-继承权限" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" class="article-date">
-  <time datetime="2022-12-04T14:52:54.000Z" itemprop="datePublished">2022-12-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/">c++继承权限</a>
+      <a class="article-title" href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/">分支预测</a>
     </h1>
   
 
@@ -430,20 +269,17 @@
     <div class="article-entry" itemprop="articleBody">
       
         <ol>
-<li><p>继承有三种权限，public，proteced，private，默认不写是private</p>
-</li>
-<li><p>权限的最低是public，其次是protected，最高private</p>
-</li>
-<li><p>继承方式代表是父类属性在当前类中的最低呈现</p>
-</li>
-<li><p>父类中的privated属性在子类中不可访问</p>
-</li>
+<li>宏定义解释<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> likely(x) __builtin_expect(!!(x), 1)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> unlikely(x) __builtin_expect(!!(x), 0)</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-
+        
+          <p class="article-more-link">
+            <a href="/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/#more">阅读全文</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2022/12/04/c-%E7%BB%A7%E6%89%BF%E6%9D%83%E9%99%90/" data-id="cmbt3hg8g001i1xco73r00eye" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/09/27/%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B/" data-id="cmbt3hg8k002q1xcohzeo6kyq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -453,10 +289,10 @@
 
 
   
-    <article id="post-OpenGL模板测试流程" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-c-模版函数delete防止隐士类型转换-md" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" class="article-date">
-  <time datetime="2022-11-08T03:51:27.000Z" itemprop="datePublished">2022-11-08</time>
+    <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/" class="article-date">
+  <time datetime="2024-09-26T06:29:27.000Z" itemprop="datePublished">2024-09-26</time>
 </a>
     
   </div>
@@ -467,7 +303,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/">OpenGL模板测试流程</a>
+      <a class="article-title" href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/">c++模版函数delete防止隐士类型转换.md</a>
     </h1>
   
 
@@ -475,20 +311,186 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="模板测试流程"><a href="#模板测试流程" class="headerlink" title="模板测试流程"></a>模板测试流程</h3>
+        <p>本文展示如何使用C++模板函数的<code>delete</code>关键字来防止不必要的隐式类型转换。</p>
         
           <p class="article-more-link">
-            <a href="/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/#more">阅读全文</a>
+            <a href="/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/#more">阅读全文</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2022/11/08/OpenGL%E6%A8%A1%E6%9D%BF%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" data-id="cmbt3hg8f00151xco9c94b8pe" class="article-share-link">Share</a>
+      <a data-url="https://jackwzx.github.io/2024/09/26/c-%E6%A8%A1%E7%89%88%E5%87%BD%E6%95%B0delete%E9%98%B2%E6%AD%A2%E9%9A%90%E5%A3%AB%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-md/" data-id="cmbt3hg8f001g1xco5cif3fzs" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li></ul>
+    </footer>
+  </div>
+  
+</article>
 
+
+  
+    <article id="post-AndoirdEGLContext销毁管理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/" class="article-date">
+  <time datetime="2024-07-31T16:19:32.000Z" itemprop="datePublished">2024-08-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/">AndoirdEGLContext销毁管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">EGLContextFactory</span> &#123;</span><br><span class="line">    EGLContext <span class="title function_">createContext</span><span class="params">(EGL10 egl, EGLDisplay display, EGLConfig eglConfig)</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">destroyContext</span><span class="params">(EGL10 egl, EGLDisplay display, EGLContext context)</span>;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h3 id="EGLContext-如果释放时，会删除在当前Context-下创建的bufffer-texture-以及fbo等资源吗"><a href="#EGLContext-如果释放时，会删除在当前Context-下创建的bufffer-texture-以及fbo等资源吗" class="headerlink" title="EGLContext 如果释放时，会删除在当前Context 下创建的bufffer,texture 以及fbo等资源吗"></a>EGLContext 如果释放时，会删除在当前Context 下创建的bufffer,texture 以及fbo等资源吗</h3>
+        
+          <p class="article-more-link">
+            <a href="/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/08/01/AndoirdEGLContext%E9%94%80%E6%AF%81%E7%AE%A1%E7%90%86/" data-id="cmbt3hg8800031xco71cmc8jk" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/" class="article-date">
+  <time datetime="2024-07-30T04:26:12.000Z" itemprop="datePublished">2024-07-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/">从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>要从包含平移、旋转和缩放的矩阵中提取仅包含平移和旋转的矩阵，您需要对原矩阵进行一些操作。原矩阵通常是一个3x3或4x4的矩阵。</p>
+<h3 id="对于3x3矩阵："><a href="#对于3x3矩阵：" class="headerlink" title="对于3x3矩阵："></a>对于3x3矩阵：</h3><p>原3x3矩阵的形式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| a  b  tx |</span><br><span class="line">| c  d  ty |</span><br><span class="line">| 0  0  1  |</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/07/30/%E4%BB%8E%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E3%80%81%E6%97%8B%E8%BD%AC%E5%92%8C%E7%BC%A9%E6%94%BE%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E4%BB%85%E5%8C%85%E5%90%AB%E5%B9%B3%E7%A7%BB%E5%92%8C%E6%97%8B%E8%BD%AC%E7%9A%84%E7%9F%A9%E9%98%B5/" data-id="cmbt3hg8k002p1xco1htk66zl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenGLE-VAO局部影响vs全局影响" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/" class="article-date">
+  <time datetime="2024-07-28T08:57:48.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/">OpenGLE_VAO局部影响vs全局影响</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="全局顶点属性数组使能状态"><a href="#全局顶点属性数组使能状态" class="headerlink" title="全局顶点属性数组使能状态"></a>全局顶点属性数组使能状态</h3>
+        
+          <p class="article-more-link">
+            <a href="/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/07/28/OpenGLE-VAO%E5%B1%80%E9%83%A8%E5%BD%B1%E5%93%8Dvs%E5%85%A8%E5%B1%80%E5%BD%B1%E5%93%8D/" data-id="cmbt3hg8e00111xco2rpc12nf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-OpenGLES设置顶点属性的默认值" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" class="article-date">
+  <time datetime="2024-07-28T08:53:57.000Z" itemprop="datePublished">2024-07-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/">OpenGLES设置顶点属性的默认值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 OpenGL ES 中，设置顶点属性的默认值和通过顶点缓冲对象（VBO）上传顶点属性是两种不同的处理顶点属性的方法。以下是详细的解释：</p>
+<h3 id="设置顶点属性默认值"><a href="#设置顶点属性默认值" class="headerlink" title="设置顶点属性默认值"></a>设置顶点属性默认值</h3>
+        
+          <p class="article-more-link">
+            <a href="/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2024/07/28/OpenGLES%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E7%9A%84%E9%BB%98%E8%AE%A4%E5%80%BC/" data-id="cmbt3hg8e00121xcod1kr81j1" class="article-share-link">Share</a>
+      
+      
     </footer>
   </div>
   
@@ -500,7 +502,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -553,23 +555,23 @@
       <ul>
         
           <li>
-            <a href="/2025/12/09/%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E4%B8%93%E4%B8%9A%E4%B8%94%E5%88%87%E4%B8%AD%E8%A6%81%E5%AE%B3%E7%9A%84%E9%97%AE%E9%A2%98/">移动端部光源延迟渲染和阴影计算共用同一个Framebuffer 会提升性能吗</a>
+            <a href="/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/">git 浅克隆之后如何切换分支</a>
           </li>
         
           <li>
-            <a href="/2025/12/09/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%83%A8%E5%85%89%E6%BA%90%E5%BB%B6%E8%BF%9F%E6%B8%B2%E6%9F%93%E5%92%8C%E9%98%B4%E5%BD%B1%E8%AE%A1%E7%AE%97%E5%85%B1%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AAFramebuffer%20%E4%BC%9A%E6%8F%90%E5%8D%87%E6%80%A7%E8%83%BD%E5%90%97/">移动端模板测试与Eary-z分析</a>
+            <a href="/2025/12/26/ARM64%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/">ARM64函数调用栈寄存器分配</a>
           </li>
         
           <li>
-            <a href="/2025/12/08/%E9%AB%98%E9%80%9A%E9%AA%81%E9%BE%99%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E5%99%A8%E6%8C%87%E6%A0%87%E8%A7%A3%E8%AF%BB/">高通骁龙性能分析器指标解读</a>
+            <a href="/2025/12/23/c++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E5%AD%98%E5%9C%A8%E4%BA%86%E5%93%AA%E9%87%8C/">c++函数返回值存在了哪里</a>
           </li>
         
           <li>
-            <a href="/2025/12/07/Transform%20Feedback%E8%AE%A1%E7%AE%97%E8%92%99%E7%9A%AE%E6%8A%80%E6%9C%AF/">Transform Feedback计算蒙皮技术</a>
+            <a href="/2025/12/21/std%20vector%20clear%20%E5%88%86%E6%9E%90/">std::vector&lt;T&gt; clear详解</a>
           </li>
         
           <li>
-            <a href="/2025/12/07/invalidDepth%20FrameBuffer%E4%B9%8B%E5%90%8E%E6%8F%90%E4%BA%A4%E5%90%8C%E4%B8%80%E4%B8%AAframebuffer%20draw%20%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98/">invalidDepth FrameBuffer之后提交同一个framebuffer draw 性能问题</a>
+            <a href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/">AArch64寄存器</a>
           </li>
         
       </ul>

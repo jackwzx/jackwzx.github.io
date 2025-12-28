@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-888YX9GKW2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-888YX9GKW2');
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1587619220496591"
+     crossorigin="anonymous"></script>
+<!-- End Google AdSense -->
+ 
+  
+  <title>着色器中非线性深度转换成线性深度 | Xujing的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在 OpenGL 中，深度缓冲（Depth Buffer）中存储的值（通常记为 $z_{buffer}$ 或 $d$）是非线性的。这意味着深度值 $0.5$ 并不代表物体位于 near 和 far 平面的正中间。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="着色器中非线性深度转换成线性深度">
+<meta property="og:url" content="https://jackwzx.github.io/2025/12/11/%E7%9D%80%E8%89%B2%E5%99%A8%E4%B8%AD%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%BD%AC%E6%8D%A2%E6%88%90%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6/index.html">
+<meta property="og:site_name" content="Xujing的博客">
+<meta property="og:description" content="在 OpenGL 中，深度缓冲（Depth Buffer）中存储的值（通常记为 $z_{buffer}$ 或 $d$）是非线性的。这意味着深度值 $0.5$ 并不代表物体位于 near 和 far 平面的正中间。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-11T06:07:47.000Z">
+<meta property="article:modified_time" content="2025-12-11T06:08:19.745Z">
+<meta property="article:author" content="Xujing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Xujing的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xujing的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap" style="display: none;">
+        <!-- 已由本地搜索替代 -->
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-着色器中非线性深度转换成线性深度" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/12/11/%E7%9D%80%E8%89%B2%E5%99%A8%E4%B8%AD%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%BD%AC%E6%8D%A2%E6%88%90%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6/" class="article-date">
+  <time datetime="2025-12-11T06:07:47.000Z" itemprop="datePublished">2025-12-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      着色器中非线性深度转换成线性深度
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 OpenGL 中，深度缓冲（Depth Buffer）中存储的值（通常记为 $z_{buffer}$ 或 $d$）是非线性的。这意味着深度值 $0.5$ 并不代表物体位于 <code>near</code> 和 <code>far</code> 平面的正中间。</p>
+<span id="more"></span>
+
+<p>为了在 Shader 中进行后期处理（如 SSAO、景深效果、体积光），我们通常需要将这个非线性的深度值还原为<strong>观察空间（View Space）下的线性深度</strong>（Linear Depth, 即物体距离相机的真实距离）。</p>
+<p>以下是完整的数学推导过程。</p>
+<hr>
+<h3 id="1-坐标变换流水线"><a href="#1-坐标变换流水线" class="headerlink" title="1. 坐标变换流水线"></a>1. 坐标变换流水线</h3><p>要推导逆变换，必须先理解从<strong>观察空间</strong>到<strong>深度缓冲</strong>的正向过程：</p>
+<ol>
+<li><p><strong>观察空间 (View Space)</strong>: 点 $P_{view} = (x_e, y_e, z_e, 1)^T$。</p>
+<ul>
+<li>  在 OpenGL 默认右手坐标系中，相机位于原点看向 $-z$ 轴，所以可见物体的 $z_e$ 是负值（例如 $-5.0$）。</li>
+<li>  我们需要求的线性深度 $z_{linear}$ 通常指定义为正数距离：$z_{linear} = -z_e$。</li>
+</ul>
+</li>
+<li><p> <strong>裁剪空间 (Clip Space)</strong>: 应用透视投影矩阵后。</p>
+</li>
+<li><p> <strong>归一化设备坐标 (NDC)</strong>: 进行透视除法（除以 $w$）。</p>
+</li>
+<li><p> <strong>屏幕空间 (Window Space)</strong>: 深度值映射到 $[0, 1]$ 区间。</p>
+</li>
+</ol>
+<h3 id="2-关键矩阵与公式"><a href="#2-关键矩阵与公式" class="headerlink" title="2. 关键矩阵与公式"></a>2. 关键矩阵与公式</h3><h4 id="第一步：透视投影-Projection"><a href="#第一步：透视投影-Projection" class="headerlink" title="第一步：透视投影 (Projection)"></a>第一步：透视投影 (Projection)</h4><p>标准的 OpenGL 透视投影矩阵（<code>gluPerspective</code> 或 <code>glm::perspective</code>）的第三行和第四行决定了 $z$ 和 $w$ 的变换。</p>
+<p>矩阵形式简化如下（设 $n$ 为近平面，$f$ 为远平面）：<br>$$<br>M = \begin{pmatrix}<br>\dots &amp; 0 &amp; 0 &amp; 0 \<br>\dots &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; A &amp; B \<br>0 &amp; 0 &amp; -1 &amp; 0<br>\end{pmatrix}<br>$$<br>其中系数为：<br>$$ A = -\frac{f+n}{f-n}, \quad B = -\frac{2fn}{f-n} $$</p>
+<p><strong>裁剪空间坐标 $(z_{clip}, w_{clip})$</strong> 计算如下：<br>$$ z_{clip} = A \cdot z_e + B \cdot 1 = -\frac{f+n}{f-n} z_e - \frac{2fn}{f-n} $$<br>$$ w_{clip} = -1 \cdot z_e = -z_e $$</p>
+<h4 id="第二步：透视除法-To-NDC"><a href="#第二步：透视除法-To-NDC" class="headerlink" title="第二步：透视除法 (To NDC)"></a>第二步：透视除法 (To NDC)</h4><p>将裁剪坐标除以 $w_{clip}$ 得到 NDC 坐标 $z_{ndc}$。OpenGL 的 $z_{ndc}$ 范围是 $[-1, 1]$。</p>
+<p>$$ z_{ndc} = \frac{z_{clip}}{w_{clip}} = \frac{-\frac{f+n}{f-n} z_e - \frac{2fn}{f-n}}{-z_e} $$</p>
+<p>化简该公式：<br>$$ z_{ndc} = \frac{f+n}{f-n} + \frac{2fn}{z_e(f-n)} $$<br><em>(注意：这里清楚地表明了 $z_{ndc}$ 与 $1/z_e$ 成正比，这就是非线性的来源)</em></p>
+<h4 id="第三步：深度缓冲映射-To-Depth-Buffer"><a href="#第三步：深度缓冲映射-To-Depth-Buffer" class="headerlink" title="第三步：深度缓冲映射 (To Depth Buffer)"></a>第三步：深度缓冲映射 (To Depth Buffer)</h4><p>硬件会自动将 $[-1, 1]$ 的 $z_{ndc}$ 映射到 $[0, 1]$ 的深度缓冲值 $z_{b}$ (即我们在 Shader 中读到的纹理值)。</p>
+<p>$$ z_b = 0.5 \cdot z_{ndc} + 0.5 $$<br>反之：<br>$$ z_{ndc} = 2 \cdot z_b - 1 $$</p>
+<hr>
+<h3 id="3-逆向推导-从深度值求线性距离"><a href="#3-逆向推导-从深度值求线性距离" class="headerlink" title="3. 逆向推导 (从深度值求线性距离)"></a>3. 逆向推导 (从深度值求线性距离)</h3><p>现在我们将上述过程反转，已知 $z_b$，求解 $z_e$。</p>
+<h4 id="步骤-A-从-z-b-恢复-z-ndc"><a href="#步骤-A-从-z-b-恢复-z-ndc" class="headerlink" title="步骤 A: 从 $z_b$ 恢复 $z_{ndc}$"></a>步骤 A: 从 $z_b$ 恢复 $z_{ndc}$</h4><p>$$ z_{ndc} = 2 \cdot z_b - 1 $$</p>
+<h4 id="步骤-B-代入-NDC-公式解-z-e"><a href="#步骤-B-代入-NDC-公式解-z-e" class="headerlink" title="步骤 B: 代入 NDC 公式解 $z_e$"></a>步骤 B: 代入 NDC 公式解 $z_e$</h4><p>利用第二步推导的公式：<br>$$ z_{ndc} = \frac{f+n}{f-n} + \frac{2fn}{z_e(f-n)} $$</p>
+<p>将 $z_{ndc}$ 移项，把含 $z_e$ 的项分离出来：<br>$$ z_{ndc} - \frac{f+n}{f-n} = \frac{2fn}{z_e(f-n)} $$</p>
+<p>通分左边：<br>$$ \frac{z_{ndc}(f-n) - (f+n)}{f-n} = \frac{2fn}{z_e(f-n)} $$</p>
+<p>两边同时乘以 $(f-n)$ 消去分母：<br>$$ z_{ndc}(f-n) - (f+n) = \frac{2fn}{z_e} $$</p>
+<p>解出 $z_e$：<br>$$ z_e = \frac{2fn}{z_{ndc}(f-n) - (f+n)} $$</p>
+<h4 id="步骤-C-转换为线性距离-正值"><a href="#步骤-C-转换为线性距离-正值" class="headerlink" title="步骤 C: 转换为线性距离 (正值)"></a>步骤 C: 转换为线性距离 (正值)</h4><p>因为 OpenGL 视图空间中相机前方的 $z_e$ 是负数，我们通常需要正的距离 $z_{linear}$：<br>$$ z_{linear} = -z_e = \frac{-2fn}{z_{ndc}(f-n) - (f+n)} $$</p>
+<p>将分母符号取反，分子变得整洁：<br>$$ z_{linear} = \frac{2fn}{(f+n) - z_{ndc}(f-n)} $$</p>
+<p><strong>(这是常用的中间公式，使用 $z_{ndc}$)</strong></p>
+<hr>
+<h4 id="步骤-D-代入-z-b-得到最终公式"><a href="#步骤-D-代入-z-b-得到最终公式" class="headerlink" title="步骤 D: 代入 $z_b$ 得到最终公式"></a>步骤 D: 代入 $z_b$ 得到最终公式</h4><p>将 $z_{ndc} = 2z_b - 1$ 代入上式：</p>
+<p>分母部分：<br>$$ \text{Denom} = (f+n) - (2z_b - 1)(f-n) $$<br>$$ = f + n - [2z_b(f-n) - (f-n)] $$<br>$$ = f + n - 2z_b(f-n) + f - n $$<br>$$ = 2f - 2z_b(f-n) $$</p>
+<p>代回原式：<br>$$ z_{linear} = \frac{2fn}{2f - 2z_b(f-n)} $$</p>
+<p>分子分母同时除以 2：<br>$$ z_{linear} = \frac{fn}{f - z_b(f-n)} $$</p>
+<p>或者写成更常见的加权形式：<br>$$ z_{linear} = \frac{f \cdot n}{f - z_b \cdot f + z_b \cdot n} = \frac{n \cdot f}{z_b(n - f) + f} $$</p>
+<hr>
+<h3 id="4-最终结论与代码"><a href="#4-最终结论与代码" class="headerlink" title="4. 最终结论与代码"></a>4. 最终结论与代码</h3><h4 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h4><p>$$ z_{linear} = \frac{n \cdot f}{f - z_{buffer} \cdot (f - n)} $$</p>
+<p>或者：<br>$$ z_{linear} = \frac{1}{\frac{z_{buffer}}{n} + \frac{1-z_{buffer}}{f}} $$</p>
+<h4 id="GLSL-实现"><a href="#GLSL-实现" class="headerlink" title="GLSL 实现"></a>GLSL 实现</h4><p>在 Fragment Shader 中，假设你已经采样了深度纹理得到 <code>depth</code>（即 $z_b$，范围 0~1）：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> LinearizeDepth(<span class="type">float</span> depth)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">float</span> z_ndc = depth * <span class="number">2.0</span> - <span class="number">1.0</span>; <span class="comment">// Back to NDC [-1, 1]</span></span><br><span class="line">    <span class="type">float</span> near = <span class="number">0.1</span>;                <span class="comment">// 投影矩阵的 near plane</span></span><br><span class="line">    <span class="type">float</span> far  = <span class="number">100.0</span>;              <span class="comment">// 投影矩阵的 far plane</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 使用推导出的中间公式 (Steps C)</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="number">2.0</span> * near * far) / (far + near - z_ndc * (far - near));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者使用化简后的最终公式（计算量稍小）：</p>
+<figure class="highlight glsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> LinearizeDepthOptimized(<span class="type">float</span> depth)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">float</span> n = <span class="number">0.1</span>;</span><br><span class="line">    <span class="type">float</span> f = <span class="number">100.0</span>;</span><br><span class="line">    <span class="comment">// 对应公式: (n * f) / (f - depth * (f - n))</span></span><br><span class="line">    <span class="keyword">return</span> (n * f) / (f - depth * (f - n)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li> <strong>非线性来源</strong>：透视除法 ($1/z$)。</li>
+<li> <strong>推导核心</strong>：利用投影矩阵公式，反解 $z_e$。</li>
+<li> <strong>结果</strong>：深度主要聚集在近平面附近，远处的精度会迅速下降。还原线性深度本质上是把这个 $1/z$ 的分布拉直。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/12/11/%E7%9D%80%E8%89%B2%E5%99%A8%E4%B8%AD%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6%E8%BD%AC%E6%8D%A2%E6%88%90%E7%BA%BF%E6%80%A7%E6%B7%B1%E5%BA%A6/" data-id="cmjpcxj45000h1bco9pi4dgss" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/12/14/INTP%E5%AD%A9%E5%AD%90%E5%86%99%E4%BD%9C%E4%B8%9A/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          面对INTP（内向、直觉、思维、感知）性格的孩子，家长最头疼的往往就是**“虽然聪明，但执行力极差”**。
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/12/11/Android%E6%9C%BA%E5%9E%8B%E6%80%A7%E8%83%BD%E5%88%86%E7%BA%A7%E6%96%B9%E6%A1%88/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android机型性能分级方案</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E7%BC%96%E7%A8%8B/">C++编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93/">图形渲染</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/">家庭教育</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/">技术分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/">C++</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">3D图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GLSL/" rel="tag">GLSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSAO/" rel="tag">SSAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shader/" rel="tag">Shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%A6%E5%8D%95/" rel="tag">书单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%B2%E5%AD%90/" rel="tag">亲子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" rel="tag">儿童教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" rel="tag">原子操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" rel="tag">图形编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" rel="tag">宏定义</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag">并发编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" rel="tag">手机成瘾</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" rel="tag">接口适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" rel="tag">插值算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%92%AD%E5%AE%A2/" rel="tag">播客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E8%82%B2/" rel="tag">教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" rel="tag">构造函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" rel="tag">移动端优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" rel="tag">编程陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" rel="tag">预处理器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" rel="tag">颜色空间</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 12px;">3D图形学</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 16px;">C++</a> <a href="/tags/C-11/" style="font-size: 18px;">C++11</a> <a href="/tags/GLSL/" style="font-size: 10px;">GLSL</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/OpenGL/" style="font-size: 12px;">OpenGL</a> <a href="/tags/SSAO/" style="font-size: 10px;">SSAO</a> <a href="/tags/Shader/" style="font-size: 10px;">Shader</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 18px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E4%B9%A6%E5%8D%95/" style="font-size: 10px;">书单</a> <a href="/tags/%E4%BA%B2%E5%AD%90/" style="font-size: 12px;">亲子</a> <a href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" style="font-size: 10px;">儿童教育</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 10px;">动态库</a> <a href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" style="font-size: 10px;">原子操作</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">图形学</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">图形编程</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 10px;">多线程</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" style="font-size: 10px;">宏定义</a> <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">并发编程</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" style="font-size: 10px;">手机成瘾</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" style="font-size: 10px;">接口适配</a> <a href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" style="font-size: 10px;">插值算法</a> <a href="/tags/%E6%92%AD%E5%AE%A2/" style="font-size: 10px;">播客</a> <a href="/tags/%E6%95%99%E8%82%B2/" style="font-size: 10px;">教育</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 12px;">数学</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" style="font-size: 10px;">构造函数</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" style="font-size: 10px;">移动端优化</a> <a href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 10px;">类型转换</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 12px;">线性代数</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" style="font-size: 10px;">编程陷阱</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 14px;">计算机图形学</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 12px;">阅读</a> <a href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" style="font-size: 10px;">预处理器</a> <a href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" style="font-size: 10px;">颜色空间</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/">git 浅克隆之后如何切换分支</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/26/ARM64%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/">ARM64函数调用栈寄存器分配</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/23/c++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E5%AD%98%E5%9C%A8%E4%BA%86%E5%93%AA%E9%87%8C/">c++函数返回值存在了哪里</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/21/std%20vector%20clear%20%E5%88%86%E6%9E%90/">std::vector&lt;T&gt; clear详解</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/">AArch64寄存器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2025 Xujing<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+  <div class="local-search-popup">
+  <div class="local-search-box">
+    <div class="local-search-input-wrapper">
+      <input id="local-search-input" type="text" placeholder="搜索..." />
+    </div>
+    <span class="search-close-button">×</span>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<script>
+// 搜索功能实现
+window.addEventListener('DOMContentLoaded', function() {
+  var isXml = true;
+  var searchPath = "search.xml";
+  if (searchPath.length === 0) {
+    searchPath = "search.xml";
+  } else if (/json$/i.test(searchPath)) {
+    isXml = false;
+  }
+  var path = "/" + searchPath;
+  var input = document.getElementById("local-search-input");
+  var resultContent = document.getElementById("local-search-result");
+  var searchData = [];
+
+  // 加载搜索索引
+  loadSearchData();
+
+  function loadSearchData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', path, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          if (isXml) {
+            var xmlDoc = new DOMParser().parseFromString(xhr.responseText, "text/xml");
+            var entries = xmlDoc.getElementsByTagName("entry");
+            searchData = Array.from(entries).map(function(entry) {
+              return {
+                title: entry.getElementsByTagName("title")[0].textContent,
+                content: entry.getElementsByTagName("content")[0].textContent,
+                url: entry.getElementsByTagName("url")[0].textContent
+              };
+            });
+          } else {
+            searchData = JSON.parse(xhr.responseText);
+          }
+          
+          // 添加搜索事件监听
+          input.addEventListener('input', search);
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  function search() {
+    var searchText = input.value.trim().toLowerCase();
+    var keywords = searchText.split(/[\s\-]+/);
+    resultContent.innerHTML = "";
+    
+    if (searchText.length > 0) {
+      // 执行搜索
+      searchData.forEach(function(data) {
+        var isMatch = true;
+        var dataTitle = data.title.trim().toLowerCase();
+        var dataContent = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+        var dataUrl = data.url;
+        var indexTitle = -1;
+        var indexContent = -1;
+        var firstOccur = -1;
+        
+        // 只匹配非空关键字
+        if (keywords.length > 0) {
+          keywords.forEach(function(keyword, i) {
+            indexTitle = dataTitle.indexOf(keyword);
+            indexContent = dataContent.indexOf(keyword);
+            if (indexTitle < 0 && indexContent < 0) {
+              isMatch = false;
+            } else {
+              if (indexContent < 0) {
+                indexContent = 0;
+              }
+              if (i == 0) {
+                firstOccur = indexContent;
+              }
+            }
+          });
+        }
+        
+        // 显示搜索结果
+        if (isMatch) {
+          var resultItem = document.createElement("div");
+          resultItem.className = "search-result-item";
+          
+          // 标题
+          var resultTitle = document.createElement("div");
+          resultTitle.className = "search-result-title";
+          var resultLink = document.createElement("a");
+          resultLink.href = dataUrl;
+          resultLink.textContent = data.title;
+          resultTitle.appendChild(resultLink);
+          resultItem.appendChild(resultTitle);
+          
+          // 内容
+          if (firstOccur >= 0) {
+            // 截取内容
+            var content = dataContent;
+            var start = Math.max(0, firstOccur - 20);
+            var end = Math.min(content.length, firstOccur + 80);
+            if (start > 0) {
+              content = '...' + content.substring(start, end) + '...';
+            } else {
+              content = content.substring(start, end) + '...';
+            }
+            
+            // 高亮关键字
+            keywords.forEach(function(keyword) {
+              var regS = new RegExp(keyword, "gi");
+              content = content.replace(regS, '<strong class="search-keyword">' + keyword + '</strong>');
+            });
+            
+            var resultContentDiv = document.createElement("div");
+            resultContentDiv.className = "search-result-content";
+            resultContentDiv.innerHTML = content;
+            resultItem.appendChild(resultContentDiv);
+          }
+          
+          resultContent.appendChild(resultItem);
+        }
+      });
+    }
+  }
+
+  // 搜索框弹出与关闭
+  var searchBtn = document.getElementById("nav-search-btn");
+  var searchPopup = document.querySelector(".local-search-popup");
+  var closeBtn = document.querySelector(".search-close-button");
+  
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      searchPopup.style.display = "block";
+      input.focus();
+    });
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      searchPopup.style.display = "none";
+    });
+  }
+  
+  document.addEventListener('keyup', function(e) {
+    if (e.key === "Escape") {
+      searchPopup.style.display = "none";
+    }
+  });
+});
+</script> 
+</body>
+</html>

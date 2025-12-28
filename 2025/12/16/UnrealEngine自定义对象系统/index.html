@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-888YX9GKW2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-888YX9GKW2');
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1587619220496591"
+     crossorigin="anonymous"></script>
+<!-- End Google AdSense -->
+ 
+  
+  <title>Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套**自定义对象系统**。 | Xujing的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套自定义对象系统。C++ 标准本身缺乏运行时反射（Reflection）和自动内存管理（GC），因此 Epic Games 自己实现了一套名为 Unreal Object Handling 的系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套**自定义对象系统**。">
+<meta property="og:url" content="https://jackwzx.github.io/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Xujing的博客">
+<meta property="og:description" content="Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套自定义对象系统。C++ 标准本身缺乏运行时反射（Reflection）和自动内存管理（GC），因此 Epic Games 自己实现了一套名为 Unreal Object Handling 的系统。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-16T05:10:33.000Z">
+<meta property="article:modified_time" content="2025-12-16T05:10:33.604Z">
+<meta property="article:author" content="Xujing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Xujing的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xujing的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap" style="display: none;">
+        <!-- 已由本地搜索替代 -->
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-UnrealEngine自定义对象系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time datetime="2025-12-16T05:10:33.000Z" itemprop="datePublished">2025-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套**自定义对象系统**。
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套<strong>自定义对象系统</strong>。C++ 标准本身缺乏运行时反射（Reflection）和自动内存管理（GC），因此 Epic Games 自己实现了一套名为 <strong>Unreal Object Handling</strong> 的系统。</p>
+<span id="more"></span>
+
+<p>这套系统的核心由 <strong>Unreal Header Tool (UHT)<strong>、</strong>UObject</strong>、<strong>反射系统</strong> 和 <strong>序列化系统</strong> 组成。</p>
+<hr>
+<h3 id="一、-核心机制：Unreal-Header-Tool-UHT"><a href="#一、-核心机制：Unreal-Header-Tool-UHT" class="headerlink" title="一、 核心机制：Unreal Header Tool (UHT)"></a>一、 核心机制：Unreal Header Tool (UHT)</h3><p>在深入具体功能之前，必须理解 UE 是如何“扩展”C++ 的。</p>
+<p><strong>实现原理：</strong></p>
+<ol>
+<li> <strong>宏标记</strong>：开发者在头文件（.h）中使用特定的宏，如 <code>UCLASS()</code>, <code>UPROPERTY()</code>, <code>UFUNCTION()</code>, <code>GENERATED_BODY()</code>。</li>
+<li> <strong>预处理</strong>：在标准 C++ 编译器（如 MSVC, Clang）运行之前，<strong>UHT</strong> 会先解析项目中的头文件。</li>
+<li> <strong>代码生成</strong>：UHT 识别出这些宏，并生成对应的 <code>.gen.cpp</code> 和 <code>.generated.h</code> 文件。这些文件包含了注册类型、获取偏移量、构建反射数据所需的“胶水代码”。</li>
+<li> <strong>编译</strong>：最后，C++ 编译器将用户写的代码和 UHT 生成的代码一起编译。</li>
+</ol>
+<hr>
+<h3 id="二、-类型系统-Type-System-amp-反射-Reflection"><a href="#二、-类型系统-Type-System-amp-反射-Reflection" class="headerlink" title="二、 类型系统 (Type System) &amp; 反射 (Reflection)"></a>二、 类型系统 (Type System) &amp; 反射 (Reflection)</h3><p>UE 的反射系统允许在运行时查询类型信息（比如“这个对象有哪些变量？”“这个函数叫什么名字？”）。这是蓝图（Blueprints）、网络复制、编辑器属性面板和垃圾回收的基础。</p>
+<h4 id="1-基础能力"><a href="#1-基础能力" class="headerlink" title="1. 基础能力"></a>1. 基础能力</h4><ul>
+<li>  **运行时类型识别 (RTTI)**：比 C++ 标准的 RTTI 更强大，支持 <code>Cast&lt;T&gt;()</code>，<code>IsA()</code> 等。</li>
+<li>  <strong>动态调用</strong>：可以通过字符串名字调用函数（<code>ProcessEvent</code>）。</li>
+<li>  <strong>属性访问</strong>：可以通过字符串名字读写变量。</li>
+<li>  <strong>蓝图集成</strong>：将 C++ 暴露给脚本环境。</li>
+</ul>
+<h4 id="2-实现方式"><a href="#2-实现方式" class="headerlink" title="2. 实现方式"></a>2. 实现方式</h4><p><strong>A. 类型层级 (UClass, UScriptStruct, UEnum)</strong><br>所有参与反射的类都继承自 <code>UObject</code>。每个类在运行时都有一个对应的 <code>UClass</code> 对象（元类），它描述了这个类的结构。</p>
+<ul>
+<li>  **<code>UClass</code>**：存储了类的名字、父类、函数列表（<code>UFunction</code>）、属性列表（<code>FProperty</code>）以及 CDO（类默认对象）。</li>
+</ul>
+<p><strong>B. 属性描述 (FProperty)</strong><br>在 UE4.25 之前叫 <code>UProperty</code>，后优化为 <code>FProperty</code>（非 UObject，轻量级）。</p>
+<ul>
+<li>  每个被 <code>UPROPERTY()</code> 标记的变量，UHT 都会生成一个对应的 <code>FProperty</code> 实例（如 <code>FIntProperty</code>, <code>FObjectProperty</code>）。</li>
+<li><strong>实现关键 - 内存偏移 (Offset)<strong>：反射系统并不魔幻，它访问变量的核心原理是</strong>指针 + 偏移量</strong>。UHT 会计算出某个变量相对于对象 <code>this</code> 指针的内存偏移量。  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 伪代码概念</span></span><br><span class="line"><span class="type">void</span>* ValueAddress = (uint8*)MyObjectInstance + Property-&gt;Offset_Internal;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>C. 注册机制 (StaticClass)</strong><br><code>GENERATED_BODY()</code> 宏会注入一个静态函数 <code>StaticClass()</code>。在引擎启动时（<code>Main</code> 函数之前），通过 C++ 的静态初始化机制，系统会构建出所有的 <code>UClass</code> 树，并将生成的 <code>FProperty</code> 链表挂载到对应的 <code>UClass</code> 上。</p>
+<p><strong>D. CDO (Class Default Object)</strong><br>每个 <code>UClass</code> 在内存中都维护一个**类默认对象 (CDO)**。这是一个完全初始化好的该类的实例。</p>
+<ul>
+<li>  <strong>作用</strong>：作为模板。当 <code>SpawnActor</code> 或 <code>NewObject</code> 时，系统会通过 <code>memcpy</code> 或序列化 CDO 来快速初始化新对象，而不是从零构造。</li>
+</ul>
+<hr>
+<h3 id="三、-序列化-Serialization"><a href="#三、-序列化-Serialization" class="headerlink" title="三、 序列化 (Serialization)"></a>三、 序列化 (Serialization)</h3><p>序列化是将对象的状态转换为字节流（用于存储到磁盘或网络传输），反之亦然。UE 的序列化高度依赖反射系统。</p>
+<h4 id="1-基础能力-1"><a href="#1-基础能力-1" class="headerlink" title="1. 基础能力"></a>1. 基础能力</h4><ul>
+<li>  <strong>Asset 存储</strong>：将资源保存为 <code>.uasset</code> / <code>.umap</code>。</li>
+<li>  <strong>SaveGame</strong>：保存游戏进度。</li>
+<li>  <strong>网络复制</strong>：将变量同步到客户端。</li>
+<li>  <strong>版本控制</strong>：支持向后兼容（加载旧版本的资源）。</li>
+</ul>
+<h4 id="2-实现方式-1"><a href="#2-实现方式-1" class="headerlink" title="2. 实现方式"></a>2. 实现方式</h4><p><strong>A. FArchive</strong><br><code>FArchive</code> 是核心基类，重载了 <code>&lt;&lt;</code> 操作符。它既可以代表读取（Loading），也可以代表写入（Saving）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 典型的序列化代码</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyClass::Serialize</span><span class="params">(FArchive&amp; Ar)</span> </span>&#123;</span><br><span class="line">    Super::<span class="built_in">Serialize</span>(Ar);</span><br><span class="line">    Ar &lt;&lt; MyIntVariable;</span><br><span class="line">    Ar &lt;&lt; MyStringVariable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>B. 结构化序列化 (Tagged Property Serialization)</strong><br>这是 <code>.uasset</code> 的主要存储方式。UE 不只是简单地转储二进制块，而是<strong>基于反射</strong>进行保存。</p>
+<ul>
+<li><strong>流程</strong>：<ol>
+<li> 遍历对象的所有 <code>UPROPERTY</code>。</li>
+<li> 对比当前值与 CDO（默认值）是否一致。</li>
+<li> <strong>只保存与默认值不同的变量</strong>（Delta Serialization）。这极大地节省了空间。</li>
+<li> 保存格式为：<code>[属性名] [类型] [大小] [值]</code>。</li>
+</ol>
+</li>
+<li>  <strong>优势</strong>：因为保存了属性名，即使你后来在 C++ 中删除了中间某个变量，或者打乱了变量顺序，加载时依然能通过名字匹配正确恢复数据，不会导致错位。</li>
+</ul>
+<p><strong>C. 链接器 (LinkerLoad / LinkerSave)</strong><br>对于复杂的资源加载（如加载一个引用了贴图、材质、声音的关卡），UE 使用 Linker 表。</p>
+<ul>
+<li>  <strong>Import Table</strong>：记录此包依赖的外部资源。</li>
+<li>  <strong>Export Table</strong>：记录此包内部定义的资源。</li>
+<li>  加载时，Linker 会先加载依赖项（Import），然后通过反射构建对象并反序列化数据。</li>
+</ul>
+<hr>
+<h3 id="四、-垃圾回收-Garbage-Collection"><a href="#四、-垃圾回收-Garbage-Collection" class="headerlink" title="四、 垃圾回收 (Garbage Collection)"></a>四、 垃圾回收 (Garbage Collection)</h3><p>UE 使用追踪式 GC，而不是 C++ 的 RAII 或智能指针（尽管现在也有 <code>TSharedPtr</code>，但 <code>UObject</code> 依然归 GC 管）。</p>
+<h4 id="1-基础能力-2"><a href="#1-基础能力-2" class="headerlink" title="1. 基础能力"></a>1. 基础能力</h4><ul>
+<li>  自动管理 <code>UObject</code> 生命周期。</li>
+<li>  处理循环引用。</li>
+<li>  防止野指针（通过 <code>IsValid</code> 或 <code>TWeakObjectPtr</code>）。</li>
+</ul>
+<h4 id="2-实现方式-2"><a href="#2-实现方式-2" class="headerlink" title="2. 实现方式"></a>2. 实现方式</h4><p><strong>A. 标记-清除 (Mark-and-Sweep)</strong></p>
+<ol>
+<li> **Root Set (根集合)**：GC 从一组根对象开始（例如被添加到 Root 的对象、当前关卡、玩家控制器）。</li>
+<li>**Reachability Analysis (可达性分析)**：<ul>
+<li>  利用<strong>反射系统</strong>。GC 遍历根对象的 <code>UPROPERTY</code>（必须是 <code>UObject*</code> 类型），找到引用的子对象。</li>
+<li>  递归重复此过程，标记所有“可达”的对象。</li>
+</ul>
+</li>
+<li> <strong>Sweep (清除)<strong>：遍历全局 <code>UObject</code> 列表（<code>GUObjectArray</code>），销毁那些</strong>未被标记</strong>的对象（即不可达对象）。</li>
+</ol>
+<p><strong>B. 增量与集群 (Incremental &amp; Clustering)</strong><br>为了避免 GC 导致游戏卡顿（Stop-the-world）：</p>
+<ul>
+<li>  <strong>增量 GC</strong>：将标记过程分摊到多帧进行。</li>
+<li>  <strong>GC Cluster</strong>：将粒子系统或材质实例等大量生命周期绑定的小对象视为一个簇，要么一起活，要么一起死，减少遍历开销。</li>
+</ul>
+<hr>
+<h3 id="总结：数据流向图"><a href="#总结：数据流向图" class="headerlink" title="总结：数据流向图"></a>总结：数据流向图</h3><p>为了把这些串起来，想象创建并保存一个 Actor 的过程：</p>
+<ol>
+<li> <strong>编写代码</strong>：你写了 <code>AMyActor</code>，里面有个 <code>UPROPERTY() int32 Health;</code>。</li>
+<li> <strong>编译时</strong>：<strong>UHT</strong> 分析代码，生成反射数据（记录 <code>Health</code> 叫什么，偏移量是多少，类型是 Int）。</li>
+<li> <strong>运行时启动</strong>：引擎利用反射数据构建 <code>UClass</code>，并实例化一个 <code>CDO</code>。</li>
+<li> <strong>生成对象</strong>：<code>SpawnActor</code> 复制 CDO 的内存来创建 <code>MyActorInstance</code>。</li>
+<li> <strong>修改属性</strong>：你在蓝图中修改 <code>Health</code> 为 100。蓝图虚拟机通过反射找到 <code>Health</code> 的内存地址并写入值。</li>
+<li> <strong>垃圾回收</strong>：GC 扫描发现这个 Actor 被关卡引用（通过反射指针），标记为存活。</li>
+<li><strong>保存游戏</strong>：<ul>
+<li>  创建 <code>FArchive</code>。</li>
+<li>  序列化系统遍历 <code>MyActorInstance</code> 的所有属性。</li>
+<li>  发现 <code>Health</code> (100) 与 CDO 的 <code>Health</code> (默认值) 不同。</li>
+<li>  将 <code>&quot;Health&quot;: 100</code> 写入磁盘。</li>
+</ul>
+</li>
+</ol>
+<p>这就是 UE 能够实现如此高度动态化、既像 C++ 又像脚本语言特性的底层奥秘。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/" data-id="cmjpcxj4400091bco1noogrp6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2025/12/16/JNI%E8%B0%83%E7%94%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          这是一个非常经典的 JNI 性能优化问题。
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/12/15/atomic%E5%92%8Cnonatomic%E5%85%B3%E9%94%AE%E5%AD%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Objective-C 属性（`@property`）中的 `atomic` 和 `nonatomic` 关键字。</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E7%BC%96%E7%A8%8B/">C++编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93/">图形渲染</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/">家庭教育</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/">技术分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/">C++</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">3D图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GLSL/" rel="tag">GLSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSAO/" rel="tag">SSAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shader/" rel="tag">Shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%A6%E5%8D%95/" rel="tag">书单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%B2%E5%AD%90/" rel="tag">亲子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" rel="tag">儿童教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" rel="tag">原子操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" rel="tag">图形编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" rel="tag">宏定义</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag">并发编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" rel="tag">手机成瘾</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" rel="tag">接口适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" rel="tag">插值算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%92%AD%E5%AE%A2/" rel="tag">播客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E8%82%B2/" rel="tag">教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" rel="tag">构造函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" rel="tag">移动端优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" rel="tag">编程陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" rel="tag">预处理器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" rel="tag">颜色空间</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 12px;">3D图形学</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 16px;">C++</a> <a href="/tags/C-11/" style="font-size: 18px;">C++11</a> <a href="/tags/GLSL/" style="font-size: 10px;">GLSL</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/OpenGL/" style="font-size: 12px;">OpenGL</a> <a href="/tags/SSAO/" style="font-size: 10px;">SSAO</a> <a href="/tags/Shader/" style="font-size: 10px;">Shader</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 18px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E4%B9%A6%E5%8D%95/" style="font-size: 10px;">书单</a> <a href="/tags/%E4%BA%B2%E5%AD%90/" style="font-size: 12px;">亲子</a> <a href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" style="font-size: 10px;">儿童教育</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 10px;">动态库</a> <a href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" style="font-size: 10px;">原子操作</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">图形学</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">图形编程</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 10px;">多线程</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" style="font-size: 10px;">宏定义</a> <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">并发编程</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" style="font-size: 10px;">手机成瘾</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" style="font-size: 10px;">接口适配</a> <a href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" style="font-size: 10px;">插值算法</a> <a href="/tags/%E6%92%AD%E5%AE%A2/" style="font-size: 10px;">播客</a> <a href="/tags/%E6%95%99%E8%82%B2/" style="font-size: 10px;">教育</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 12px;">数学</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" style="font-size: 10px;">构造函数</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" style="font-size: 10px;">移动端优化</a> <a href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 10px;">类型转换</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 12px;">线性代数</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" style="font-size: 10px;">编程陷阱</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 14px;">计算机图形学</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 12px;">阅读</a> <a href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" style="font-size: 10px;">预处理器</a> <a href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" style="font-size: 10px;">颜色空间</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/">git 浅克隆之后如何切换分支</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/26/ARM64%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/">ARM64函数调用栈寄存器分配</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/23/c++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E5%AD%98%E5%9C%A8%E4%BA%86%E5%93%AA%E9%87%8C/">c++函数返回值存在了哪里</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/21/std%20vector%20clear%20%E5%88%86%E6%9E%90/">std::vector&lt;T&gt; clear详解</a>
+          </li>
+        
+          <li>
+            <a href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/">AArch64寄存器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2025 Xujing<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+  <div class="local-search-popup">
+  <div class="local-search-box">
+    <div class="local-search-input-wrapper">
+      <input id="local-search-input" type="text" placeholder="搜索..." />
+    </div>
+    <span class="search-close-button">×</span>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<script>
+// 搜索功能实现
+window.addEventListener('DOMContentLoaded', function() {
+  var isXml = true;
+  var searchPath = "search.xml";
+  if (searchPath.length === 0) {
+    searchPath = "search.xml";
+  } else if (/json$/i.test(searchPath)) {
+    isXml = false;
+  }
+  var path = "/" + searchPath;
+  var input = document.getElementById("local-search-input");
+  var resultContent = document.getElementById("local-search-result");
+  var searchData = [];
+
+  // 加载搜索索引
+  loadSearchData();
+
+  function loadSearchData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', path, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          if (isXml) {
+            var xmlDoc = new DOMParser().parseFromString(xhr.responseText, "text/xml");
+            var entries = xmlDoc.getElementsByTagName("entry");
+            searchData = Array.from(entries).map(function(entry) {
+              return {
+                title: entry.getElementsByTagName("title")[0].textContent,
+                content: entry.getElementsByTagName("content")[0].textContent,
+                url: entry.getElementsByTagName("url")[0].textContent
+              };
+            });
+          } else {
+            searchData = JSON.parse(xhr.responseText);
+          }
+          
+          // 添加搜索事件监听
+          input.addEventListener('input', search);
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  function search() {
+    var searchText = input.value.trim().toLowerCase();
+    var keywords = searchText.split(/[\s\-]+/);
+    resultContent.innerHTML = "";
+    
+    if (searchText.length > 0) {
+      // 执行搜索
+      searchData.forEach(function(data) {
+        var isMatch = true;
+        var dataTitle = data.title.trim().toLowerCase();
+        var dataContent = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+        var dataUrl = data.url;
+        var indexTitle = -1;
+        var indexContent = -1;
+        var firstOccur = -1;
+        
+        // 只匹配非空关键字
+        if (keywords.length > 0) {
+          keywords.forEach(function(keyword, i) {
+            indexTitle = dataTitle.indexOf(keyword);
+            indexContent = dataContent.indexOf(keyword);
+            if (indexTitle < 0 && indexContent < 0) {
+              isMatch = false;
+            } else {
+              if (indexContent < 0) {
+                indexContent = 0;
+              }
+              if (i == 0) {
+                firstOccur = indexContent;
+              }
+            }
+          });
+        }
+        
+        // 显示搜索结果
+        if (isMatch) {
+          var resultItem = document.createElement("div");
+          resultItem.className = "search-result-item";
+          
+          // 标题
+          var resultTitle = document.createElement("div");
+          resultTitle.className = "search-result-title";
+          var resultLink = document.createElement("a");
+          resultLink.href = dataUrl;
+          resultLink.textContent = data.title;
+          resultTitle.appendChild(resultLink);
+          resultItem.appendChild(resultTitle);
+          
+          // 内容
+          if (firstOccur >= 0) {
+            // 截取内容
+            var content = dataContent;
+            var start = Math.max(0, firstOccur - 20);
+            var end = Math.min(content.length, firstOccur + 80);
+            if (start > 0) {
+              content = '...' + content.substring(start, end) + '...';
+            } else {
+              content = content.substring(start, end) + '...';
+            }
+            
+            // 高亮关键字
+            keywords.forEach(function(keyword) {
+              var regS = new RegExp(keyword, "gi");
+              content = content.replace(regS, '<strong class="search-keyword">' + keyword + '</strong>');
+            });
+            
+            var resultContentDiv = document.createElement("div");
+            resultContentDiv.className = "search-result-content";
+            resultContentDiv.innerHTML = content;
+            resultItem.appendChild(resultContentDiv);
+          }
+          
+          resultContent.appendChild(resultItem);
+        }
+      });
+    }
+  }
+
+  // 搜索框弹出与关闭
+  var searchBtn = document.getElementById("nav-search-btn");
+  var searchPopup = document.querySelector(".local-search-popup");
+  var closeBtn = document.querySelector(".search-close-button");
+  
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      searchPopup.style.display = "block";
+      input.focus();
+    });
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      searchPopup.style.display = "none";
+    });
+  }
+  
+  document.addEventListener('keyup', function(e) {
+    if (e.key === "Escape") {
+      searchPopup.style.display = "none";
+    }
+  });
+});
+</script> 
+</body>
+</html>

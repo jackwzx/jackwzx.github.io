@@ -69,7 +69,7 @@
     
     
     <entry>
-      <title>这是一个非常核心的 JNI 知识点。</title>
+      <title>Jni NewGlobalRef</title>
       <link href="/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/"/>
       <url>/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/</url>
       
@@ -186,7 +186,7 @@
     
     
     <entry>
-      <title>移动端部光源延迟渲染和阴影计算共用同一个Framebuffer 会提升性能吗</title>
+      <title>Framebuffer 复用问题</title>
       <link href="/2025/12/09/%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E4%B8%93%E4%B8%9A%E4%B8%94%E5%88%87%E4%B8%AD%E8%A6%81%E5%AE%B3%E7%9A%84%E9%97%AE%E9%A2%98/"/>
       <url>/2025/12/09/%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E4%B8%93%E4%B8%9A%E4%B8%94%E5%88%87%E4%B8%AD%E8%A6%81%E5%AE%B3%E7%9A%84%E9%97%AE%E9%A2%98/</url>
       

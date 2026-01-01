@@ -81,48 +81,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-存储浮点数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/12/04/%E5%AD%98%E5%82%A8%E6%B5%AE%E7%82%B9%E6%95%B0/" class="article-date">
-  <time datetime="2025-12-04T02:42:29.000Z" itemprop="datePublished">2025-12-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/04/%E5%AD%98%E5%82%A8%E6%B5%AE%E7%82%B9%E6%95%B0/">存储浮点数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们要彻底理解这个问题，需要深入到计算机底层是如何存储浮点数（Floating Point）的。这里涉及到一个核心概念：<strong>科学计数法（Scientific Notation）的二进制版本</strong>。</p>
-<p>我们把这个问题拆解成三个部分：<strong>结构解析</strong>、<strong>为什么是 1024 个刻度</strong>、<strong>为什么范围不同精度不同</strong>。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/12/04/%E5%AD%98%E5%82%A8%E6%B5%AE%E7%82%B9%E6%95%B0/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/12/04/%E5%AD%98%E5%82%A8%E6%B5%AE%E7%82%B9%E6%95%B0/" data-id="cmiykwl300003alco64rz3qbl" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-mediump（中精度）和 highp（高精度）对比分析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2025/12/03/mediump%EF%BC%88%E4%B8%AD%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%92%8C%20highp%EF%BC%88%E9%AB%98%E7%B2%BE%E5%BA%A6%EF%BC%89%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" class="article-date">
@@ -498,6 +456,56 @@
 
 
   
+    <article id="post-java中的布尔类型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time datetime="2025-11-11T16:00:00.000Z" itemprop="datePublished">2025-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/">Java中的布尔类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Java 中的 <code>boolean</code> 与数值类型（<code>int</code> 等）是不同的原始类型，语言层面既不允许隐式转换，也不允许显式强制转换。</p>
+<ul>
+<li>不允许的示例<ul>
+<li><code>int i = true;</code>、<code>boolean b = 1;</code>、<code>b = (boolean) 1;</code> 都会编译报错</li>
+<li><code>if (1) &#123;&#125;</code> 在 Java 中非法（不同于 C/C++），只能 <code>if (b)</code> 或 <code>if (表达式为 boolean)</code></li>
+</ul>
+</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/" data-id="cmih5kqno0009veco2k8f31qj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
 
 
   <nav id="page-nav">
@@ -586,7 +594,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2025 Xujing<br>
+      &copy; 2026 Xujing<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

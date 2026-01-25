@@ -81,6 +81,264 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Android NDK 编译参数最终构建顺序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/" class="article-date">
+  <time datetime="2026-01-21T12:41:16.000Z" itemprop="datePublished">2026-01-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/">Android NDK 编译参数最终构建顺序  **。</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Android NDK 的构建体系中，链接参数的组合顺序非常重要，因为对于冲突的参数（如 <code>-O2</code> 和 <code>-O3</code>），<strong>排在后面的参数通常会覆盖前面的参数</strong>。</p>
+<p>这些参数的流向和最终组合顺序如下：</p>
+        
+          <p class="article-more-link">
+            <a href="/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/" data-id="cmktmcqbf0001b5coc6ff0ths" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-静态库设置强制导出后，动态库一定包含此符号吗" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/" class="article-date">
+  <time datetime="2026-01-21T06:10:34.000Z" itemprop="datePublished">2026-01-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/">静态库设置强制导出后，动态库一定包含此符号吗</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在开发中，这是一个经典且容易踩坑的链接行为。简单结论是：<strong>默认情况下，打出来的 <code>.so</code> 不会包含该函数。</strong></p>
+<h3 id="1-为什么“强制导出”无效？"><a href="#1-为什么“强制导出”无效？" class="headerlink" title="1. 为什么“强制导出”无效？"></a>1. 为什么“强制导出”无效？</h3><p>静态库（<code>.a</code> 或 <code>.lib</code>）本质上是一堆对象文件（<code>.o</code> 或 <code>.obj</code>）的“压缩包”。链接器在构建动态库（<code>.so</code>）时，遵循以下逻辑：</p>
+<ul>
+<li>  <strong>按需提取：</strong> 链接器只有在发现动态库的代码中存在一个“未定义引用（Undefined Reference）”时，才会去静态库里寻找对应的符号，并将包含该符号的整个 <code>.o</code> 文件拉进结果中。</li>
+<li>  <strong>无视属性：</strong> 虽然你在代码里写了 <code>__attribute__((visibility(&quot;default&quot;)))</code>（Linux）或 <code>__declspec(dllexport)</code>（Windows），但这只是该符号在 <code>.o</code> 文件里的一个“标记”。</li>
+<li>  <strong>结果：</strong> 如果你的动态库没有代码调用这个函数，链接器根本就不会去加载那个 <code>.o</code> 文件。既然文件没被加载，里面的“导出标记”自然也就不会生效，最终 <code>.so</code> 的导出表里就不会有它。</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/" data-id="cmktmcqbi0006b5co46c0cb2e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-子Shell以及返回值运行机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/01/20/%E5%AD%90Shell%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" class="article-date">
+  <time datetime="2026-01-20T11:11:26.000Z" itemprop="datePublished">2026-01-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/20/%E5%AD%90Shell%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">子Shell以及返回值运行机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一个非常经典且重要的 Shell 执行机制问题。直接给结论：</p>
+<ol>
+<li><strong>会新建子进程（子 Shell）吗？</strong><br> <strong>会。</strong> 使用 <code>bash $PushAssets</code> 会启动一个新的 Bash 进程来运行该脚本。</li>
+<li><strong><code>set -e</code> 能触发退出吗？</strong><br> <strong>能。</strong> 如果子脚本返回非 0 值，父脚本在 <code>set -e</code> 模式下会立即终止。</li>
+</ol>
+        
+          <p class="article-more-link">
+            <a href="/2026/01/20/%E5%AD%90Shell%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2026/01/20/%E5%AD%90Shell%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/" data-id="cmktmcqbg0004b5co3ze27ver" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-c++ 析构函数的三种变体" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/01/20/c++%20%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93/" class="article-date">
+  <time datetime="2026-01-20T06:56:25.000Z" itemprop="datePublished">2026-01-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/20/c++%20%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93/">c++ 析构函数的三种变体</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 C++ 的 <strong>Itanium ABI</strong>（应用二进制接口，被 GCC 和 Clang 等主流编译器广泛采用）中，为了处理复杂的继承（尤其是虚继承）和不同的对象生命周期管理需求，编译器会为同一个类生成三种主要的析构函数变体：<strong>D0</strong>、<strong>D1</strong> 和 <strong>D2</strong>。</p>
+        
+          <p class="article-more-link">
+            <a href="/2026/01/20/c++%20%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2026/01/20/c++%20%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93/" data-id="cmktmcqbg0003b5coasxe2170" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Android Class loader介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/01/15/Android%20Class%20loader%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2026-01-15T09:25:26.000Z" itemprop="datePublished">2026-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/15/Android%20Class%20loader%E4%BB%8B%E7%BB%8D/">Android Class loader介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Android 中，这是一个非常经典且常见的 JNI 问题。核心原因在于 <strong>类加载器（ClassLoader）的差异</strong> 以及 <strong>JNI 如何查找类</strong> 的机制。</p>
+<p>以下是详细的机制分析：</p>
+        
+          <p class="article-more-link">
+            <a href="/2026/01/15/Android%20Class%20loader%E4%BB%8B%E7%BB%8D/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2026/01/15/Android%20Class%20loader%E4%BB%8B%E7%BB%8D/" data-id="cmktmcqbb0000b5cohp7igkhx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Android ShareContext Demo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/01/15/Android%20ShareContext%20Demo/" class="article-date">
+  <time datetime="2026-01-15T04:09:39.000Z" itemprop="datePublished">2026-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/15/Android%20ShareContext%20Demo/">Android ShareContext Demo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>了解了，你的需求是：<strong>只有一个 <code>GLSurfaceView</code>（拥有一个渲染线程），但你需要开启另一个后台线程（子线程）并在该线程中操作 OpenGL 资源（如异步加载纹理），这两个线程需要共享同一个 Context。</strong></p>
+        
+          <p class="article-more-link">
+            <a href="/2026/01/15/Android%20ShareContext%20Demo/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2026/01/15/Android%20ShareContext%20Demo/" data-id="cmktmcqbg0002b5co8ymf3jka" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-git 浅克隆之后如何切换分支" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/" class="article-date">
@@ -247,263 +505,11 @@
 
 
   
-    <article id="post-AArch64寄存器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/" class="article-date">
-  <time datetime="2025-12-21T07:35:43.000Z" itemprop="datePublished">2025-12-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/">AArch64寄存器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ARM64（AArch64）的函数调用规则主要遵循 <strong>AAPCS64</strong> (Procedure Call Standard for the ARM 64-bit Architecture)。了解这些规则对于编写汇编代码、调试程序或进行性能优化至关重要。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/" data-id="cmjpcxj3y00001bco8d6g9tyc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JNI局部引用和全局引用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/" class="article-date">
-  <time datetime="2025-12-17T03:36:01.000Z" itemprop="datePublished">2025-12-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/">Jni NewGlobalRef</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这是一个非常核心的 JNI 知识点。要理解为什么你的代码会崩，以及 <code>NewGlobalRef</code> 到底做了什么，我们需要深入到底层机制。</p>
-<p>我们把 JNI 的引用想象成 <strong>“指针”</strong> 或 <strong>“句柄”</strong>，它们指向 Java 堆内存中的真实对象。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/12/17/JNI%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8%E5%92%8C%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8/" data-id="cmjpcxj4300061bco7o52g5d1" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JNI调用性能分析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/12/16/JNI%E8%B0%83%E7%94%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" class="article-date">
-  <time datetime="2025-12-16T05:27:31.000Z" itemprop="datePublished">2025-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/16/JNI%E8%B0%83%E7%94%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/">这是一个非常经典的 JNI 性能优化问题。</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这是一个非常经典的 JNI 性能优化问题。</p>
-<p><strong>直接结论：</strong><br><strong>调用一次自定义 Java 函数（Scenario A）的性能绝对优于调用多次 Java API（Scenario B），即使 Scenario B 已经缓存了 <code>jclass</code> 和 <code>jmethodID</code>。</strong></p>
-        
-          <p class="article-more-link">
-            <a href="/2025/12/16/JNI%E8%B0%83%E7%94%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/12/16/JNI%E8%B0%83%E7%94%A8%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90/" data-id="cmjpcxj4300071bco0g19fbyy" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-UnrealEngine自定义对象系统" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/" class="article-date">
-  <time datetime="2025-12-16T05:10:33.000Z" itemprop="datePublished">2025-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/">Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套**自定义对象系统**。</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Unreal Engine (UE) 之所以强大，很大程度上归功于其构建在 C++ 之上的一套<strong>自定义对象系统</strong>。C++ 标准本身缺乏运行时反射（Reflection）和自动内存管理（GC），因此 Epic Games 自己实现了一套名为 <strong>Unreal Object Handling</strong> 的系统。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/12/16/UnrealEngine%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AF%B9%E8%B1%A1%E7%B3%BB%E7%BB%9F/" data-id="cmjpcxj4400091bco1noogrp6" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-atomic和nonatomic关键字" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/12/15/atomic%E5%92%8Cnonatomic%E5%85%B3%E9%94%AE%E5%AD%97/" class="article-date">
-  <time datetime="2025-12-15T04:00:34.000Z" itemprop="datePublished">2025-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/15/atomic%E5%92%8Cnonatomic%E5%85%B3%E9%94%AE%E5%AD%97/">Objective-C 属性（`@property`）中的 `atomic` 和 `nonatomic` 关键字。</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这两个宏定义的区别完全对应 Objective-C 属性（<code>@property</code>）中的 <code>atomic</code> 和 <code>nonatomic</code> 关键字。</p>
-<h3 id="1-核心区别表格"><a href="#1-核心区别表格" class="headerlink" title="1. 核心区别表格"></a>1. 核心区别表格</h3>
-        
-          <p class="article-more-link">
-            <a href="/2025/12/15/atomic%E5%92%8Cnonatomic%E5%85%B3%E9%94%AE%E5%AD%97/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/12/15/atomic%E5%92%8Cnonatomic%E5%85%B3%E9%94%AE%E5%AD%97/" data-id="cmjpcxj44000a1bcoctnl0hlz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-INTP孩子写作业" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/12/14/INTP%E5%AD%A9%E5%AD%90%E5%86%99%E4%BD%9C%E4%B8%9A/" class="article-date">
-  <time datetime="2025-12-14T09:43:28.000Z" itemprop="datePublished">2025-12-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/14/INTP%E5%AD%A9%E5%AD%90%E5%86%99%E4%BD%9C%E4%B8%9A/">面对INTP（内向、直觉、思维、感知）性格的孩子，家长最头疼的往往就是**“虽然聪明，但执行力极差”**。</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>面对INTP（内向、直觉、思维、感知）性格的孩子，家长最头疼的往往就是<strong>“虽然聪明，但执行力极差”</strong>。他们通常被称为“逻辑学家”或“思想家”，大脑里在构建宏伟宇宙，现实中却连一支铅笔都懒得削。<br>针对INTP孩子“散漫、拖拉、低效”的作业辅导，核心逻辑不能是“监控和施压”，而应该是“外包执行力”与“智力博弈”。<br>以下是分维度的具体操作指南：</p>
-<ol>
-<li>理解底层逻辑：为什么他会这样？<br>首先，你要知道他不是笨，也不是故意气你。<br>• Ti (内向思考)： 他们追求的是“弄懂原理”。一旦他觉得这道题原理懂了，重复的抄写和练习对他来说就是纯粹的折磨，毫无意义。<br>• Ne (外向直觉)： 他们的思维是发散的。写着写着作业，看到橡皮上的花纹，可能联想到了分形几何，然后就发呆（其实脑子在飞速运转）了。</li>
-</ol>
-        
-          <p class="article-more-link">
-            <a href="/2025/12/14/INTP%E5%AD%A9%E5%AD%90%E5%86%99%E4%BD%9C%E4%B8%9A/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/12/14/INTP%E5%AD%A9%E5%AD%90%E5%86%99%E4%BD%9C%E4%B8%9A/" data-id="cmjpcxj4300051bco6tz17tfs" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -543,7 +549,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -556,23 +562,23 @@
       <ul>
         
           <li>
-            <a href="/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/">git 浅克隆之后如何切换分支</a>
+            <a href="/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/">Android NDK 编译参数最终构建顺序  **。</a>
           </li>
         
           <li>
-            <a href="/2025/12/26/ARM64%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/">ARM64函数调用栈寄存器分配</a>
+            <a href="/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/">静态库设置强制导出后，动态库一定包含此符号吗</a>
           </li>
         
           <li>
-            <a href="/2025/12/23/c++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E5%AD%98%E5%9C%A8%E4%BA%86%E5%93%AA%E9%87%8C/">c++函数返回值存在了哪里</a>
+            <a href="/2026/01/20/%E5%AD%90Shell%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">子Shell以及返回值运行机制</a>
           </li>
         
           <li>
-            <a href="/2025/12/21/std%20vector%20clear%20%E5%88%86%E6%9E%90/">std::vector&lt;T&gt; clear详解</a>
+            <a href="/2026/01/20/c++%20%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93/">c++ 析构函数的三种变体</a>
           </li>
         
           <li>
-            <a href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/">AArch64寄存器</a>
+            <a href="/2026/01/15/Android%20Class%20loader%E4%BB%8B%E7%BB%8D/">Android Class loader介绍</a>
           </li>
         
       </ul>

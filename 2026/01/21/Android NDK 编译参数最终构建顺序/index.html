@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-888YX9GKW2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-888YX9GKW2');
+</script>
+<!-- End Google Analytics -->
+
+
+  
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8940188751267191"
+     crossorigin="anonymous"></script>
+<!-- End Google AdSense -->
+ 
+  
+  <title>Android NDK 编译参数最终构建顺序  **。 | Xujing的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在 Android NDK 的构建体系中，链接参数的组合顺序非常重要，因为对于冲突的参数（如 -O2 和 -O3），排在后面的参数通常会覆盖前面的参数。 这些参数的流向和最终组合顺序如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android NDK 编译参数最终构建顺序  **。">
+<meta property="og:url" content="https://jackwzx.github.io/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/index.html">
+<meta property="og:site_name" content="Xujing的博客">
+<meta property="og:description" content="在 Android NDK 的构建体系中，链接参数的组合顺序非常重要，因为对于冲突的参数（如 -O2 和 -O3），排在后面的参数通常会覆盖前面的参数。 这些参数的流向和最终组合顺序如下：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-21T12:41:16.000Z">
+<meta property="article:modified_time" content="2026-01-25T10:46:04.382Z">
+<meta property="article:author" content="Xujing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Xujing的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Xujing的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap" style="display: none;">
+        <!-- 已由本地搜索替代 -->
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Android NDK 编译参数最终构建顺序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/" class="article-date">
+  <time datetime="2026-01-21T12:41:16.000Z" itemprop="datePublished">2026-01-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android NDK 编译参数最终构建顺序  **。
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Android NDK 的构建体系中，链接参数的组合顺序非常重要，因为对于冲突的参数（如 <code>-O2</code> 和 <code>-O3</code>），<strong>排在后面的参数通常会覆盖前面的参数</strong>。</p>
+<p>这些参数的流向和最终组合顺序如下：</p>
+<span id="more"></span>
+
+<h3 id="1-核心顺序总结"><a href="#1-核心顺序总结" class="headerlink" title="1. 核心顺序总结"></a>1. 核心顺序总结</h3><p>在最终生成的链接命令（Link Command）中，参数的排列顺序大致如下：</p>
+<ol>
+<li> <strong>NDK 默认参数</strong> (来自 <code>android.toolchain.cmake</code>)</li>
+<li> <strong>Gradle 注入参数</strong> (来自 <code>build.gradle</code> 的 <code>arguments</code>)</li>
+<li> <strong>CMake 全局变量</strong> (在 <code>CMakeLists.txt</code> 中通过 <code>set(CMAKE_SHARED_LINKER_FLAGS ...)</code> 设置的)</li>
+<li> <strong>CMake 目标选项</strong> (通过 <code>target_link_options</code> 设置的)</li>
+<li> <strong>CMake 链接库参数</strong> (在 <code>target_link_libraries</code> 中写的 <code>-Wl,...</code> 参数)</li>
+</ol>
+<hr>
+<h3 id="2-详细拆解"><a href="#2-详细拆解" class="headerlink" title="2. 详细拆解"></a>2. 详细拆解</h3><h4 id="第一层：系统级默认值-android-toolchain-cmake"><a href="#第一层：系统级默认值-android-toolchain-cmake" class="headerlink" title="第一层：系统级默认值 (android.toolchain.cmake)"></a>第一层：系统级默认值 (<code>android.toolchain.cmake</code>)</h4><p>当你指定 <code>externalNativeBuild</code> 时，NDK 会先加载它自带的工具链文件。</p>
+<ul>
+<li>  它会根据你的 <code>minSdkVersion</code>、<code>ABI</code> (如 arm64-v8a) 设置基础参数。</li>
+<li>  例如，它会设置 <code>--fatal-warnings</code>、<code>-Qunused-arguments</code> 以及针对不同 Android 版本的特殊对齐参数。</li>
+<li>  这些参数最早被放入 <code>CMAKE_SHARED_LINKER_FLAGS</code> 的初始值中。</li>
+</ul>
+<h4 id="第二层：Gradle-命令行注入-build-gradle-gt-arguments"><a href="#第二层：Gradle-命令行注入-build-gradle-gt-arguments" class="headerlink" title="第二层：Gradle 命令行注入 (build.gradle -&gt; arguments)"></a>第二层：Gradle 命令行注入 (<code>build.gradle</code> -&gt; <code>arguments</code>)</h4><p>你在 <code>build.gradle</code> 的 <code>cmake &#123; arguments &quot;-DCMAKE_SHARED_LINKER_FLAGS=...&quot; &#125;</code> 中定义的参数会进入 CMake 缓存。</p>
+<ul>
+<li>  <strong>注意：</strong> 如果你使用的是 <code>-D</code> 设置，它可能会<strong>覆盖</strong>或<strong>初始化</strong> CMake 变量。</li>
+<li>  如果 NDK 工具链文件使用了 <code>set(VAR &quot;...&quot; CACHE ...)</code>，而你又在命令行传了 <code>-D</code>，则以你传的为准。</li>
+</ul>
+<h4 id="第三层：CMake-项目配置-CMakeLists-txt"><a href="#第三层：CMake-项目配置-CMakeLists-txt" class="headerlink" title="第三层：CMake 项目配置 (CMakeLists.txt)"></a>第三层：CMake 项目配置 (<code>CMakeLists.txt</code>)</h4><p>这是你拥有完全控制权的地方：</p>
+<ul>
+<li><strong>全局设置：</strong> <code>set(CMAKE_SHARED_LINKER_FLAGS &quot;$&#123;CMAKE_SHARED_LINKER_FLAGS&#125; -Wl,--gc-sections&quot;)</code><ul>
+<li>  如果你用了 <code>$&#123;CMAKE_SHARED_LINKER_FLAGS&#125;</code>，你就把 NDK 和 Gradle 的参数接在了前面。</li>
+</ul>
+</li>
+<li><strong>目标设置：</strong> <code>target_link_options(mapv2 PRIVATE &quot;-Wl,-z,max-page-size=16384&quot;)</code><ul>
+<li>  这些参数会出现在全局变量之后。</li>
+</ul>
+</li>
+<li><strong>链接库混合设置：</strong> <code>target_link_libraries(mapv2 PRIVATE &quot;-Wl,--gc-sections&quot;)</code><ul>
+<li>  在 CMake 的执行逻辑中，<code>target_link_libraries</code> 里的参数通常出现在链接命令的<strong>最后面</strong>（紧跟在 <code>.o</code> 文件和 <code>.a</code> 库文件的后面）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-为什么参数的“位置”很重要？"><a href="#3-为什么参数的“位置”很重要？" class="headerlink" title="3. 为什么参数的“位置”很重要？"></a>3. 为什么参数的“位置”很重要？</h3><p>链接器（LD/LLD）处理参数是从左往右的。</p>
+<ul>
+<li>  <strong>覆盖关系：</strong> 如果 <code>android.toolchain.cmake</code> 默认设置了 <code>-Wl,--no-gc-sections</code>（假设），而你在 <code>target_link_libraries</code> 里写了 <code>-Wl,--gc-sections</code>，由于你的参数在后面，<strong>你的会生效</strong>。</li>
+<li>  <strong>库的搜索顺序：</strong> 对于 <code>-l</code> 参数，顺序决定了符号解析的优先级。</li>
+</ul>
+<hr>
+<h3 id="4-哪里有官方文档说明？"><a href="#4-哪里有官方文档说明？" class="headerlink" title="4. 哪里有官方文档说明？"></a>4. 哪里有官方文档说明？</h3><p>目前没有一份单一的“大一统”文档把这三者的交叉顺序写得非常死，你需要参考三个地方的文档合集：</p>
+<ol>
+<li><p><strong>CMake 官方文档 (Order of Link Options)：</strong><br> CMake 明确说明了 <code>target_link_options</code> 会出现在 <code>target_link_libraries</code> 之前。<br> <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/command/target_link_options.html">参考：CMake link_options</a></p>
+</li>
+<li><p><strong>Android NDK 官方文档：</strong><br> NDK 文档解释了它如何通过 <code>arguments</code> 传递参数给 CMake。<br> <a target="_blank" rel="noopener" href="https://developer.android.com/ndk/guides/cmake">参考：NDK CMake 变量说明</a></p>
+</li>
+<li><p><strong>终极文档：生成的构建记录 (build.ninja 或 link.txt)</strong><br> 最好的“文档”就是你编译后的实际产物。</p>
+<ul>
+<li>  去路径：<code>.cxx/Debug/[Hash]/[ABI]/</code></li>
+<li>  找到 <code>build.ninja</code> 文件。</li>
+<li>  搜索 <code>LINK_FLAGS</code> 关键字。</li>
+<li>  你会看到 CMake 是如何把 <code>CMAKE_SHARED_LINKER_FLAGS</code>、<code>link_options</code> 和 <code>libraries</code> 拼接成一条长长的 <code>clang++</code> 指令的。你会发现，<strong>你写在 <code>target_link_libraries</code> 里的 <code>-Wl</code> 参数往往排在指令的最末尾。</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="5-最佳实践建议"><a href="#5-最佳实践建议" class="headerlink" title="5. 最佳实践建议"></a>5. 最佳实践建议</h3><p>为了避免顺序混乱导致的参数失效：</p>
+<ol>
+<li> <strong>不要在 <code>build.gradle</code> 里写具体的链接逻辑</strong>，只写 ABI 和通用的定义。</li>
+<li> <strong>在 <code>CMakeLists.txt</code> 中使用 <code>target_link_options</code></strong> 来定义 <code>-Wl</code> 相关的参数，这样语义最清晰。</li>
+<li> **不要直接 <code>set(CMAKE_SHARED_LINKER_FLAGS &quot;...&quot;)</code>**，而是使用 <code>$&#123;CMAKE_SHARED_LINKER_FLAGS&#125; ...</code> 这种追加方式，防止把系统默认的重要参数冲掉。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/" data-id="cmktmcqbf0001b5coc6ff0ths" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">静态库设置强制导出后，动态库一定包含此符号吗</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-%E7%BC%96%E7%A8%8B/">C++编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93/">图形渲染</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B6%E5%BA%AD%E6%95%99%E8%82%B2/">家庭教育</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90/">技术分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/">C++</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">3D图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GLSL/" rel="tag">GLSL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JNI/" rel="tag">JNI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenGL/" rel="tag">OpenGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSAO/" rel="tag">SSAO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shader/" rel="tag">Shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TypeScript/" rel="tag">TypeScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c-11/" rel="tag">c++11</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openGL/" rel="tag">openGL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/" rel="tag">ruby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/test/" rel="tag">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B9%A6%E5%8D%95/" rel="tag">书单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%B2%E5%AD%90/" rel="tag">亲子</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" rel="tag">儿童教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" rel="tag">动态库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" rel="tag">原子操作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" rel="tag">图形编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" rel="tag">宏定义</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag">并发编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" rel="tag">手机成瘾</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" rel="tag">接口适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" rel="tag">插值算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%92%AD%E5%AE%A2/" rel="tag">播客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%99%E8%82%B2/" rel="tag">教育</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" rel="tag">构造函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" rel="tag">移动端优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag">线性代数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" rel="tag">编程陷阱</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag">设计模式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%85%E8%AF%BB/" rel="tag">阅读</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" rel="tag">预处理器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" rel="tag">颜色空间</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/3D%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 12px;">3D图形学</a> <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/C/" style="font-size: 16px;">C++</a> <a href="/tags/C-11/" style="font-size: 18px;">C++11</a> <a href="/tags/GLSL/" style="font-size: 10px;">GLSL</a> <a href="/tags/JNI/" style="font-size: 10px;">JNI</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/OpenGL/" style="font-size: 12px;">OpenGL</a> <a href="/tags/SSAO/" style="font-size: 10px;">SSAO</a> <a href="/tags/Shader/" style="font-size: 10px;">Shader</a> <a href="/tags/TypeScript/" style="font-size: 10px;">TypeScript</a> <a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/openGL/" style="font-size: 18px;">openGL</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/%E4%B9%A6%E5%8D%95/" style="font-size: 10px;">书单</a> <a href="/tags/%E4%BA%B2%E5%AD%90/" style="font-size: 12px;">亲子</a> <a href="/tags/%E5%84%BF%E7%AB%A5%E6%95%99%E8%82%B2/" style="font-size: 10px;">儿童教育</a> <a href="/tags/%E5%8A%A8%E6%80%81%E5%BA%93/" style="font-size: 10px;">动态库</a> <a href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" style="font-size: 10px;">原子操作</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 10px;">图形学</a> <a href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">图形编程</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 10px;">多线程</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 10px;">字符串</a> <a href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" style="font-size: 10px;">宏定义</a> <a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" style="font-size: 10px;">并发编程</a> <a href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">性能优化</a> <a href="/tags/%E6%89%8B%E6%9C%BA%E6%88%90%E7%98%BE/" style="font-size: 10px;">手机成瘾</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D/" style="font-size: 10px;">接口适配</a> <a href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" style="font-size: 10px;">插值算法</a> <a href="/tags/%E6%92%AD%E5%AE%A2/" style="font-size: 10px;">播客</a> <a href="/tags/%E6%95%99%E8%82%B2/" style="font-size: 10px;">教育</a> <a href="/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 12px;">数学</a> <a href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" style="font-size: 10px;">构造函数</a> <a href="/tags/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E4%BC%98%E5%8C%96/" style="font-size: 10px;">移动端优化</a> <a href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" style="font-size: 10px;">类型转换</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 12px;">线性代数</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" style="font-size: 10px;">编程陷阱</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" style="font-size: 14px;">计算机图形学</a> <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" style="font-size: 10px;">设计模式</a> <a href="/tags/%E9%98%85%E8%AF%BB/" style="font-size: 12px;">阅读</a> <a href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" style="font-size: 10px;">预处理器</a> <a href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" style="font-size: 10px;">颜色空间</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/">Android NDK 编译参数最终构建顺序  **。</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/">静态库设置强制导出后，动态库一定包含此符号吗</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/20/%E5%AD%90Shell%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">子Shell以及返回值运行机制</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/20/c++%20%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93/">c++ 析构函数的三种变体</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/15/Android%20Class%20loader%E4%BB%8B%E7%BB%8D/">Android Class loader介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2026 Xujing<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+  <div class="local-search-popup">
+  <div class="local-search-box">
+    <div class="local-search-input-wrapper">
+      <input id="local-search-input" type="text" placeholder="搜索..." />
+    </div>
+    <span class="search-close-button">×</span>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<script>
+// 搜索功能实现
+window.addEventListener('DOMContentLoaded', function() {
+  var isXml = true;
+  var searchPath = "search.xml";
+  if (searchPath.length === 0) {
+    searchPath = "search.xml";
+  } else if (/json$/i.test(searchPath)) {
+    isXml = false;
+  }
+  var path = "/" + searchPath;
+  var input = document.getElementById("local-search-input");
+  var resultContent = document.getElementById("local-search-result");
+  var searchData = [];
+
+  // 加载搜索索引
+  loadSearchData();
+
+  function loadSearchData() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', path, true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          if (isXml) {
+            var xmlDoc = new DOMParser().parseFromString(xhr.responseText, "text/xml");
+            var entries = xmlDoc.getElementsByTagName("entry");
+            searchData = Array.from(entries).map(function(entry) {
+              return {
+                title: entry.getElementsByTagName("title")[0].textContent,
+                content: entry.getElementsByTagName("content")[0].textContent,
+                url: entry.getElementsByTagName("url")[0].textContent
+              };
+            });
+          } else {
+            searchData = JSON.parse(xhr.responseText);
+          }
+          
+          // 添加搜索事件监听
+          input.addEventListener('input', search);
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  function search() {
+    var searchText = input.value.trim().toLowerCase();
+    var keywords = searchText.split(/[\s\-]+/);
+    resultContent.innerHTML = "";
+    
+    if (searchText.length > 0) {
+      // 执行搜索
+      searchData.forEach(function(data) {
+        var isMatch = true;
+        var dataTitle = data.title.trim().toLowerCase();
+        var dataContent = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+        var dataUrl = data.url;
+        var indexTitle = -1;
+        var indexContent = -1;
+        var firstOccur = -1;
+        
+        // 只匹配非空关键字
+        if (keywords.length > 0) {
+          keywords.forEach(function(keyword, i) {
+            indexTitle = dataTitle.indexOf(keyword);
+            indexContent = dataContent.indexOf(keyword);
+            if (indexTitle < 0 && indexContent < 0) {
+              isMatch = false;
+            } else {
+              if (indexContent < 0) {
+                indexContent = 0;
+              }
+              if (i == 0) {
+                firstOccur = indexContent;
+              }
+            }
+          });
+        }
+        
+        // 显示搜索结果
+        if (isMatch) {
+          var resultItem = document.createElement("div");
+          resultItem.className = "search-result-item";
+          
+          // 标题
+          var resultTitle = document.createElement("div");
+          resultTitle.className = "search-result-title";
+          var resultLink = document.createElement("a");
+          resultLink.href = dataUrl;
+          resultLink.textContent = data.title;
+          resultTitle.appendChild(resultLink);
+          resultItem.appendChild(resultTitle);
+          
+          // 内容
+          if (firstOccur >= 0) {
+            // 截取内容
+            var content = dataContent;
+            var start = Math.max(0, firstOccur - 20);
+            var end = Math.min(content.length, firstOccur + 80);
+            if (start > 0) {
+              content = '...' + content.substring(start, end) + '...';
+            } else {
+              content = content.substring(start, end) + '...';
+            }
+            
+            // 高亮关键字
+            keywords.forEach(function(keyword) {
+              var regS = new RegExp(keyword, "gi");
+              content = content.replace(regS, '<strong class="search-keyword">' + keyword + '</strong>');
+            });
+            
+            var resultContentDiv = document.createElement("div");
+            resultContentDiv.className = "search-result-content";
+            resultContentDiv.innerHTML = content;
+            resultItem.appendChild(resultContentDiv);
+          }
+          
+          resultContent.appendChild(resultItem);
+        }
+      });
+    }
+  }
+
+  // 搜索框弹出与关闭
+  var searchBtn = document.getElementById("nav-search-btn");
+  var searchPopup = document.querySelector(".local-search-popup");
+  var closeBtn = document.querySelector(".search-close-button");
+  
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      searchPopup.style.display = "block";
+      input.focus();
+    });
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+      searchPopup.style.display = "none";
+    });
+  }
+  
+  document.addEventListener('keyup', function(e) {
+    if (e.key === "Escape") {
+      searchPopup.style.display = "none";
+    }
+  });
+});
+</script> 
+</body>
+</html>

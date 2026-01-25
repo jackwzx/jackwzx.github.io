@@ -81,6 +81,265 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-RGBA8888和RGB565区别" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2025-12-02T08:59:08.000Z" itemprop="datePublished">2025-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/">针对 RGBA8888（32位）和 RGB565（16位）这两种格式 分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>针对 <strong>RGBA8888</strong>（32位）和 <strong>RGB565</strong>（16位）这两种格式，在<strong>蓝色（Blue）</strong>显示的差异上，核心在于<strong>色彩精度（Color Depth）</strong>的不同。</p>
+<p>简单总结：<strong>RGB565 下的蓝色会出现明显的“色阶（Banding）”现象，渐变不平滑，且色彩还原度不如 RGBA8888。</strong></p>
+        
+          <p class="article-more-link">
+            <a href="/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/12/02/RGBA8888%E5%92%8CRGB565%E5%8C%BA%E5%88%AB/" data-id="cmiq17fn90001v6cohes0e60z" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-深入理解Android中的SurfaceFlinger" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/" class="article-date">
+  <time datetime="2025-11-30T07:09:15.000Z" itemprop="datePublished">2025-11-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/">深入理解Android中的SurfaceFlinger</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一篇关于 Android 图形系统核心——<strong>SurfaceFlinger</strong> 的深度解析。</p>
+<p>既然你已经掌握了如何使用 <code>EGLContext</code> 和独立线程进行渲染，那么理解 SurfaceFlinger 将帮助你打通从 <code>swapBuffers</code> 到屏幕显示的“最后一公里”。</p>
+        
+          <p class="article-more-link">
+            <a href="/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/11/30/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Android%E4%B8%AD%E7%9A%84SurfaceFlinger/" data-id="cmildt6yk0003b2cohu61dce1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Android Surface 延迟释放策略" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/" class="article-date">
+  <time datetime="2025-11-30T06:39:27.000Z" itemprop="datePublished">2025-11-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/">Android Surface 延迟释放策略</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>你的这个思路非常棒！这就是所谓的 <strong>“延迟销毁 (Lazy/Deferred Destruction)”</strong> 或者 <strong>“Surface 缓存”</strong> 策略。</p>
+<p>这在很多高性能渲染引擎（如游戏、地图SDK）中是常见的做法。</p>
+        
+          <p class="article-more-link">
+            <a href="/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/11/30/Android%20Surface%20%E5%BB%B6%E8%BF%9F%E9%87%8A%E6%94%BE%E7%AD%96%E7%95%A5/" data-id="cmildt6yh0000b2cof71zffky" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-在 C++ 中，条件变量和信号量对比" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/" class="article-date">
+  <time datetime="2025-11-30T06:03:07.000Z" itemprop="datePublished">2025-11-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/">在 C++ 中，条件变量和信号量对比</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 C++ 中，<strong>信号量（Semaphore）</strong> 提供了一种基于“计数器”的同步机制。</p>
+<p>需要注意的是，标准的信号量 <code>std::counting_semaphore</code> 和 <code>std::binary_semaphore</code> 是在 <strong>C++20</strong> 才正式引入的。如果你严格限制在 <strong>C++11</strong> 环境，通常需要自己封装 POSIX 信号量（<code>sem_t</code>）或 Windows 信号量，或者使用 Boost 库。</p>
+        
+          <p class="article-more-link">
+            <a href="/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/11/30/%E5%9C%A8%20C++%20%E4%B8%AD%EF%BC%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%92%8C%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%AF%B9%E6%AF%94/" data-id="cmildt6yk0002b2co618l3yoj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-c++条件变量详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" class="article-date">
+  <time datetime="2025-11-30T05:54:27.000Z" itemprop="datePublished">2025-11-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/">std::condition_variable使用介绍</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>C++11 引入的 <code>std::condition_variable</code>（条件变量）是多线程编程中用于<strong>线程间同步</strong>和<strong>通信</strong>的重要机制。它允许一个线程挂起（阻塞），直到另一个线程通知它某个特定的条件已经满足。</p>
+        
+          <p class="article-more-link">
+            <a href="/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/11/30/c++%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E8%AF%A6%E8%A7%A3/" data-id="cmildt6yk0001b2co32yyc0gf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java中的布尔类型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/" class="article-date">
+  <time datetime="2025-11-11T16:00:00.000Z" itemprop="datePublished">2025-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/">Java中的布尔类型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Java 中的 <code>boolean</code> 与数值类型（<code>int</code> 等）是不同的原始类型，语言层面既不允许隐式转换，也不允许显式强制转换。</p>
+<ul>
+<li>不允许的示例<ul>
+<li><code>int i = true;</code>、<code>boolean b = 1;</code>、<code>b = (boolean) 1;</code> 都会编译报错</li>
+<li><code>if (1) &#123;&#125;</code> 在 Java 中非法（不同于 C/C++），只能 <code>if (b)</code> 或 <code>if (表达式为 boolean)</code></li>
+</ul>
+</li>
+</ul>
+        
+          <p class="article-more-link">
+            <a href="/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/#more">阅读全文</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jackwzx.github.io/2025/11/12/java%E4%B8%AD%E7%9A%84%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B/" data-id="cmih5kqno0009veco2k8f31qj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-为什么ASan需要-fsanitize=address编译选项，而不仅仅是替换动态库" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2025/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88ASan%E9%9C%80%E8%A6%81-fsanitize=address%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E6%9B%BF%E6%8D%A2%E5%8A%A8%E6%80%81%E5%BA%93/" class="article-date">
@@ -264,281 +523,11 @@
 
 
   
-    <article id="post-C++原子操作函数详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/06/25/C++%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2025-06-25T02:00:00.000Z" itemprop="datePublished">2025-06-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/C-%E7%BC%96%E7%A8%8B/">C++编程</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/06/25/C++%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/">C++原子操作函数详解：多线程编程的利器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在多线程编程中，数据竞争和同步问题一直是开发者面临的挑战。C++11引入的原子操作（atomic operations）为解决这些问题提供了强有力的工具。本文将详细介绍几个重要的原子操作函数：<code>atomic_store</code>、<code>atomic_compare_exchange_strong_explicit</code>、<code>atomic_load_explicit</code> 和 <code>atomic_fetch_sub_explicit</code>，帮助你在多线程编程中正确使用这些函数。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/06/25/C++%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/06/25/C++%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" data-id="cmcbfk9tp0000oicodqoa5vmt" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" rel="tag">原子操作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" rel="tag">并发编程</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-GLSL中的smoothstep函数详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/06/24/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2025-06-24T12:00:00.000Z" itemprop="datePublished">2025-06-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/06/24/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/">GLSL中的smoothstep函数详解</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在GLSL(OpenGL Shading Language)编程中，<code>smoothstep</code>函数是一个非常有用且常用的内置函数。它能够在两个值之间创建平滑的插值，广泛应用于边缘软化、渐变效果、动画过渡等场景。本文将深入介绍smoothstep函数的用法、数学原理和实际应用。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/06/24/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/06/24/GLSL%E4%B8%AD%E7%9A%84smoothstep%E5%87%BD%E6%95%B0%E8%AF%A6%E8%A7%A3/" data-id="cmc9xgo8q00015tcobfgv3v1s" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GLSL/" rel="tag">GLSL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shader/" rel="tag">Shader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%9B%BE%E5%BD%A2%E7%BC%96%E7%A8%8B/" rel="tag">图形编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-HSV颜色空间和插值优势详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/06/24/HSV%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4%E5%92%8C%E6%8F%92%E5%80%BC%E4%BC%98%E5%8A%BF%E8%AF%A6%E8%A7%A3/" class="article-date">
-  <time datetime="2025-06-24T09:00:00.000Z" itemprop="datePublished">2025-06-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/06/24/HSV%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4%E5%92%8C%E6%8F%92%E5%80%BC%E4%BC%98%E5%8A%BF%E8%AF%A6%E8%A7%A3/">HSV颜色空间和插值优势详解</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="HSV颜色空间和插值优势详解"><a href="#HSV颜色空间和插值优势详解" class="headerlink" title="HSV颜色空间和插值优势详解"></a>HSV颜色空间和插值优势详解</h2><p>在计算机图形学和图像处理中，颜色空间的选择对最终效果有着重要影响。本文将深入探讨 HSV 颜色空间的特点，以及为什么在颜色插值时，HSV 比传统的 RGB 能产生更自然、更符合人眼感知的效果。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/06/24/HSV%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4%E5%92%8C%E6%8F%92%E5%80%BC%E4%BC%98%E5%8A%BF%E8%AF%A6%E8%A7%A3/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/06/24/HSV%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4%E5%92%8C%E6%8F%92%E5%80%BC%E4%BC%98%E5%8A%BF%E8%AF%A6%E8%A7%A3/" data-id="cmcaalwxr00002ocoba583r7u" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8F%92%E5%80%BC%E7%AE%97%E6%B3%95/" rel="tag">插值算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" rel="tag">计算机图形学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4/" rel="tag">颜色空间</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-C++11委托构造函数和继承构造函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/06/24/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" class="article-date">
-  <time datetime="2025-06-24T08:30:00.000Z" itemprop="datePublished">2025-06-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/06/24/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/">C++11 委托构造函数和继承构造函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="C-11-委托构造函数和继承构造函数"><a href="#C-11-委托构造函数和继承构造函数" class="headerlink" title="C++11 委托构造函数和继承构造函数"></a>C++11 委托构造函数和继承构造函数</h2><p>C++11 引入了两个重要的构造函数特性：委托构造函数（Delegating Constructors）和继承构造函数（Inheriting Constructors）。这两个特性都旨在减少代码重复，提高代码的可维护性和可读性。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/06/24/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/06/24/C++11%E5%A7%94%E6%89%98%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%A7%E6%89%BF%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" data-id="cmca8bv4200007ofyb87c6yek" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-11/" rel="tag">C++11</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0/" rel="tag">构造函数</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-cpp-macro-analysis-podcast" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/06/15/cpp-macro-analysis-podcast/" class="article-date">
-  <time datetime="2025-06-15T02:00:00.000Z" itemprop="datePublished">2025-06-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a>►<a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/C/">C++</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/06/15/cpp-macro-analysis-podcast/">C++宏定义陷阱与#、##操作符详解 - 播客分析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="播客分析：C-宏定义的陷阱与-、-操作符详解"><a href="#播客分析：C-宏定义的陷阱与-、-操作符详解" class="headerlink" title="播客分析：C++宏定义的陷阱与#、##操作符详解"></a>播客分析：C++宏定义的陷阱与#、##操作符详解</h2><h3 id="C-宏中的-和-操作符详解"><a href="#C-宏中的-和-操作符详解" class="headerlink" title="C++宏中的#和##操作符详解"></a>C++宏中的#和##操作符详解</h3>
-        
-          <p class="article-more-link">
-            <a href="/2025/06/15/cpp-macro-analysis-podcast/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/06/15/cpp-macro-analysis-podcast/" data-id="cmbx3as1h000096j2gvwo9lbp" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%8F%E5%AE%9A%E4%B9%89/" rel="tag">宏定义</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%92%AD%E5%AE%A2/" rel="tag">播客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" rel="tag">预处理器</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-C++类型转换陷阱-有符号和无符号整数比较" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2025/06/08/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%99%B7%E9%98%B1-%E6%9C%89%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83/" class="article-date">
-  <time datetime="2025-06-08T02:00:00.000Z" itemprop="datePublished">2025-06-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/06/08/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%99%B7%E9%98%B1-%E6%9C%89%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83/">C++类型转换陷阱：有符号和无符号整数比较</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在C++编程中，有一些看似简单的操作可能会带来意想不到的结果。今天我们要讨论一个常见但容易被忽视的问题：有符号整数（signed）和无符号整数（unsigned）的比较操作。</p>
-        
-          <p class="article-more-link">
-            <a href="/2025/06/08/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%99%B7%E9%98%B1-%E6%9C%89%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83/#more">阅读全文</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jackwzx.github.io/2025/06/08/C++%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%99%B7%E9%98%B1-%E6%9C%89%E7%AC%A6%E5%8F%B7%E5%92%8C%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0%E6%AF%94%E8%BE%83/" data-id="cmbt3hg8b000f1xco9wpc4r9o" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" rel="tag">类型转换</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E9%99%B7%E9%98%B1/" rel="tag">编程陷阱</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -578,7 +567,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">December 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">November 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">August 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">June 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">March 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">January 2025</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">November 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">September 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">August 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
     </div>
   </div>
 
@@ -591,23 +580,23 @@
       <ul>
         
           <li>
-            <a href="/2025/12/26/git%20%E6%B5%85%E5%85%8B%E9%9A%86%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF/">git 浅克隆之后如何切换分支</a>
+            <a href="/2026/01/21/Android%20NDK%20%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0%E6%9C%80%E7%BB%88%E6%9E%84%E5%BB%BA%E9%A1%BA%E5%BA%8F/">Android NDK 编译参数最终构建顺序  **。</a>
           </li>
         
           <li>
-            <a href="/2025/12/26/ARM64%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A0%88%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%86%E9%85%8D/">ARM64函数调用栈寄存器分配</a>
+            <a href="/2026/01/21/%E9%9D%99%E6%80%81%E5%BA%93%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E5%AF%BC%E5%87%BA%E5%90%8E%EF%BC%8C%E5%8A%A8%E6%80%81%E5%BA%93%E4%B8%80%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E7%AC%A6%E5%8F%B7%E5%90%97/">静态库设置强制导出后，动态库一定包含此符号吗</a>
           </li>
         
           <li>
-            <a href="/2025/12/23/c++%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E5%AD%98%E5%9C%A8%E4%BA%86%E5%93%AA%E9%87%8C/">c++函数返回值存在了哪里</a>
+            <a href="/2026/01/20/%E5%AD%90Shell%E4%BB%A5%E5%8F%8A%E8%BF%94%E5%9B%9E%E5%80%BC%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/">子Shell以及返回值运行机制</a>
           </li>
         
           <li>
-            <a href="/2025/12/21/std%20vector%20clear%20%E5%88%86%E6%9E%90/">std::vector&lt;T&gt; clear详解</a>
+            <a href="/2026/01/20/c++%20%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E7%9A%84%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93/">c++ 析构函数的三种变体</a>
           </li>
         
           <li>
-            <a href="/2025/12/21/AArch64%E5%AF%84%E5%AD%98%E5%99%A8/">AArch64寄存器</a>
+            <a href="/2026/01/15/Android%20Class%20loader%E4%BB%8B%E7%BB%8D/">Android Class loader介绍</a>
           </li>
         
       </ul>
